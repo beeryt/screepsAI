@@ -53,6 +53,68 @@ class Colony
       }
     }
 
+    class Queue
+    {
+      constructor()
+      {
+        this.items = [];
+      }
+      enqueue(element)
+      {
+        this.items.push(element);
+      }
+      dequeue()
+      {
+        if (this.isEmpty())
+        {
+          return "Underflow";
+        }
+        return this.items.shift();
+      }
+      front()
+      {
+        if (this.isEmpty())
+        {
+          return "No elements in Queue";
+        }
+        return this.items[0];
+      }
+      isEmpty()
+      {
+        return this.items.length == 0;
+      }
+      printQueue()
+      {
+        let str = "";
+        for (let i = 0; i < this.items.length; ++i)
+        {
+          str += this.items[i] + " ";
+        }
+        return str;
+      }
+    }
+
+    breadth_first_search_1(graph, start)
+    {
+      let frontier = Queue()
+      frontier.put(start)
+      let visited = {}
+      visited[start] = True
+
+      while (!frontier.isEmpty())
+      {
+        let current = frontier.front();
+        console.log("visiting", current);
+        graph.neighbors(current).forEach(next => {
+          if (!visited.contains(next))
+          {
+            frontier.enqueue(next)
+            visited[next] = True;
+          }
+        });
+      }
+    }
+
     let example_graph = new SimpleGraph()
     example_graph.edges = {
       'A': ['B'],
@@ -61,6 +123,8 @@ class Colony
       'D': ['E', 'A'],
       'E': ['B']
     }
+
+    breadth_first_search_1(example_graph, 'A');
   }
 
   run()
