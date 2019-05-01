@@ -63,27 +63,8 @@ class Colony
     this.room.visual.circle(pos, {radius: .33});
 
     this.room.find(FIND_SOURCES).forEach((source) => {
+      this.room.visual.line(pos, source);
     });
-
-    function apple(roomName)
-    {
-      console.log("roomCallback(",roomName,")");
-    }
-
-    function banana(roomName, costMatrix)
-    {
-      console.log("costCallback(",roomName,")");
-      let room = Game.rooms[roomName];
-      for (let i = 0; i < 50*50; ++i)
-      {
-        let x = Math.floor(i / 50);
-        let y = i % 50;
-        room.visual.text(costMatrix.get(x,y), room.getPositionAt(x,y));
-      }
-    }
-
-    PathFinder.search(this.pos, {pos: pos}, {roomCallback: apple});
-    this.room.findPath(this.pos, pos, {costCallback: banana});
   }
 
   visuals()
