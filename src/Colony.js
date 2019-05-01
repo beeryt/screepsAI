@@ -103,7 +103,7 @@ class Colony
 
       while (!frontier.isEmpty())
       {
-        let current = frontier.front();
+        let current = frontier.dequeue();
         console.log("visiting", current);
         graph.neighbors(current).forEach(next => {
           if (!(next in visited))
