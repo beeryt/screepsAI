@@ -106,7 +106,7 @@ class Colony
         let current = frontier.front();
         console.log("visiting", current);
         graph.neighbors(current).forEach(next => {
-          if (!visited.contains(next))
+          if (!visited.includes(next))
           {
             frontier.enqueue(next)
             visited[next] = True;
@@ -124,7 +124,7 @@ class Colony
       'E': ['B']
     }
 
-    breadth_first_search_1(example_graph, 'A');
+    this.breadth_first_search_1(example_graph, 'A');
   }
 
   run()
