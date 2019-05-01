@@ -20,14 +20,17 @@ class Colony
 
   refresh()
   {
+    console.log("Colony::refresh()");
   }
 
   update()
   {
+    console.log("Colony::update()");
   }
 
   run()
   {
+    console.log("Colony::run()");
   }
 
   visuals()

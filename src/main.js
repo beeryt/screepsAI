@@ -19,6 +19,7 @@ module.exports.loop = function() {
   Sovereign.refresh();
   Sovereign.update();
   Sovereign.run();
+  console.log();
 };
 
 function reset() {

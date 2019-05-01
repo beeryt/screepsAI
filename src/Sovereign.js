@@ -14,6 +14,23 @@ class Sovereign
     this.colonies.push(new Colony(Game.spawns.Spawn1.room));
   }
 
+  init()
+  {
+    console.log("Sovereign::init()");
+    this.populateColonies();
+    this.colonies.forEach(function(colony) {
+      colony.init();
+    });
+  }
+
+  refresh()
+  {
+    console.log("Sovereign::refresh()");
+    this.colonies.forEach(function(colony) {
+      colony.refresh();
+    });
+  }
+  
   update()
   {
     console.log("Sovereign::update()");
@@ -22,23 +39,9 @@ class Sovereign
     });
   }
 
-  refresh()
-  {
-    this.colonies.forEach(function(colony) {
-      colony.refresh();
-    });
-  }
-
-  init()
-  {
-    this.populateColonies();
-    this.colonies.forEach(function(colony) {
-      colony.init();
-    });
-  }
-
   run()
   {
+    console.log("Sovereign::run()");
     this.colonies.forEach(function(colony) {
       colony.run();
     });
