@@ -47,6 +47,19 @@ class Colony
     this.mines.forEach((mine) => {
       mine.run();
     });
+
+    // find center of mass
+    let sumX = 0;
+    let sumY = 0;
+    let mass = 0;
+    this.room.find(FIND_SOURCES).forEach((source) => {
+      sumX += source.pos.x;
+      sumY += source.pos.y;
+      mass += source.energyCapacity;
+    });
+
+    let pos = this.room.getPositionAt(sumX / mass, sumY / mass);
+    this.room.visual.circle(pos, {radius: .33});
   }
 
   visuals()
