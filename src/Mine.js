@@ -49,3 +49,5 @@ class Mine {
     console.log("Mine::run()");
   }
 }
+
+module.exports = Mine;
