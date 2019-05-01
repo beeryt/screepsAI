@@ -99,7 +99,7 @@ class Colony
       let frontier = new Queue()
       frontier.enqueue(start)
       let visited = {}
-      visited[start] = True
+      visited[start] = true
 
       while (!frontier.isEmpty())
       {
