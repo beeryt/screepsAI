@@ -161,6 +161,12 @@ class Colony
     function banana(roomName, costMatrix)
     {
       console.log("costCallback(",roomName,")");
+      for (let i = 0; i < 50*50; ++i)
+      {
+        let x = Math.floor(i / 50);
+        let y = i % 50;
+        this.room.visual.text(costMatrix.get(x,y), this.room.getPositionAt(x,y));
+      }
     }
 
     PathFinder.search(this.pos, {pos: pos}, {roomCallback: apple});
