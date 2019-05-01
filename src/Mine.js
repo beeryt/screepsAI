@@ -42,12 +42,13 @@ class Mine {
   update()
   {
     console.log("Mine::update()");
-    this.room.visual.line(this.pos, this.colony.pos);
-    this.room.visual.circle(this.pos);
     let path = PathFinder.search(this.colony.pos, {pos: this.pos, range: 1});
     if (path.incomplete) { console.log("Path was incomplete"); }
     let pos = _.find(path.path, pos => pos.getRangeTo(this) == 1);
-    this.room.visual.circle(pos, {radius: 1});
+
+    this.room.visual.line(this.pos, this.colony.pos);
+    this.room.visual.circle(this.pos, {radius: 0.5});
+    this.room.visual.circle(pos, {radius: 0.5});
   }
 
   run()
