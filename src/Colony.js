@@ -63,7 +63,7 @@ class Colony
     this.room.visual.circle(pos, {radius: .33});
 
     this.room.find(FIND_SOURCES).forEach((source) => {
-      this.room.visual.line(pos, source);
+      this.room.visual.line(pos, source.pos);
     });
   }
 
