@@ -26,7 +26,6 @@ class Mine {
   init()
   {
     console.log("Mine::init()");
-    this.room.visual.line(this.pos, this.colony.pos);
   }
 
   refresh()
@@ -43,6 +42,7 @@ class Mine {
   update()
   {
     console.log("Mine::update()");
+    this.room.visual.line(this.pos, this.colony.pos);
   }
 
   run()
