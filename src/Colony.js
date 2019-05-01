@@ -94,7 +94,7 @@ class Colony
       }
     }
 
-    breadth_first_search_1(graph, start)
+    function breadth_first_search_1(graph, start)
     {
       let frontier = Queue()
       frontier.put(start)
@@ -124,7 +124,7 @@ class Colony
       'E': ['B']
     }
 
-    this.breadth_first_search_1(example_graph, 'A');
+    breadth_first_search_1(example_graph, 'A');
   }
 
   run()
