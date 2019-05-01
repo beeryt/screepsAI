@@ -106,7 +106,7 @@ class Colony
         let current = frontier.front();
         console.log("visiting", current);
         graph.neighbors(current).forEach(next => {
-          if (!visited.includes(next))
+          if (!(next in visited))
           {
             frontier.enqueue(next)
             visited[next] = True;
