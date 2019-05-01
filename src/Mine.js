@@ -47,8 +47,8 @@ class Mine {
     let pos = _.find(path.path, pos => pos.getRangeTo(this) == 1);
 
     this.room.visual.line(this.pos, this.colony.pos);
-    this.room.visual.circle(this.pos, {radius: 0.5});
-    this.room.visual.circle(pos, {radius: 0.5});
+    this.room.visual.circle(this.pos, {radius: 0.3});
+    this.room.visual.circle(pos, {radius: 0.3});
   }
 
   run()
