@@ -40,93 +40,6 @@ class Colony
     });
   }
 
-  search()
-  {
-    class SimpleGraph {
-      constructor()
-      {
-        this.edges = {};
-      }
-
-      neighbors(id) {
-        return this.edges[id];
-      }
-    }
-
-    class Queue
-    {
-      constructor()
-      {
-        this.items = [];
-      }
-      enqueue(element)
-      {
-        this.items.push(element);
-      }
-      dequeue()
-      {
-        if (this.isEmpty())
-        {
-          return "Underflow";
-        }
-        return this.items.shift();
-      }
-      front()
-      {
-        if (this.isEmpty())
-        {
-          return "No elements in Queue";
-        }
-        return this.items[0];
-      }
-      isEmpty()
-      {
-        return this.items.length == 0;
-      }
-      printQueue()
-      {
-        let str = "";
-        for (let i = 0; i < this.items.length; ++i)
-        {
-          str += this.items[i] + " ";
-        }
-        return str;
-      }
-    }
-
-    function breadth_first_search_1(graph, start)
-    {
-      let frontier = new Queue()
-      frontier.enqueue(start)
-      let visited = {}
-      visited[start] = true
-
-      while (!frontier.isEmpty())
-      {
-        let current = frontier.dequeue();
-//        console.log("visiting", current);
-        graph.neighbors(current).forEach(next => {
-          if (!(next in visited))
-          {
-            frontier.enqueue(next)
-            visited[next] = true;
-          }
-        });
-      }
-    }
-
-    let example_graph = new SimpleGraph()
-    example_graph.edges = {
-      'A': ['B'],
-      'B': ['A', 'C', 'D'],
-      'C': ['A'],
-      'D': ['E', 'A'],
-      'E': ['B']
-    }
-
-    breadth_first_search_1(example_graph, 'A');
-  }
-
   run()
   {
     console.log("Colony::run()");
@@ -150,7 +63,6 @@ class Colony
     this.room.visual.circle(pos, {radius: .33});
 
     this.room.find(FIND_SOURCES).forEach((source) => {
-      this.search();
     });
 
     function apple(roomName)

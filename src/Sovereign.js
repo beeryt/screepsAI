@@ -32,7 +32,7 @@ class Sovereign
     });
     console.log();
   }
-  
+
   update()
   {
     console.log("Sovereign::update()");
