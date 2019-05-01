@@ -59,6 +59,7 @@ class Colony
     });
 
     let pos = this.room.getPositionAt(sumX / mass, sumY / mass);
+    console.log(pos);
     this.room.visual.circle(pos, {radius: .33});
   }
 
