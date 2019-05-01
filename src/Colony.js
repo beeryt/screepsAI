@@ -97,7 +97,7 @@ class Colony
     function breadth_first_search_1(graph, start)
     {
       let frontier = new Queue()
-      frontier.put(start)
+      frontier.enqueue(start)
       let visited = {}
       visited[start] = True
 
