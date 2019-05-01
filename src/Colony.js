@@ -158,7 +158,13 @@ class Colony
       console.log("roomCallback(",roomName,")");
     }
 
+    function banana(roomName, costMatrix)
+    {
+      console.log("costCallback(",roomName,")");
+    }
+
     PathFinder.search(this.pos, {pos: pos}, {roomCallback: apple});
+    this.room.findPath(this.pos, pos, {costCallback: banana});
   }
 
   visuals()
