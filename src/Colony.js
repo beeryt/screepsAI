@@ -109,7 +109,7 @@ class Colony
           if (!(next in visited))
           {
             frontier.enqueue(next)
-            visited[next] = True;
+            visited[next] = true;
           }
         });
       }
