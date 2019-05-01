@@ -25,16 +25,28 @@ class Colony
   refresh()
   {
     console.log("Colony::refresh()");
+
+    this.mines.forEach((mine) => {
+      mine.refresh();
+    });
   }
 
   update()
   {
     console.log("Colony::update()");
+
+    this.mines.forEach((mine) => {
+      mine.update();
+    });
   }
 
   run()
   {
     console.log("Colony::run()");
+
+    this.mines.forEach((mine) => {
+      mine.run();
+    });
   }
 
   visuals()
