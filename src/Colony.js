@@ -53,7 +53,7 @@ class Colony
       }
     }
 
-    example_graph = new SimpleGraph()
+    let example_graph = new SimpleGraph()
     example_graph.edges = {
       'A': ['B'],
       'B': ['A', 'C', 'D'],
