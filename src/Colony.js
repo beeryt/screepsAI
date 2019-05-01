@@ -22,6 +22,10 @@ class Colony
   {
   }
 
+  update()
+  {
+  }
+
   run()
   {
   }
