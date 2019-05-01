@@ -104,7 +104,7 @@ class Colony
       while (!frontier.isEmpty())
       {
         let current = frontier.dequeue();
-        console.log("visiting", current);
+//        console.log("visiting", current);
         graph.neighbors(current).forEach(next => {
           if (!(next in visited))
           {
@@ -152,6 +152,13 @@ class Colony
     this.room.find(FIND_SOURCES).forEach((source) => {
       this.search();
     });
+
+    function apple(roomName)
+    {
+      console.log("roomCallback(",roomName,")");
+    }
+
+    PathFinder.search(this.pos, {pos: pos}, {roomCallback: apple});
   }
 
   visuals()
