@@ -40,6 +40,29 @@ class Colony
     });
   }
 
+  search()
+  {
+    class SimpleGraph {
+      constructor()
+      {
+        this.edges = {};
+      }
+
+      neighbors(id) {
+        return this.edges[id];
+      }
+    }
+
+    example_graph = SimpleGraph()
+    example_graph.edges = {
+      'A': ['B'],
+      'B': ['A', 'C', 'D'],
+      'C': ['A'],
+      'D': ['E', 'A'],
+      'E': ['B']
+    }
+  }
+
   run()
   {
     console.log("Colony::run()");
@@ -61,6 +84,10 @@ class Colony
     let pos = this.room.getPositionAt(sumX / mass, sumY / mass);
     console.log(pos);
     this.room.visual.circle(pos, {radius: .33});
+
+    this.room.find(FIND_SOURCES).forEach((source) => {
+      this.search();
+    });
   }
 
   visuals()
