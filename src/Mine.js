@@ -26,6 +26,7 @@ class Mine {
   init()
   {
     console.log("Mine::init()");
+    this.room.visual.line(this.pos, this.colony.pos);
   }
 
   refresh()
