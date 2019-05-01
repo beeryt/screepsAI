@@ -15,7 +15,7 @@ class Colony
     console.log("Colony::init()");
 
     console.log("Debug: adding first source");
-    this.mines.push(new Mine(this, _.first(this.room.find(FIND_SOURCES)));
+    this.mines.push(new Mine(this, _.first(this.room.find(FIND_SOURCES))));
 
     this.mines.forEach(function(mine) {
       mine.init();
