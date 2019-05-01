@@ -53,8 +53,8 @@ class Colony
     let sumY = 0;
     let mass = 0;
     this.room.find(FIND_SOURCES).forEach((source) => {
-      sumX += source.pos.x;
-      sumY += source.pos.y;
+      sumX += source.pos.x * source.energyCapacity;
+      sumY += source.pos.y * source.energyCapacity;
       mass += source.energyCapacity;
     });
 
