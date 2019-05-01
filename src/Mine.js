@@ -16,7 +16,7 @@ class Mine {
     let room = Game.rooms[this.pos.roomName];
     if (room)
     {
-      this.source           = _.first(this.pos.lookFor(LOOK_SOURCSE));
+      this.source           = _.first(this.pos.lookFor(LOOK_SOURCES));
       this.constructionSite = _.first(this.pos.findInRange(FIND_MY_CONSTRUCTION_SITES,  2));
       this.container        = this.pos.findClosestByRange(room.containers, 1);
       this.link             = this.pos.findClosestByRange(this.colony.links, 2);
