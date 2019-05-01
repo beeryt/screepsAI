@@ -58,9 +58,9 @@ class Colony
       mass += source.energyCapacity;
     });
 
-    sumX += this.room.controller.pos.x * 100000;
-    sumY += this.room.controller.pos.y * 100000;
-    mass += 100000;
+    sumX += this.room.controller.pos.x * mass;
+    sumY += this.room.controller.pos.y * mass;
+    mass += mass;
 
     let pos = this.room.getPositionAt(sumX / mass, sumY / mass);
     console.log(pos);
