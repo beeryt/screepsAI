@@ -24,7 +24,7 @@ module.exports.loop = function() {
 };
 
 function reset() {
-  console.log("Code updated or global reset.");
+  console.log("Welcome to Sovereign!\nCode updated or global reset.");
   global.Sovereign = new _Sovereign();
   Sovereign.build();
 }
