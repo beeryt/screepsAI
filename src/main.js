@@ -9,24 +9,22 @@ module.exports.loop = function() {
     }
   }
 
-  if (Sovereign && Game.time < Sovereign.expiry)
-  {
-    Sovereign.refresh();
-  } else
+  if (!Sovereign || Game.time >= Sovereign.expiry)
   {
     delete global.Sovereign;
     global.Sovereign = new _Sovereign();
-    Sovereign.build();
+    Sovereign.init();
   }
-  
-  Sovereign.init();
+
+  Sovereign.refresh();
+  Sovereign.update();
   Sovereign.run();
 };
 
 function reset() {
   console.log("Welcome to Sovereign!\nCode updated or global reset.");
   global.Sovereign = new _Sovereign();
-  Sovereign.build();
+  Sovereign.init();
 }
 
 reset();

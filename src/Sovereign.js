@@ -14,11 +14,11 @@ class Sovereign
     this.colonies.push(new Colony(Game.spawns.Spawn1.room));
   }
 
-  init()
+  update()
   {
-    console.log("Sovereign::init()");
+    console.log("Sovereign::update()");
     this.colonies.forEach(function(colony) {
-      colony.init();
+      colony.update();
     });
   }
 
@@ -29,11 +29,11 @@ class Sovereign
     });
   }
 
-  build()
+  init()
   {
     this.populateColonies();
     this.colonies.forEach(function(colony) {
-      colony.refresh();
+      colony.init();
     });
   }
 

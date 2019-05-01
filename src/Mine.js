@@ -88,9 +88,9 @@ class EnergyMine {
     return;
   }
 
-  init()
+  update()
   {
-    // console.log("Mine::init()");
+    // console.log("Mine::update()");
     let numWorkParts = 0;
     this.miners.forEach(function(miner) {
       numWorkParts += miner.getActiveBodyparts(WORK);
