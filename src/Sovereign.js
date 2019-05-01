@@ -21,6 +21,7 @@ class Sovereign
     this.colonies.forEach(function(colony) {
       colony.init();
     });
+    console.log();
   }
 
   refresh()
@@ -29,6 +30,7 @@ class Sovereign
     this.colonies.forEach(function(colony) {
       colony.refresh();
     });
+    console.log();
   }
   
   update()
@@ -37,6 +39,7 @@ class Sovereign
     this.colonies.forEach(function(colony) {
       colony.update();
     });
+    console.log();
   }
 
   run()
@@ -45,6 +48,7 @@ class Sovereign
     this.colonies.forEach(function(colony) {
       colony.run();
     });
+    console.log();
   }
 }
 
