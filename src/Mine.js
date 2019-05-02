@@ -55,6 +55,7 @@ class Mine {
       this.mineables.push(p);
       let ret = PathFinder.search(this.colony.pos, {pos: p})
       console.log(ret.incomplete, ret.cost)
+      this.room.visual.line(p, this.colony.pos);
       if (ret.incomplete) { continue; }
       this.locale[p] = ret.cost;
     }
