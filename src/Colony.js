@@ -67,7 +67,7 @@ class Colony
     this.room.visual.circle(pos, {radius: .33});
 
     // draw 5x5 region
-    this.room.visual.rect(pos, 5, 5);
+    this.room.visual.rect(pos, 5, 5, {stroke: "#ffffff", fill: undefined});
     var count = 0;
     for (let i = 0; i < 25; ++i)
     {
