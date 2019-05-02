@@ -117,7 +117,7 @@ const dijkstra = (graph, source) => {
     {
       let v = neighbors[i];
       if (!Q.has(v)) return;
-      let alt = dist[u] + Math.floor(Math.random());
+      let alt = dist[u] + Math.floor(Math.random()*1000);
       if (alt < dist[v]) {
         dist[v] = alt;
         prev[v] = u;
