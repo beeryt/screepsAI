@@ -98,8 +98,8 @@ class Colony
     this.room.visual.circle(flee, {radius: .33, fill: "#ffaa00"})
     findVector(pos, flee, 5, 5);
 
-    this.room.visual.text(i, pos);
     let c = pos;
+    this.room.visual.text(0, c);
     for (let i = 1; i < 5; ++i)
     {
       let cmos = findWallMass(c, 5, 5);
