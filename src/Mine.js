@@ -64,6 +64,15 @@ class Mine {
       this.room.visual.line(lastPoint, point, {lineStyle: 'dashed'});
       lastPoint = point;
     })
+
+    // draw costs
+    for (let k in this.locale)
+    {
+      if (this.locale.hasOwnProperty(k))
+      {
+        this.room.visual.text(this.locale[k], k);
+      }
+    }
   }
 
   run()
