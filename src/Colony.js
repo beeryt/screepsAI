@@ -154,10 +154,10 @@ function doThing(room)
 
 
   let (dist,prev) = dijkstra(null,null);
-  let max = _.max(dist);
+  let maxi = _.max(dist);
   dist.forEach(i => {
     let pos = room.getPositionAt(Math.floor(i/50), Math.floor(i%50));
-    let color = "rgba(" + dist[i]/max + ",0,255,1)";
+    let color = "rgba(" + dist[i]/maxi + ",0,255,1)";
     room.visual.circle(pos, {fill: color});
   }
 
