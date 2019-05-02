@@ -100,6 +100,7 @@ class Colony
 
     let c = pos;
     this.room.visual.text(0, c.x+2.5,c.y+2.5);
+    this.room.visual.circle(findWallMass(c,5,5), {radius:.33, fill:"#ffaa00"}).text(0, findWallMass(c,5,5));
     for (let i = 1; i < 5; ++i)
     {
       let cmos = findWallMass(c, 5, 5);
