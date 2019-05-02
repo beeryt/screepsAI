@@ -25,11 +25,6 @@ class Mine {
   init()
   {
     this.path = PathFinder.search(this.pos, {pos: this.colony.pos}).path;
-    let lastPoint = this.pos;
-    this.path.forEach(point => {
-      this.room.visual.line(lastPoint, point, {lineStyle: 'dashed'});
-      lastPoint = point;
-    })
   }
 
   refresh()
@@ -50,6 +45,13 @@ class Mine {
     this.room.visual.line(this.pos, this.colony.pos);
     this.room.visual.circle(this.pos, {radius: 0.3});
     this.room.visual.circle(pos, {radius: 0.3});
+
+    // draw path
+    let lastPoint = this.pos;
+    this.path.forEach(point => {
+      this.room.visual.line(lastPoint, point, {lineStyle: 'dashed'});
+      lastPoint = point;
+    })
   }
 
   run()
