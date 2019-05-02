@@ -25,6 +25,7 @@ class Colony
     });
 
     this.pos = this.room.getPositionAt(sumX/mass, sumY/mass);
+    this.room.visual.circle(this.pos);
 
     this.mines.forEach(function(mine) {
       mine.init();
