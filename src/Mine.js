@@ -1,6 +1,10 @@
 function isWalkable(pos)
 {
   pos.look().forEach(object => {
+    if (object.type == 'structure' && object.structure.type == 'road')
+    {
+      return true;
+    }
     if (object.type in OBSTACLE_OBJECT_TYPES)
     {
       return false;
