@@ -86,13 +86,13 @@ class Colony
       let room = Game.rooms[origin.roomName];
       let x = (2*origin.x + width) / 2;
       let y = (2*origin.y + height) / 2;
-      let pos = room.getPositionAt(x,y);
-      room.visual.line(avoid, pos)
-      let ret = PathFinder.search(pos, {pos: avoid}, {flee: true, maxCost: 20});
-      let target = _.find(ret.path, pos => pos.getRangeTo(origin) == 1);
+      let center = room.getPositionAt(x,y);
+      room.visual.line(avoid, center)
+      let ret = PathFinder.search(center, {pos: avoid}, {flee: true, maxCost: 20});
+      let target = _.find(ret.path, pos => pos.getRangeTo(center) == 1);
       room.visual.circle(origin, {fill: "#aaff00"})
       room.visual.circle(target, {radius: 0.5});
-      return avoid.getDirectionTo(pos);
+      return avoid.getDirectionTo(center);
 
     }
 
