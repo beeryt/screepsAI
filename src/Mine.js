@@ -45,7 +45,7 @@ class Mine {
     let ret = PathFinder.search(this.colony.pos, {pos: this.pos, range: 1});
     this.path = ret.path;
 
-    this.locale = {};
+    this.locale = [];
     for (let i = 0; i < 9; ++i)
     {
       let x = Math.floor(i/3) + this.pos.x - 1;
@@ -54,10 +54,8 @@ class Mine {
       if (!isWalkable(p)) continue;
       this.mineables.push(p);
       let ret = PathFinder.search(this.colony.pos, {pos: p, range: 1})
-      console.log(ret.incomplete, ret.cost, ret.path.length)
-      this.room.visual.line(p, this.colony.pos);
       if (ret.incomplete) { continue; }
-      this.locale[p] = ret.cost;
+      this.locale.push({pos: p, cost: ret.cost});
     }
   }
 
@@ -92,13 +90,9 @@ class Mine {
     })
 
     // draw costs
-    for (let k in this.locale)
-    {
-      if (this.locale.hasOwnProperty(k))
-      {
-        this.room.visual.text(this.locale[k], k);
-      }
-    }
+    this.locale.forEach(o => {
+      this.room.visual.text(o.cost, o.pos);
+    });
   }
 
   run()
