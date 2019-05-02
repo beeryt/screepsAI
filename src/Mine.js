@@ -33,6 +33,7 @@ class Mine {
       let x = Math.floor(i/3) + this.pos.x - 1;
       let y = Math.floor(i%3) + this.pos.y - 1;
       let p = this.room.getPositionAt(x,y);
+      this.room.visual.circle(p);
       let ret = PathFinder.search(this.colony.pos, {pos: p})
       console.log(ret.incomplete)
       if (ret.incomplete) { continue; }
