@@ -78,6 +78,7 @@ class Colony
         sumY += y * terrain.get(x,y);
         mass += terrain.get(x,y);
       }
+      console.log(sumX/mass, sumY/mass)
       return Game.rooms[pos.roomName].getPositionAt(sumX/mass, sumY/mass);
     }
 
