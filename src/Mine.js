@@ -50,7 +50,7 @@ class Mine {
 
     // draw path
     console.log("thisPath:", this.path.length)
-    let lastPoint = this.pos;
+    let lastPoint = this.colony.pos;
     this.path.forEach(point => {
       this.room.visual.line(lastPoint, point, {lineStyle: 'dashed'});
       lastPoint = point;
