@@ -65,15 +65,15 @@ class Colony
     this.room.visual.circle(pos, {radius: .33});
 
     let terrain = new Room.Terrain(this.pos.roomName);
-    function findWallMass(pos, width, height  )
+    function findWallMass(pos, width, height)
     {
       let sumX = 0;
       let sumY = 0;
       let mass = 0;
       for (let i = 0; i < width*height; ++i)
       {
-        let x = Math.floor(i/width) + pos.x;
-        let y = (i%height) + pos.y;
+        let x = Math.floor(i/width) + pos.x - Math.floor(width/2);
+        let y = (i%height) + pos.y - Math.floor(width/2);
         sumX += x * terrain.get(x,y);
         sumY += y * terrain.get(x,y);
         mass += terrain.get(x,y);
