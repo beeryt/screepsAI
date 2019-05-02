@@ -99,7 +99,7 @@ class Colony
     findVector(pos, flee, 5, 5);
 
     let c = pos;
-    this.room.visual.text(0, c);
+    this.room.visual.text(0, c.x+2.5,c.y+2.5);
     for (let i = 1; i < 5; ++i)
     {
       let cmos = findWallMass(c, 5, 5);
