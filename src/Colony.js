@@ -156,11 +156,12 @@ function doThing(room)
   let ret = dijkstra(null,null);
   let dist = ret[0];
   let maxi = _.max(dist);
-  dist.forEach(i => {
+  for (let i = 0; i < 2500; ++i)
+  {
     let pos = room.getPositionAt(Math.floor(i/50), Math.floor(i%50));
     let color = "rgba(" + dist[i]/maxi + ",0,255,1)";
     room.visual.circle(pos, {fill: color});
-  });
+  }
 }
 
 class Colony
