@@ -84,8 +84,8 @@ function doThing(room)
     if (y > maxY) maxY = y;
   });
   
-  width = maxX - minX;
-  height = maxY - minY;
+  let width = maxX - minX;
+  let height = maxY - minY;
 
   room.visual.rect(minX-.5, minY-.5, width, height);
 
