@@ -89,7 +89,7 @@ function doThing(room)
 
   room.visual.rect(minX-.5, minY-.5, width, height, {fill: '#00000000', stroke: '#0af000'});
   let terrain = new Room.Terrain(room.name);
-  let lastTerrain = 0;
+  let lastTerrain = 654;
   let terrainCount = 0;
   let output = [];
   for (let i = 0; i < 2500; ++i)
