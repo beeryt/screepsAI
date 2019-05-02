@@ -68,6 +68,8 @@ const floyd_warshall = graph =>
 
 const dijkstra = (graph, source) => {
   let Q = new Set();
+  let dist = {};
+  let prev = {};
 
   for (let v = 0; v < 2500; ++v)
   {
