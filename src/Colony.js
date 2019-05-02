@@ -74,9 +74,9 @@ class Colony
     sumX = sumY = mass = 0;
     for (let i = 0; i < 25; ++i)
     {
-      let x = Math.floor(i / 5) + pos.x;
-      let y = (i % 5) + pos.y;
-      if (terrain.get(x,y) == TERRAIN_MASK_WALL)
+      let x = Math.floor(i / 5);
+      let y = (i % 5);
+      if (terrain.get(pos.x+x,pos.y+y) == TERRAIN_MASK_WALL)
       {
         sumX += x;
         sumY += y;
@@ -84,7 +84,7 @@ class Colony
       }
     }
 
-    let flee = this.room.getPositionAt(sumX/mass, sumY/mass);
+    let flee = this.room.getPositionAt(sumX/mass+pos.x, sumY/mass+pos.y);
     console.log("Red", flee)
     this.room.visual.circle(flee, {radius: .33, fill: "#ffaa00"})
 
