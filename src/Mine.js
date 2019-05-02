@@ -24,6 +24,8 @@ class Mine {
 
   init()
   {
+    this.path = PathFinder.search(this.pos, {pos: this.colony.pos}).path;
+    this.room.visual.path(this.path);
   }
 
   refresh()
