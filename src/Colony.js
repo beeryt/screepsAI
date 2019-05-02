@@ -89,7 +89,7 @@ class Colony
       let center = room.getPositionAt(x,y);
       room.visual.line(avoid, center)
       let ret = PathFinder.search(center, {pos: avoid}, {flee: true, maxCost: 20});
-      let target = _.find(ret.path, pos => pos.getRangeTo(center) == 1);
+      let target = _.find(ret.path, target => target.getRangeTo(center) == 1);
       room.visual.circle(center, {fill: "#aaff00"})
       room.visual.circle(target, {radius: 0.5});
       return avoid.getDirectionTo(center);
