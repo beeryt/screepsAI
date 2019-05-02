@@ -58,9 +58,9 @@ class Colony
       mass += source.energyCapacity;
     });
 
-    sumX += this.room.controller.pos.x * mass;
-    sumY += this.room.controller.pos.y * mass;
-    mass += mass;
+    // sumX += this.room.controller.pos.x * mass;
+    // sumY += this.room.controller.pos.y * mass;
+    // mass += mass;
 
     let pos = this.room.getPositionAt(sumX / mass, sumY / mass);
     console.log(pos);
@@ -84,7 +84,6 @@ class Colony
     }
 
     let flee = this.room.getPositionAt(sumX/mass, sumY/mass);
-    console.log("Red", flee)
     this.room.visual.circle(sumX/mass, sumY/mass)
     this.room.visual.circle(flee, {radius: .33, fill: "#ffaa00"})
 
