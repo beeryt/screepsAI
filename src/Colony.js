@@ -101,7 +101,7 @@ function doThing(room)
     {
       output.push({terrain: lastTerrain, count: terrainCount});
     }
-    lastTerrain = terrain;
+    lastTerrain = t;
     terrainCount++;
     
     room.visual.text(i%10,x,y, {opacity: .25});
