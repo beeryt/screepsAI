@@ -72,10 +72,10 @@ class Colony
       let mass = 0;
       for (let i = 0; i < width*height; ++i)
       {
-        let x = Math.floor(i/width) + pos.x;
-        let y = (i%height) + pos.y;
+        let x = Math.floor(i/height) + pos.x;
+        let y = (i%width) + pos.y;
         sumX += x * terrain.get(x,y);
-        sumY += x * terrain.get(x,y);
+        sumY += y * terrain.get(x,y);
         mass += terrain.get(x,y);
       }
       return Game.rooms[pos.roomName].getPositionAt(sumX/mass, sumY/mass);
