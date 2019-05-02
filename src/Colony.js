@@ -86,7 +86,7 @@ const dijkstra_getNeighbors = (u) => {
   for (let i = 0; i < 9; ++i) {
     let x = Math.floor(i/3);
     let y = Math.floor(i%3);
-    let v = u + (x*50) + y -51;
+    let v = u + (x*3) + y -4;
     if (v < 0 || v >= 50) continue;
     neighbors.push[v];
   }
