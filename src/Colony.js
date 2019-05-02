@@ -95,6 +95,8 @@ class Colony
         room.visual.text(++c, point);
       });
 
+      room.visual.circle(_.first(ret.path))
+
       let dir = avoid.getDirectionTo(target);
       switch (dir)
       {
