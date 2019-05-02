@@ -12,7 +12,6 @@ class Mine {
 
   populateStructures()
   {
-    console.log("Mine::populateStructures()");
     let room = Game.rooms[this.pos.roomName];
     if (room)
     {
@@ -25,13 +24,10 @@ class Mine {
 
   init()
   {
-    console.log("Mine::init()");
   }
 
   refresh()
   {
-    console.log("Mine::refresh()");
-
     // recently gained visibility to this room
     if (!this.room && Game.rooms[this.pos.roomName])
     {
@@ -41,7 +37,6 @@ class Mine {
 
   update()
   {
-    console.log("Mine::update()");
     let path = PathFinder.search(this.colony.pos, {pos: this.pos, range: 1});
     if (path.incomplete) { console.log("Path was incomplete"); }
     let pos = _.find(path.path, pos => pos.getRangeTo(this) == 1);
@@ -53,7 +48,6 @@ class Mine {
 
   run()
   {
-    console.log("Mine::run()");
   }
 }
 
