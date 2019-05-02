@@ -10,7 +10,9 @@ function isWalkable(pos)
       return false;
     }
   });
-  return true;
+
+  let terrain = Game.room[pos.roomName].terrain;
+  return terrain.get(pos.x, pos.y) != TERRAIN_MASK_WALL;
 }
 
 class Mine {
