@@ -67,7 +67,7 @@ class Colony
     this.room.visual.circle(pos, {radius: .33});
 
     // draw 5x5 region
-    this.room.visual.rect(pos.x-0.5, pos.y-0.5, 7, 7, {stroke: "#ffffff", fill: 'undefined'});
+    this.room.visual.rect(pos.x-0.5, pos.y-0.5, 7, 7, {stroke: "#00000000", fill: 'undefined'});
     let terrain = new Room.Terrain(this.pos.roomName);
 
     // center of mass of walls
