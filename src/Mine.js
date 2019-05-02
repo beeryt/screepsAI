@@ -25,7 +25,7 @@ class Mine {
   init()
   {
     let ret = PathFinder.search(this.pos, {pos: this.colony.pos});
-    console.log(ret);
+    console.log(ret.incomplete);
     this.path = PathFinder.search(this.pos, {pos: this.colony.pos}).path;
   }
 
