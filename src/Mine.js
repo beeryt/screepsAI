@@ -1,3 +1,19 @@
+function isWalkable(pos)
+{
+  pos.look().forEach(object => {
+    if (object.type in OBSTACLE_OBJECT_TYPES)
+    {
+      return false;
+    }
+  });
+
+  if (pos.findInRange(FIND_, 0).length == 0)
+  {
+    console.log("road detected");
+  }
+  return true;
+}
+
 class Mine {
   constructor(colony, source)
   {
@@ -33,7 +49,7 @@ class Mine {
       let x = Math.floor(i/3) + this.pos.x - 1;
       let y = Math.floor(i%3) + this.pos.y - 1;
       let p = this.room.getPositionAt(x,y);
-      if (p.look().length > 1) continue; // not just terrain
+      if (!isWalkable(p)) continue;
       this.room.visual.circle(p);
       let ret = PathFinder.search(this.colony.pos, {pos: p})
       console.log(ret.incomplete)
