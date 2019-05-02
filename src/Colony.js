@@ -81,7 +81,7 @@ const dijkstra = (graph, source) => {
 
   while (Q.size)
   {
-    let u = _.minBy(Q, u => { return dist[u]; });
+    let u = _.minBy(Q.entries(), u => { return dist[u]; });
 
     Q.delete(u);
 
