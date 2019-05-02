@@ -114,6 +114,12 @@ class Colony
     // draw 5x5 region
     this.room.visual.rect(pos.x-0.5, pos.y-0.5, 5, 5, {stroke: "#ffffff", fill: "#00000000"});
 
+    let flee = findWallMass(pos,5,5);
+    let ret = PathFinder.search(pos, {pos: flee, range: 5});
+    ret.path.forEach(point => {
+      this.room.visual.text(count++, point, {color: "#00aaff"})
+    });
+
     let c = pos;
     this.room.visual.text(0, c);
     this.room.visual.circle(findWallMass(c,5,5), {radius:.33, fill:"#ffaa00"}).text(0, findWallMass(c,5,5));
