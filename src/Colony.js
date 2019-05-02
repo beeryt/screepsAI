@@ -80,13 +80,11 @@ const dijkstra_findMin = (dist, Q) => {
 };
 
 const dijkstra_getNeighbors = (u) => {
-  let x = Math.floor(u/50);
-  let y = Math.floor(u%50);
   let neighbors = [];
   for (let i = 0; i < 9; ++i) {
-    let x = Math.floor(i/3);
-    let y = Math.floor(i%3);
-    let v = u + (x*3) + y -4;
+    let x = Math.floor(i/3) + Math.floor(u/50) - 1;
+    let y = Math.floor(i%3) + Math.floor(u%50) - 1;
+    let v = x*50 + y;
     if (v < 0 || v >= 50) continue;
     let room = Game.rooms['sim']
     let p1 = room.getPositionAt(Math.floor(v/50), v%50);
