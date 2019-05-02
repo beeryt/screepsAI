@@ -11,7 +11,7 @@ function isWalkable(pos)
     }
   });
 
-  let terrain = Game.room[pos.roomName].terrain;
+  let terrain = Game.rooms[pos.roomName].terrain;
   return terrain.get(pos.x, pos.y) != TERRAIN_MASK_WALL;
 }
 
