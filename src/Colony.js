@@ -79,10 +79,6 @@ class Colony
       return Game.rooms[pos.roomName].getPositionAt(sumX/mass, sumY/mass);
     }
 
-    let pos = this.room.getPositionAt(sumX / mass, sumY / mass);
-    console.log(pos);
-    this.room.visual.circle(pos, {radius: .33});
-
     // draw 5x5 region
     this.room.visual.rect(pos.x-0.5, pos.y-0.5, 5, 5, {stroke: "#ffffff", fill: "#00000000"});
     let flee = findWallMass(pos, 5, 5);
