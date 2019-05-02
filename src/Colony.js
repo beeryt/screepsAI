@@ -115,7 +115,7 @@ class Colony
     this.room.visual.rect(pos.x-0.5, pos.y-0.5, 5, 5, {stroke: "#ffffff", fill: "#00000000"});
 
     let flee = findWallMass(pos,5,5);
-    let ret = PathFinder.search(pos, {pos: flee, range: 5}, {flee: true});
+    let ret = PathFinder.search(pos, {pos: flee, range: 5}, {flee: true, maxCost: 5});
     let count = 0;
     ret.path.forEach(point => {
       this.room.visual.text(count++, point, {color: "#00aaff"})
