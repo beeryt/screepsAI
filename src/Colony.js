@@ -88,10 +88,27 @@ function doThing(room)
   let height = maxY - minY+1;
 
   room.visual.rect(minX-.5, minY-.5, width, height, {fill: '#00000000', stroke: '#0af000'});
+  let terrain = Room.Terrain(room.name);
+  let lastTerrain = 0;
+  let terrainCount = 0;
+  let output = [];
   for (let i = 0; i < 2500; ++i)
   {
     let x = Math.floor(i/50);
     let y = Math.floor(i%50);
+    let t = terrain.get(x,y);
+    if (t == lastTerrain) { terrainCount++; }
+    else {
+      if (terrainCount == 0) continue;
+
+      output.push({terrain: t, count: terrainCount});
+
+      lastTerrain = terrain;
+      terrainCount = 0;
+    }
+    output.forEach(entry() => {
+      console.log(entry.terrain, entry.count);
+    });
     room.visual.text(i%10,x,y, {opacity: .25});
   }
 
