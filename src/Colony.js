@@ -58,9 +58,26 @@ class Colony
       mass += source.energyCapacity;
     });
 
-    // sumX += this.room.controller.pos.x * mass;
-    // sumY += this.room.controller.pos.y * mass;
-    // mass += mass;
+    sumX += this.room.controller.pos.x * mass;
+    sumY += this.room.controller.pos.y * mass;
+    mass += mass;
+
+    let terrain = new Room.Terrain(this.pos.roomName);
+    function findWallMass(pos, x, y)
+    {
+      let sumX = 0;
+      let sumY = 0;
+      let mass = 0;
+      for (let i = 0; i < width*height; ++i)
+      {
+        let x = Math.floor(i/width) + pos.x;
+        let y = (i%height) + pos.y;
+        sumX += x * terrain.get(x,y);
+        sumY += x * terrain.get(x,y);
+        mass += terrain.get(x,y);
+      }
+      return this.room.getPositionAt(sumX/mass, sumY/mass);
+    }
 
     let pos = this.room.getPositionAt(sumX / mass, sumY / mass);
     console.log(pos);
@@ -68,23 +85,7 @@ class Colony
 
     // draw 5x5 region
     this.room.visual.rect(pos.x-0.5, pos.y-0.5, 5, 5, {stroke: "#ffffff", fill: "#00000000"});
-    let terrain = new Room.Terrain(this.pos.roomName);
-
-    // center of mass of walls
-    sumX = 0;
-    sumY = 0;
-    mass = 0;
-    for (let i = 0; i < 25; ++i)
-    {
-      let x = Math.floor(i / 5) + pos.x;
-      let y = (i % 5) + pos.y;
-      sumX += x * terrain.get(x,y);
-      sumY += y * terrain.get(x,y);
-      mass += terrain.get(x,y);
-    }
-
-    let flee = this.room.getPositionAt(sumX/mass, sumY/mass);
-    this.room.visual.circle(sumX/mass, sumY/mass)
+    let flee = findWallMass(pos, 5, 5);
     this.room.visual.circle(flee, {radius: .33, fill: "#ffaa00"})
 
     this.room.find(FIND_SOURCES).forEach((source) => {
