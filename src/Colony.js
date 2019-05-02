@@ -88,6 +88,13 @@ function doThing(room)
   let height = maxY - minY+1;
 
   room.visual.rect(minX-.5, minY-.5, width, height, {fill: '#00000000', stroke: '#0af000'});
+  for (let i = 0; i < 2500; ++i)
+  {
+    let x = Math.floor(x/50);
+    let y = Math.floor(x%50);
+    room.visual.text(i,x,y);
+  }
+
 
 }
 
