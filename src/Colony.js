@@ -89,7 +89,8 @@ class Colony
       let center = room.getPositionAt(x,y);
       let ret = PathFinder.search(center, {pos: avoid, range: 5}, {flee: true, maxCost: 20});
 
-      return _.first(ret.path);
+      let target = _.find(ret.path, target => target.getRangeTo(center) == 1);
+      return target;
     }
 
     // draw 5x5 region
