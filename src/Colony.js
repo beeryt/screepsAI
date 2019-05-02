@@ -89,8 +89,7 @@ class Colony
       let center = room.getPositionAt(x,y);
       let ret = PathFinder.search(center, {pos: avoid, range: 5}, {flee: true, maxCost: 20});
 
-      let target = _.find(ret.path, target => target.getRangeTo(center) == 1);
-      return target;
+      return _.first(ret.path);
     }
 
     // draw 5x5 region
@@ -107,6 +106,7 @@ class Colony
       if (cmos.x == c.x && cmos.y == c.y) { break; }
       c = findVector(c, cmos, 5, 5);
       this.room.visual.text(i, c);
+      this.room.visual.circle(cmos).text(i,cmos);
     }
 
     this.room.find(FIND_SOURCES).forEach((source) => {
