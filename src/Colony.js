@@ -87,7 +87,7 @@ class Colony
       let x = (2*origin.x + width) / 2;
       let y = (2*origin.y + height) / 2;
       let center = room.getPositionAt(x,y);
-      let ret = PathFinder.search(center, {pos: avoid, range: 2}, {flee: true, maxCost: 20});
+      let ret = PathFinder.search(center, {pos: avoid, range: 5}, {flee: true, maxCost: 20});
       let target = _.find(ret.path, target => target.getRangeTo(center) == 1);
 
       let c = 0;
@@ -106,9 +106,10 @@ class Colony
         case BOTTOM_LEFT: x++; y--; break;
         case LEFT: y--; break;
         case TOP_LEFT: x--; y--; break;
-        default: Console.log("No direction from", avoid);
+        default: console.log("No direction from", avoid);
       }
       let newPos = room.getPositionAt(x,y);
+      room.visual.circle(newPos);
       return newPos;
 
     }
