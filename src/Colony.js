@@ -102,7 +102,7 @@ class Colony
     let c = pos;
     for (let i = 1; i < 5; ++i)
     {
-      let cmos = findWallMass(pos, 5, 5);
+      let cmos = findWallMass(c, 5, 5);
       if (cmos.x == c.x && cmos.y == c.y) { break; }
       c = findVector(c, cmos, 5, 5);
       this.room.visual.text(i, c);
