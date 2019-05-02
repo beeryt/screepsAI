@@ -28,10 +28,10 @@ class Mine {
     this.path = ret.path;
 
     this.locale = {};
-    for (let i = 0; i < 25; ++i)
+    for (let i = 0; i < 9; ++i)
     {
-      let x = Math.floor(i/5) + this.pos.x - 2;
-      let y = Math.floor(i%5) + this.pos.y - 2;
+      let x = Math.floor(i/3) + this.pos.x - 1;
+      let y = Math.floor(i%3) + this.pos.y - 1;
       let p = this.room.getPositionAt(x,y);
       let ret = PathFinder.search(this.colony.pos, {pos: p})
       if (ret.incomplete) continue;
