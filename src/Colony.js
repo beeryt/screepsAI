@@ -67,14 +67,15 @@ class Colony
     this.room.visual.circle(pos, {radius: .33});
 
     // draw 5x5 region
-    let terrain = new Room.Terrain(this.pos.roomName);
     this.room.visual.rect(pos.x-0.5, pos.y-0.5, 7, 7, {stroke: "#ffffff", fill: 'undefined'});
-    var count = 0;
+    let terrain = new Room.Terrain(this.pos.roomName);
+
+    // center of mass of walls
     sumX = sumY = mass = 0;
     for (let i = 0; i < 25; ++i)
     {
-      let x = Math.floor(i / 5);
-      let y = i % 5;
+      let x = Math.floor(i / 5) + pos.x;
+      let y = (i % 5) + pos.y;
       if (terrain.get(x,y) == TERRAIN_MASK_WALL)
       {
         sumX += x;
@@ -84,6 +85,7 @@ class Colony
     }
 
     let flee = this.room.getPositionAt(sumX/mass, sumY/mass);
+    console.log("Red", flee)
     this.room.visual.circle(pos, {radius: .33, color: "#ffaa00"})
 
     this.room.find(FIND_SOURCES).forEach((source) => {
