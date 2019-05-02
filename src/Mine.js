@@ -26,6 +26,17 @@ class Mine {
   {
     let ret = PathFinder.search(this.colony.pos, {pos: this.pos, range: 1});
     this.path = ret.path;
+
+    this.locale = {};
+    for (let i = 0; i < 25; ++i)
+    {
+      let x = Math.floor(i/5) + this.pos.x - 2;
+      let y = Math.floor(i%5) + this.pos.y - 2;
+      let p = this.room.getPositionAt(x,y);
+      let ret = PathFinder.search(this.colony.pos, {pos: p})
+      if (ret.incomplete) continue;
+      this.locale[p] = ret.cost;
+    }
   }
 
   refresh()
