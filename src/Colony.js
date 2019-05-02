@@ -90,7 +90,7 @@ class Colony
       let ret = PathFinder.search(center, {pos: avoid, range: 20}, {flee: true, maxCost: 20});
       let target = _.find(ret.path, target => target.getRangeTo(center) == 1);
 
-      let dir = avoid.directionTo(target);
+      let dir = avoid.getDirectionTo(target);
       switch (dir)
       {
         case TOP: x--; break;
