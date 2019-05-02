@@ -63,7 +63,7 @@ class Colony
     mass += mass;
 
     let terrain = new Room.Terrain(this.pos.roomName);
-    function findWallMass(pos, width, height)
+    function findWallMass(pos, width, height  )
     {
       let sumX = 0;
       let sumY = 0;
@@ -76,7 +76,7 @@ class Colony
         sumY += x * terrain.get(x,y);
         mass += terrain.get(x,y);
       }
-      return this.room.getPositionAt(sumX/mass, sumY/mass);
+      return Game.rooms[pos.roomName].getPositionAt(sumX/mass, sumY/mass);
     }
 
     let pos = this.room.getPositionAt(sumX / mass, sumY / mass);
