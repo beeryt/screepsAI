@@ -41,6 +41,7 @@ class Mine {
 
   init()
   {
+    this.mineables = [];
     let ret = PathFinder.search(this.colony.pos, {pos: this.pos, range: 1});
     this.path = ret.path;
 
@@ -51,7 +52,7 @@ class Mine {
       let y = Math.floor(i%3) + this.pos.y - 1;
       let p = this.room.getPositionAt(x,y);
       if (!isWalkable(p)) continue;
-      this.room.visual.circle(p);
+      this.mineables.push(p);
       let ret = PathFinder.search(this.colony.pos, {pos: p})
       console.log(ret.incomplete)
       if (ret.incomplete) { continue; }
@@ -82,6 +83,11 @@ class Mine {
     this.path.forEach(point => {
       this.room.visual.line(lastPoint, point, {lineStyle: 'dashed'});
       lastPoint = point;
+    })
+
+    // draw mineables
+    this.mineables.forEach(mineable => {
+      this.room.visual.circle(mineable);
     })
 
     // draw costs
