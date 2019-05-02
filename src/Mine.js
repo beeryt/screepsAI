@@ -53,7 +53,7 @@ class Mine {
       let p = this.room.getPositionAt(x,y);
       if (!isWalkable(p)) continue;
       this.mineables.push(p);
-      let ret = PathFinder.search(this.colony.pos, {pos: p})
+      let ret = PathFinder.search(this.colony.pos, {pos: p, range: 1})
       console.log(ret.incomplete, ret.cost, ret.path.length)
       this.room.visual.line(p, this.colony.pos);
       if (ret.incomplete) { continue; }
