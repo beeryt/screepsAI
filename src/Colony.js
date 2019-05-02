@@ -87,12 +87,24 @@ class Colony
       let x = (2*origin.x + width) / 2;
       let y = (2*origin.y + height) / 2;
       let center = room.getPositionAt(x,y);
-      room.visual.line(avoid, center)
       let ret = PathFinder.search(center, {pos: avoid, range: 20}, {flee: true, maxCost: 20});
       let target = _.find(ret.path, target => target.getRangeTo(center) == 1);
-      room.visual.circle(center, {fill: "#aaff00"})
-      room.visual.circle(target, {fill: "#00aaff"});
-      return avoid.getDirectionTo(center);
+
+      let dir = avoid.directionTo(target);
+      switch (dir)
+      {
+        case TOP: x--; break;
+        case TOP_RIGHT: x--; y++; break;
+        case RIGHT: y++; break;
+        case BOTTOM_RIGHT: x++; y++; break;
+        case BOTTOM: x++; break;
+        case BOTTOM_LEFT: x++; y--; break;
+        case LEFT: y--; break;
+        case TOP_LEFT: x--; y--; break;
+        default: Console.log("No direction from", avoid);
+      }
+      let newPos = room.getPositionAt(x,y);
+      return newPos;
 
     }
 
@@ -102,6 +114,15 @@ class Colony
     let flee = findWallMass(pos, 5, 5);
     this.room.visual.circle(flee, {radius: .33, fill: "#ffaa00"})
     findVector(pos, flee, 5, 5);
+
+    this.room.visual.text(i, pos);
+    for (let i = 1; i < 5; ++i)
+    {
+      let cmos = findWallMass(pos, 5, 5);
+      if (cmos.x == pos.x && cmos.y == pos.y) { break; }
+      pos = findVector(pos, cmos, 5, 5);
+      this.room.visual.text(i, pos);
+    }
 
     this.room.find(FIND_SOURCES).forEach((source) => {
       this.room.visual.line(pos, source.pos);
