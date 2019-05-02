@@ -87,7 +87,7 @@ function doThing(room)
   let width = maxX - minX+1;
   let height = maxY - minY+1;
 
-  room.visual.rect(minX-.5, minY-.5, width, height, {fill: '#00000000', stroke: '#0af000');
+  room.visual.rect(minX-.5, minY-.5, width, height, {fill: '#00000000', stroke: '#0af000'});
 
 }
 
