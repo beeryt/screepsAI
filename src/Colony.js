@@ -160,8 +160,7 @@ function doThing(room)
     let pos = room.getPositionAt(Math.floor(i/50), Math.floor(i%50));
     let color = "rgba(" + dist[i]/maxi + ",0,255,1)";
     room.visual.circle(pos, {fill: color});
-  }
-
+  });
 }
 
 class Colony
