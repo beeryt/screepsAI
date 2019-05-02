@@ -39,7 +39,7 @@ class Mine {
 
   update()
   {
-    let path = PathFinder.search(this.colony.pos, {pos: this.pos, range: 1});
+    let path = PathFinder.search(this.colony.pos, {pos: this.pos, range: 1}, {heuristicWeight: 0});
     if (path.incomplete) { console.log("Path was incomplete"); }
     let pos = _.find(path.path, pos => pos.getRangeTo(this) == 1);
 
