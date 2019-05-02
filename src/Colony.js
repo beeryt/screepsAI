@@ -100,6 +100,7 @@ function doThing(room)
     if (t != lastTerrain && terrainCount > 0)
     {
       output.push({terrain: lastTerrain, count: terrainCount});
+      terrainCount = 0;
     }
     lastTerrain = t;
     terrainCount++;
