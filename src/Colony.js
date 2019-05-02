@@ -84,10 +84,10 @@ function doThing(room)
     if (y > maxY) maxY = y;
   });
   
-  let width = maxX - minX;
-  let height = maxY - minY;
+  let width = maxX - minX+1;
+  let height = maxY - minY+1;
 
-  room.visual.rect(minX-.5, minY-.5, width, height);
+  room.visual.rect(minX-.5, minY-.5, width, height, {fill: '#00000000', stroke: '#0af000');
 
 }
 
