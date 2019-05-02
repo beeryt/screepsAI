@@ -25,7 +25,11 @@ class Mine {
   init()
   {
     this.path = PathFinder.search(this.pos, {pos: this.colony.pos}).path;
-    this.room.visual.path(this.path);
+    let lastPoint = this.pos;
+    this.path.forEach(point => {
+      this.room.visual.line(lastPoint, point, {lineStyle: 'dashed'});
+      lastPoint = point;
+    })
   }
 
   refresh()
