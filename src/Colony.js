@@ -27,7 +27,7 @@ const floyd_warshall = graph =>
       {
         dist[u][v] = 0;
       } else {
-        dist[u][v] = weight(ux,uy);
+        dist[u][v] = 1;//weight(ux,uy);
       }
     }
   }
@@ -47,6 +47,7 @@ const floyd_warshall = graph =>
       for (let j = 0; j < V; ++j)
       {
         let cost = dist[i][k] + dist[k][j];
+        if (cost == null) { cost = 500000; }
         if (dist[i][j] > cost)
         {
           dist[i][j] = cost;
@@ -58,7 +59,10 @@ const floyd_warshall = graph =>
   return dist;
 };
 
-function getMineMap(mine){}
+function getMineMap(mine)
+{
+  floyd_warshall(null);
+}
 
 class Colony
 {
