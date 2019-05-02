@@ -119,6 +119,7 @@ class Colony
     ret.path.forEach(point => {
       this.room.visual.text(count++, point, {color: "#00aaff"})
     });
+    return;
 
     let c = pos;
     this.room.visual.text(0, c);
