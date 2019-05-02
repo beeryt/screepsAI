@@ -92,7 +92,7 @@ function doThing(room)
   {
     let x = Math.floor(i/50);
     let y = Math.floor(i%50);
-    room.visual.text(i%10,x,y);
+    room.visual.text(i%10,x,y, {opacity: .25});
   }
 
 
