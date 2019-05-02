@@ -149,35 +149,17 @@ function doThing(room)
   let width = maxX - minX+1;
   let height = maxY - minY+1;
 
+  // sources bounding box
   room.visual.rect(minX-.5, minY-.5, width, height, {fill: '#00000000', stroke: '#0af000'});
-  let terrain = new Room.Terrain(room.name);
-  let lastTerrain = 0;
-  let terrainCount = 0;
-  let output = [];
-  for (let i = 0; i < 2500; ++i)
-  {
-    let x = Math.floor(i%50);
-    let y = Math.floor(i/50);
-    let t = terrain.get(x,y);
-    if (t != lastTerrain && terrainCount > 0)
-    {
-      output.push({terrain: lastTerrain, count: terrainCount});
-      terrainCount = 0;
-    }
-    lastTerrain = t;
-    terrainCount++;
-    
-    room.visual.text(i%10,x,y, {opacity: .25});
+
+
+  let (dist,prev) = dijkstra(null,null);
+  let max = _.max(dist);
+  dist.forEach(i => {
+    let pos = room.getPositionAt(Math.floor(i/50), Math.floor(i%50));
+    let color = "rgba(" + dist[i]/max + ",0,255,1)";
+    room.visual.circle(pos, {fill: color});
   }
-  console.log("terrainchanges:", output.length)
-  dijkstra(null, null);
-
-  let str = '';
-  output.forEach(entry => {
-    str += "<"+entry.count+">"+entry.terrain;
-  });
-
-  console.log(str);
 
 }
 
