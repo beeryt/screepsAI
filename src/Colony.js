@@ -106,7 +106,7 @@ class Colony
       if (cmos.x == c.x && cmos.y == c.y) { break; }
       c = findVector(c, cmos, 5, 5);
       this.room.visual.text(i, c);
-      this.room.visual.circle(cmos).text(i,cmos);
+      this.room.visual.circle(cmos, {radius: .33, fill: "#ffaa00"}).text(i,cmos);
     }
 
     this.room.find(FIND_SOURCES).forEach((source) => {
