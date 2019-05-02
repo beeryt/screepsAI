@@ -89,7 +89,7 @@ function doThing(room)
 
   room.visual.rect(minX-.5, minY-.5, width, height, {fill: '#00000000', stroke: '#0af000'});
   let terrain = new Room.Terrain(room.name);
-  let lastTerrain = TERRAIN_MASK_WALL;
+  let lastTerrain = 0;
   let terrainCount = 0;
   let output = [];
   for (let i = 0; i < 2500; ++i)
@@ -98,13 +98,12 @@ function doThing(room)
     let y = Math.floor(i%50);
     let t = terrain.get(x,y);
     if (t == lastTerrain) { terrainCount++; }
-    else if (terrainCount == 0) { continue; }
-    else {
+    else if (terrainCount != 0) {
       output.push({terrain: lastTerrain, count: terrainCount});
-
-      lastTerrain = terrain;
-      terrainCount = 1;
     }
+    lastTerrain = terrain;
+    terrainCount = 1;
+    
     console.log("terrainchanges:", output.length)
     room.visual.text(i%10,x,y, {opacity: .25});
   }
