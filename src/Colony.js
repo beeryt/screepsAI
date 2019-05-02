@@ -79,6 +79,20 @@ const dijkstra_findMin = (dist, Q) => {
   return q;
 };
 
+const dijkstra_getNeighbors = (u) => {
+  let x = Math.floor(u/50);
+  let y = Math.floor(u%50);
+  let neighbors = [];
+  for (let i = 0; i < 9; ++i) {
+    let x = Math.floor(i/3);
+    let y = Math.floor(i%3);
+    let v = u + ((x-1)*50) + (y-1);
+    if (v < 0 || v >= 50) continue;
+    neighbors.push[v];
+  }
+  return neighbors;
+};
+
 const dijkstra = (graph, source) => {
   let Q = new Set();
   let dist = {};
@@ -98,7 +112,7 @@ const dijkstra = (graph, source) => {
 
     Q.delete(u);
 
-    let neighbors = getNeighbors(u);
+    let neighbors = dijkstra_getNeighbors(u);
     for (let i = 0; i < neighbors.length; ++i)
     {
       let v = neighbors[i];
