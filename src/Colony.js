@@ -66,9 +66,29 @@ const floyd_warshall = graph =>
   return dist;
 };
 
-function getMineMap(mine)
+function getMineMap(room)
+{}
+
+function doThing(room)
 {
-  floyd_warshall(null);
+  let minX, minY, maxX, maxY;
+  minX = minY = 50;
+  maxX = maxY = 0;
+
+  room.find(FIND_SOURCES).forEach(source => {
+    let x = source.pos.x;
+    let y = source.pos.y;
+    if (x < minX) minX = x;
+    if (y < minY) minY = y;
+    if (x > maxX) maxX = x;
+    if (y > maxY) maxY = y;
+  });
+  
+  width = maxX - minX;
+  height = maxY - minY;
+
+  room.visual.rect(minX-.5, minY-.5, width, height);
+
 }
 
 class Colony
@@ -112,6 +132,7 @@ class Colony
   refresh()
   {
     console.log("Colony::refresh()");
+    doThing(this.room);
 
     this.mines.forEach((mine) => {
       mine.refresh();
