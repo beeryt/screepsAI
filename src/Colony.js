@@ -62,7 +62,7 @@ class Colony
     sumY += this.room.controller.pos.y * mass;
     mass += mass;
     let pos = this.room.getPositionAt(sumX/mass,sumY/mass);
-    pos = this.room.getPositionAt(30,21);
+    pos = this.room.getPositionAt(31,22);
     this.room.visual.circle(pos, {radius: .33});
 
     let terrain = new Room.Terrain(this.pos.roomName);
