@@ -34,9 +34,8 @@ class Mine {
       let y = Math.floor(i%3) + this.pos.y - 1;
       let p = this.room.getPositionAt(x,y);
       let ret = PathFinder.search(this.colony.pos, {pos: p})
-      if (ret.incomplete) { continue; }
       this.locale[p] = ret.cost;
-      console.log("doo")
+      if (ret.incomplete) { continue; }
     }
   }
 
