@@ -94,8 +94,8 @@ function doThing(room)
   let output = [];
   for (let i = 0; i < 2500; ++i)
   {
-    let x = Math.floor(i/50);
-    let y = Math.floor(i%50);
+    let x = Math.floor(i%50);
+    let y = Math.floor(i/50);
     let t = terrain.get(x,y);
     if (t != lastTerrain && terrainCount > 0)
     {
