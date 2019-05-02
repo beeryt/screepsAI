@@ -97,12 +97,12 @@ function doThing(room)
     let x = Math.floor(i/50);
     let y = Math.floor(i%50);
     let t = terrain.get(x,y);
-    if (t == lastTerrain) { terrainCount++; }
-    else if (terrainCount != 0) {
+    if (t != lastTerrain && terrainCount > 0)
+    {
       output.push({terrain: lastTerrain, count: terrainCount});
     }
     lastTerrain = terrain;
-    terrainCount = 1;
+    terrainCount++;
     
     room.visual.text(i%10,x,y, {opacity: .25});
   }
