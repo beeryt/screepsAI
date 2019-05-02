@@ -88,7 +88,7 @@ class Colony
       let y = (2*origin.y + height) / 2;
       let center = room.getPositionAt(x,y);
       room.visual.line(avoid, center)
-      let ret = PathFinder.search(center, {pos: avoid}, {flee: true, maxCost: 20});
+      let ret = PathFinder.search(center, {pos: avoid, range: 20}, {flee: true, maxCost: 20});
       let target = _.find(ret.path, target => target.getRangeTo(center) == 1);
       room.visual.circle(center, {fill: "#aaff00"})
       room.visual.circle(target, {fill: "#00aaff"});
