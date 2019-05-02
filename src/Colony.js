@@ -72,13 +72,13 @@ class Colony
       let mass = 0;
       for (let i = 0; i < width*height; ++i)
       {
-        let x = Math.floor(i/width) + pos.x - Math.floor(width/2);
-        let y = (i%height) + pos.y - Math.floor(width/2);
+        let x = Math.floor(i/width) + pos.x;
+        let y = (i%height) + pos.y;
         sumX += x * terrain.get(x,y);
         sumY += y * terrain.get(x,y);
         mass += terrain.get(x,y);
       }
-      return Game.rooms[pos.roomName].getPositionAt(Math.floor(sumX/mass), Math.floor(sumY/mass));
+      return Game.rooms[pos.roomName].getPositionAt(sumX/mass, sumY/mass);
     }
 
     function findVector(origin, avoid, width, height)
