@@ -92,7 +92,6 @@ class Colony
       return _.first(ret.path);
     }
 
-
     // draw 5x5 region
     this.room.visual.rect(pos.x-0.5, pos.y-0.5, 5, 5, {stroke: "#ffffff", fill: "#00000000"});
     let flee = findWallMass(pos, 5, 5);
@@ -100,12 +99,13 @@ class Colony
     findVector(pos, flee, 5, 5);
 
     this.room.visual.text(i, pos);
+    let c = pos;
     for (let i = 1; i < 5; ++i)
     {
       let cmos = findWallMass(pos, 5, 5);
-      if (cmos.x == pos.x && cmos.y == pos.y) { break; }
-      pos = findVector(pos, cmos, 5, 5);
-      this.room.visual.text(i, pos);
+      if (cmos.x == c.x && cmos.y == c.y) { break; }
+      c = findVector(c, cmos, 5, 5);
+      this.room.visual.text(i, c);
     }
 
     this.room.find(FIND_SOURCES).forEach((source) => {
