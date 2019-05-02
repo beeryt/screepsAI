@@ -92,7 +92,7 @@ class Colony
 
       let c = 0;
       ret.path.forEach(point => {
-        room.visual.text(c++, point);
+        room.visual.text(++c, point);
       });
 
       let dir = avoid.getDirectionTo(target);
