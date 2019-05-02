@@ -90,6 +90,11 @@ class Colony
       let ret = PathFinder.search(center, {pos: avoid, range: 20}, {flee: true, maxCost: 20});
       let target = _.find(ret.path, target => target.getRangeTo(center) == 1);
 
+      let c = 0;
+      ret.path.forEach(point => {
+        room.visual.text(c++, point);
+      });
+
       let dir = avoid.getDirectionTo(target);
       switch (dir)
       {
@@ -115,6 +120,7 @@ class Colony
     this.room.visual.circle(flee, {radius: .33, fill: "#ffaa00"})
     findVector(pos, flee, 5, 5);
 
+return;
     this.room.visual.text(i, pos);
     for (let i = 1; i < 5; ++i)
     {
