@@ -72,8 +72,10 @@ class Colony
       let mass = 0;
       for (let i = 0; i < width*height; ++i)
       {
-        let x = Math.floor(i/width) + pos.x - Math.floor(width / 2);
-        let y = (i%height) + pos.y;
+        let x = Math.floor(i/width) - Math.floor(width / 2);
+        let y = (i%height) - Math.floor(height / 2);
+        x += pos.x;
+        y += pos.y;
         sumX += x * terrain.get(x,y);
         sumY += y * terrain.get(x,y);
         mass += terrain.get(x,y);
