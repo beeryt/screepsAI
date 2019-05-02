@@ -36,6 +36,7 @@ class Mine {
       let ret = PathFinder.search(this.colony.pos, {pos: p})
       if (ret.incomplete) { continue; }
       this.locale[p] = ret.cost;
+      console.log("doo")
     }
   }
 
@@ -58,7 +59,6 @@ class Mine {
     this.room.visual.circle(pos, {radius: 0.3});
 
     // draw path
-    console.log("thisPath:", this.path.length)
     let lastPoint = this.colony.pos;
     this.path.forEach(point => {
       this.room.visual.line(lastPoint, point, {lineStyle: 'dashed'});
