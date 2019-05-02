@@ -108,7 +108,12 @@ function doThing(room)
   }
   console.log("terrainchanges:", output.length)
 
+  let str = '';
+  output.forEach(entry => {
+    str += "<"+entry.count+">"+entry.terrain;
+  });
 
+  console.log(str);
 
 }
 
