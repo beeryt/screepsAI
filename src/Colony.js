@@ -106,6 +106,7 @@ function doThing(room)
       lastTerrain = terrain;
       terrainCount = 0;
     }
+    console.log("terrainchanges:", output.length)
     room.visual.text(i%10,x,y, {opacity: .25});
   }
 
