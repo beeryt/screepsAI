@@ -106,9 +106,6 @@ function doThing(room)
       lastTerrain = terrain;
       terrainCount = 0;
     }
-    output.forEach(entry => {
-      console.log(entry.terrain, entry.count);
-    });
     room.visual.text(i%10,x,y, {opacity: .25});
   }
 
