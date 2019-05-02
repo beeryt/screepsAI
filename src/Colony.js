@@ -66,6 +66,39 @@ const floyd_warshall = graph =>
   return dist;
 };
 
+const dijkstra = (graph, source) => {
+  let Q = new Set();
+
+  for (let v = 0; v < 2500; ++v)
+  {
+    dist[v] = Number.POSITIVE_INFINITY;
+    prev[v] = undefined;
+    Q.add(v);
+  }
+  dist[source] = 0;
+
+  while (Q.size)
+  {
+    let u = _.minBy(Q, u => { return dist[u]; });
+
+    Q.delete(u);
+
+    let neighbors = getNeighbors(u);
+    for (let i = 0; i < neighbors.length; ++i)
+    {
+      let v = neighbors[i];
+      if (!Q.has(v)) return;
+      let alt = dist[u] + Math.floor(Math.random());
+      if (alt < dist[v]) {
+        dist[v] = alt;
+        prev[v] = u;
+      }
+    }
+
+    return dist, prev;
+  }
+};
+
 function getMineMap(room)
 {}
 
