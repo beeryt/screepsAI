@@ -6,11 +6,6 @@ function isWalkable(pos)
       return false;
     }
   });
-
-  if (pos.findInRange(FIND_, 0).length == 0)
-  {
-    console.log("road detected");
-  }
   return true;
 }
 
