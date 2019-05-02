@@ -78,7 +78,7 @@ class Colony
         sumY += y * terrain.get(x,y);
         mass += terrain.get(x,y);
       }
-      return Game.rooms[pos.roomName].getPositionAt(sumX/mass, sumY/mass);
+      return Game.rooms[pos.roomName].getPositionAt(Math.floor(sumX/mass), Math.floor(sumY/mass));
     }
 
     function findVector(origin, avoid, width, height)
