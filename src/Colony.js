@@ -88,7 +88,7 @@ function doThing(room)
   let height = maxY - minY+1;
 
   room.visual.rect(minX-.5, minY-.5, width, height, {fill: '#00000000', stroke: '#0af000'});
-  let terrain = Room.Terrain(room.name);
+  let terrain = new Room.Terrain(room.name);
   let lastTerrain = 0;
   let terrainCount = 0;
   let output = [];
