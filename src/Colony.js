@@ -84,8 +84,8 @@ class Colony
     function findVector(origin, avoid, width, height)
     {
       let room = Game.rooms[origin.roomName];
-      let x = (origin.x + width) / 2;
-      let y = (origin.y + height) / 2;
+      let x = (2*origin.x + width) / 2;
+      let y = (2*origin.y + height) / 2;
       room.visual.line(avoid, room.getPositionAt(x,y))
     }
 
