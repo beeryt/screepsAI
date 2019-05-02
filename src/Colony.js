@@ -5,8 +5,15 @@ const floyd_warshall = graph =>
   let V = 50*50;
 
   // let dist be a |V| x |V| array of minimum distances initialized to ∞ (undefined)
-  let dist = []
-  for (let i = 0; i < V; ++i) { dist.push(new Array(V)); }
+  let dist = [];
+  for (let i = 0; i < V; ++i)
+  {
+    dist.push(new Array(V));
+    for (let j = 0; j < V; ++j)
+    {
+      dist[i][j] = Number.POSITIVE_INFINITY;
+    }
+  }
 
   /*
    * for each edge (u,v)
@@ -47,7 +54,6 @@ const floyd_warshall = graph =>
       for (let j = 0; j < V; ++j)
       {
         let cost = dist[i][k] + dist[k][j];
-        if (cost == null) { cost = 500000; }
         if (dist[i][j] > cost)
         {
           dist[i][j] = cost;
