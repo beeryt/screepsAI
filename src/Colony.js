@@ -71,7 +71,9 @@ class Colony
     let terrain = new Room.Terrain(this.pos.roomName);
 
     // center of mass of walls
-    sumX = sumY = mass = 0;
+    sumX = 0;
+    sumY = 0;
+    mass = 0;
     for (let i = 0; i < 25; ++i)
     {
       let x = Math.floor(i / 5);
