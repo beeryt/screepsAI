@@ -14,8 +14,17 @@ class Colony
   {
     console.log("Colony::init()");
 
-    console.log("Debug: adding first source");
-    this.mines.push(new Mine(this, _.first(this.room.find(FIND_SOURCES))));
+    let sumX = 0;
+    let sumY = 0;
+    let mass = 0;
+    this.room.find(FIND_SOURCES).forEach(source => {
+      sumX += source.pos.x * source.energyCapacity;
+      sumY += source.pos.y * source.energyCapacity;
+      mass += source.energyCapacity;
+      this.mines.push(new Mine(this, source));
+    });
+
+    this.pos = this.room.getPositionAt(sumX/mass, sumY/mass);
 
     this.mines.forEach(function(mine) {
       mine.init();
