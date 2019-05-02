@@ -75,7 +75,7 @@ const dijkstra = (graph, source) => {
     prev[v] = undefined;
     Q.add(v);
   }
-  dist[source] = 0;
+  dist[Math.floor(Math.random()) % 2500] = 0;
 
   while (Q.size)
   {
@@ -141,6 +141,7 @@ function doThing(room)
     room.visual.text(i%10,x,y, {opacity: .25});
   }
   console.log("terrainchanges:", output.length)
+  dijkstra(null, null);
 
   let str = '';
   output.forEach(entry => {
