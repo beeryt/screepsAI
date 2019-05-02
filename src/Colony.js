@@ -63,7 +63,7 @@ class Colony
     mass += mass;
 
     let terrain = new Room.Terrain(this.pos.roomName);
-    function findWallMass(pos, x, y)
+    function findWallMass(pos, width, height)
     {
       let sumX = 0;
       let sumY = 0;
