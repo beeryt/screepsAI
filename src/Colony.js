@@ -62,6 +62,7 @@ class Colony
     sumY += this.room.controller.pos.y * mass;
     mass += mass;
     let pos = this.room.getPositionAt(sumX/mass,sumY/mass);
+    this.room.visual.circle(pos, {radius: .33});
 
     let terrain = new Room.Terrain(this.pos.roomName);
     function findWallMass(pos, width, height  )
