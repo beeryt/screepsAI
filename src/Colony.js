@@ -124,7 +124,7 @@ const dijkstra = (graph, source) => {
       }
     }
 
-    return dist, prev;
+    return [dist, prev];
   }
 };
 
@@ -153,7 +153,8 @@ function doThing(room)
   room.visual.rect(minX-.5, minY-.5, width, height, {fill: '#00000000', stroke: '#0af000'});
 
 
-  let (dist,prev) = dijkstra(null,null);
+  let ret = dijkstra(null,null);
+  let dist = ret[0];
   let maxi = _.max(dist);
   dist.forEach(i => {
     let pos = room.getPositionAt(Math.floor(i/50), Math.floor(i%50));
