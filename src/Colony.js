@@ -67,16 +67,13 @@ class Colony
     this.room.visual.circle(pos, {radius: .33});
 
     // draw 5x5 region
+    this.room.visual.rect(pos, 5, 5);
     var count = 0;
     for (let i = 0; i < 25; ++i)
     {
       let x = Math.floor(i / 5);
       let y = i % 5;
       let k = this.room.getPositionAt(pos.x + x, pos.y + y);
-      if ((x==0 || x==4) || (y==0 || y==4))
-      {
-        this.room.visual.text(count++, k);
-      }
     }
 
     this.room.find(FIND_SOURCES).forEach((source) => {
