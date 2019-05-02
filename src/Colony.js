@@ -98,10 +98,9 @@ function doThing(room)
     let y = Math.floor(i%50);
     let t = terrain.get(x,y);
     if (t == lastTerrain) { terrainCount++; }
+    else if (terrainCount == 0) { continue; }
     else {
-      if (terrainCount == 0) continue;
-
-      output.push({terrain: t, count: terrainCount});
+      output.push({terrain: lastTerrain, count: terrainCount});
 
       lastTerrain = terrain;
       terrainCount = 0;
