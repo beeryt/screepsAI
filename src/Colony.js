@@ -24,6 +24,10 @@ class Colony
       this.mines.push(new Mine(this, source));
     });
 
+    sumX += this.controller.pos.x * mass;
+    sumY += this.controller.pos.y * mass;
+    mass += mass;
+
     this.pos = this.room.getPositionAt(sumX/mass, sumY/mass);
     this.room.visual.circle(this.pos);
 
