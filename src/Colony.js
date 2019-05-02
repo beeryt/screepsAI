@@ -88,8 +88,25 @@ class Colony
       let y = (2*origin.y + height) / 2;
       let center = room.getPositionAt(x,y);
       let ret = PathFinder.search(center, {pos: avoid, range: 5}, {flee: true, maxCost: 20});
+      let target = _.first(ret.path);
 
-      return _.first(ret.path);
+      x = origin.x;
+      y = origin.y;
+      switch (avoid.getDirectionTo(target))
+      {
+        case TOP: y--; break;
+        case TOP_RIGHT: y--; x++; break;
+        case RIGHT: x++; break;
+        case BOTTOM_RIGHT: y++; x++; break;
+        case BOTTOM: y++; break;
+        case BOTTOM_LEFT: y++; x--; break;
+        case LEFT: x--; break;
+        case TOP_LEFT: x--; y--; break;
+        default: console.log("no direction from", avoid);
+      }
+
+      return room.getPositionAt(x,y);
+
     }
 
     // draw 5x5 region
