@@ -88,32 +88,8 @@ class Colony
       let y = (2*origin.y + height) / 2;
       let center = room.getPositionAt(x,y);
       let ret = PathFinder.search(center, {pos: avoid, range: 5}, {flee: true, maxCost: 20});
-      let target = _.find(ret.path, target => target.getRangeTo(center) == 1);
 
-      let c = 0;
-      ret.path.forEach(point => {
-        room.visual.text(++c, point);
-      });
-
-      room.visual.circle(_.first(ret.path))
-
-      let dir = avoid.getDirectionTo(target);
-      switch (dir)
-      {
-        case TOP: x--; break;
-        case TOP_RIGHT: x--; y++; break;
-        case RIGHT: y++; break;
-        case BOTTOM_RIGHT: x++; y++; break;
-        case BOTTOM: x++; break;
-        case BOTTOM_LEFT: x++; y--; break;
-        case LEFT: y--; break;
-        case TOP_LEFT: x--; y--; break;
-        default: console.log("No direction from", avoid);
-      }
-      let newPos = room.getPositionAt(x,y);
-      room.visual.circle(newPos);
-      return newPos;
-
+      return _.first(ret.path);
     }
 
 
@@ -123,7 +99,6 @@ class Colony
     this.room.visual.circle(flee, {radius: .33, fill: "#ffaa00"})
     findVector(pos, flee, 5, 5);
 
-return;
     this.room.visual.text(i, pos);
     for (let i = 1; i < 5; ++i)
     {
