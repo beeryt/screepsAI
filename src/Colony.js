@@ -29,6 +29,7 @@ const floyd_warshall = graph =>
     {
       let ux = Math.floor(i/3) + vx - 1;
       let uy = Math.floor(i%3) + vy - 1;
+      if (ux<0 || ux>=50 || uy<0 || uy>=50) continue;
       let u = ux * 3 + uy;
       if (u == v)
       {
