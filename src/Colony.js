@@ -87,7 +87,7 @@ class Colony
       let x = (2*origin.x + width) / 2;
       let y = (2*origin.y + height) / 2;
       let center = room.getPositionAt(x,y);
-      let ret = PathFinder.search(center, {pos: avoid, range: 20}, {flee: true, maxCost: 20});
+      let ret = PathFinder.search(center, {pos: avoid, range: 2}, {flee: true, maxCost: 20});
       let target = _.find(ret.path, target => target.getRangeTo(center) == 1);
 
       let c = 0;
