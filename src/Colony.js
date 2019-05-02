@@ -85,7 +85,7 @@ class Colony
 
     let flee = this.room.getPositionAt(sumX/mass, sumY/mass);
     console.log("Red", flee)
-    this.room.visual.circle(flee, {radius: .33, fill: "#ffaa00"})
+    this.room.visual.circle(sumX/mass, sumY/mass, {radius: .33, fill: "#ffaa00"})
 
     this.room.find(FIND_SOURCES).forEach((source) => {
       this.room.visual.line(pos, source.pos);
