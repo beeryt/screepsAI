@@ -73,7 +73,10 @@ class Colony
       let x = Math.floor(i / 5);
       let y = i % 5;
       let k = this.room.getPositionAt(pos.x + x, pos.y + y);
-      this.room.visual.text(count++, k);
+      if ((x==0 || x==4) || (y==0 || y==4))
+      {
+        this.room.visual.text(count++, k);
+      }
     }
 
     this.room.find(FIND_SOURCES).forEach((source) => {
