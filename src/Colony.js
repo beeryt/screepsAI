@@ -76,6 +76,7 @@ const dijkstra_findMin = (dist, Q) => {
       q = u;
     }
   });
+  if (q == null) console.log("Something went wrong here");
   return q;
 };
 
