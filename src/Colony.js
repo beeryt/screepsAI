@@ -94,7 +94,7 @@ const dijkstra_getNeighbors = (u) => {
     let v = x*50 + y;
     neighbors.push[v];
 
-    if (v > 50) continue;
+    if (v > 150) continue;
     let room = Game.rooms['sim']
     let p1 = room.getPositionAt(x,y);
     let p2 = room.getPositionAt(Math.floor(u/50), u%50);
