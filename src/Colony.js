@@ -92,10 +92,7 @@ const dijkstra_getNeighbors = (u) => {
     let y = Math.floor(i%3) + Math.floor(u%50) - 1;
     if (x<0||x>=50||y<0||y>=50) continue;
     let v = x*50 + y;
-    neighbors.push(v);
-    console.log("Found nay for", u, ":", v)
   }
-  console.log("Neighbors for", u, ":", neighbors)
   return neighbors;
 };
 
@@ -116,11 +113,6 @@ const dijkstra = (graph, source) => {
     Q.add(v);
   }
   dist[source] = 0;
-  console.log("first find:", dijkstra_findMin(dist, Q));
-  let nays = dijkstra_getNeighbors(dijkstra_findMin(dist,Q));
-  nays.forEach(n => {console.log("neighbor:", n)});
-  if (nays.length == 0) {console.log("no nays")}
-  return [{},{}];
 
   while (Q.size > 0)
   {
