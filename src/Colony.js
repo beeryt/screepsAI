@@ -169,7 +169,7 @@ function doThing(room)
   room.visual.rect(minX-.5, minY-.5, width, height, {fill: '#00000000', stroke: '#0af000'});
 
 
-  let ret = dijkstra(null,null);
+  let ret = dijkstra(null,0);
   let dist = ret[0];
   for (let i = 0; i < 2500; ++i)
   {
