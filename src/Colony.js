@@ -100,7 +100,7 @@ const dijkstra_getNeighbors = (u) => {
 
 const dijkstra_length = (dist, prev, u, v) => {
   let length = 0;
-  return Math.floor(Math.random()*255);
+  return Game.rooms['sim'].getTerrain(Math.floor(v/50),v%50);
 }
 
 const dijkstra = (graph, source) => {
