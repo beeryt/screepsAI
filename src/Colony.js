@@ -171,7 +171,8 @@ function doThing(room)
   room.visual.rect(minX-.5, minY-.5, width, height, {fill: '#00000000', stroke: '#0af000'});
 
 
-  let ret = dijkstra(null,2500/2);
+  let ret = dijkstra(null,1250);
+  room.visual.circle(Math.floor(Math.floor(1250/50),1250%50))
   let dist = ret[0];
   for (let i = 0; i < 2500; ++i)
   {
