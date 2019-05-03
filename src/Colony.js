@@ -81,7 +81,6 @@ const dijkstra_findMin = (dist, Q) => {
 };
 
 const dijkstra_getNeighbors = (u) => {
-  console.log("Finding neighbors");
   let neighbors = [];
   for (let i = 0; i < 9; ++i) {
     let x = Math.floor(i/3) + Math.floor(u/50) - 1;
