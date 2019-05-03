@@ -100,7 +100,7 @@ const dijkstra_getNeighbors = (u) => {
 
 const dijkstra_length = (dist, prev, u, v) => {
   let length = 0;
-  return Game.rooms['sim'].getTerrain(Math.floor(v/50),v%50);
+  return Math.floor(Math.random()*255);
 }
 
 const dijkstra = (graph, source) => {
@@ -119,7 +119,6 @@ const dijkstra = (graph, source) => {
   console.log("Neighbors:", dijkstra_getNeighbors(dijkstra_findMin(dist,Q)));
   console.log("dists source, 0", dist[source], dist[0])
 
-  let altCounter = 0;
   while (Q.size > 0)
   {
     let u = dijkstra_findMin(dist, Q);
@@ -127,19 +126,21 @@ const dijkstra = (graph, source) => {
     Q.delete(u);
 
     let neighbors = dijkstra_getNeighbors(u);
+    console.log("NeighborLength:", neighbors.length)
     for (let i = 0; i < neighbors.length; ++i)
     {
       let v = neighbors[i];
       if (!Q.has(v)) continue;
       let alt = dist[u] + dijkstra_length(dist,prev,u,v);
+      console.log("Hello", dist[u], alt)
       if (alt < dist[v]) {
-        altCounter++;
+        console.log("altenating")
         dist[v] = alt;
         prev[v] = u;
       }
     }
+    return [{},{}]
   }
-  console.log("Altenations:", altCounter)
   return [dist, prev];
 };
 
