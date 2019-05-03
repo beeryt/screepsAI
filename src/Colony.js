@@ -114,7 +114,7 @@ const dijkstra = (graph, source) => {
     Q.add(v);
   }
   dist[source] = 0;
-  console.log(dijkstra_findMin(dist, Q));
+  console.log("first find:", dijkstra_findMin(dist, Q));
 
   while (Q.size > 0)
   {
