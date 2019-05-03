@@ -99,7 +99,7 @@ const dijkstra_getNeighbors = (u) => {
 
 const dijkstra_length = (dist, prev, u, v) => {
   let length = 0;
-  return 1;
+  return Math.floor(Math.random()*255);
 }
 
 const dijkstra = (graph, source) => {
@@ -163,11 +163,10 @@ function doThing(room)
 
   let ret = dijkstra(null,null);
   let dist = ret[0];
-  let maxi = _.max(dist);
   for (let i = 0; i < 2500; ++i)
   {
     let pos = room.getPositionAt(Math.floor(i/50), Math.floor(i%50));
-    let color = "rgba(" + dist[i]/maxi + ",0,255,1)";
+    let color = "rgba(" + dist[i] + ",0,255,1)";
     room.visual.circle(pos, {fill: color});
   }
 }
