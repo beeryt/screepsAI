@@ -127,6 +127,7 @@ const dijkstra = (graph, source) => {
     console.log("NeighborLength:", neighbors.length)
     for (let i = 0; i < neighbors.length; ++i)
     {
+      console.log("Hello")
       let v = neighbors[i];
       if (!Q.has(v)) continue;
       let alt = dist[u] + dijkstra_length(dist,prev,u,v);
