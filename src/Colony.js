@@ -114,6 +114,9 @@ const dijkstra = (graph, source) => {
   }
   dist[source] = 0;
 
+  let U = dijkstra_findMin(dist, Q);
+  console.log("Neighbors:", dijkstra_getNeighbors(U));
+
   while (Q.size > 0)
   {
     let u = dijkstra_findMin(dist, Q);
