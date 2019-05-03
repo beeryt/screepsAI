@@ -130,8 +130,8 @@ const dijkstra = (graph, source) => {
     {
       let v = neighbors[i];
       if (!Q.has(v)) continue;
-      console.log("Hello")
       let alt = dist[u] + dijkstra_length(dist,prev,u,v);
+      console.log("Hello", dist[u], alt)
       if (alt < dist[v]) {
         console.log("altenating")
         dist[v] = alt;
