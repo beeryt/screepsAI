@@ -93,8 +93,9 @@ const dijkstra_getNeighbors = (u) => {
     if (x<0||x>=50||y<0||y>=50) continue;
     let v = x*50 + y;
     neighbors.push[v];
-    console.log("Found nay:", v)
+    console.log("Found nay for", u", ":", v)
   }
+  console.log("Neighbors for", u, ":", neighbors)
   return neighbors;
 };
 
