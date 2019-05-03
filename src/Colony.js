@@ -70,9 +70,11 @@ const dijkstra_findMin = (dist, Q) => {
   let min = Number.POSITIVE_INFINITY;
   let q = null;
   let count = 0;
+  let udn = 0;
   for (let u of Q.entries())
   {
     count++;
+    if (u == undefined) udn++;
     if (dist[u] < min)
     {
       min = dist[u];
@@ -85,7 +87,7 @@ const dijkstra_findMin = (dist, Q) => {
     q = Q.entries()[0];
     console.log("all inf", q)
   }
-  if (q == null) console.log("Something went wrong here", count);
+  if (q == null) console.log("Something went wrong here", count, udn);
   return q;
 };
 
