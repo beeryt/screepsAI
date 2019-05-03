@@ -69,7 +69,8 @@ const floyd_warshall = graph =>
 const dijkstra_findMin = (dist, Q) => {
   let min = Number.POSITIVE_INFINITY;
   let q = null;
-  Q.entries().forEach(u => {
+  for (let u of Q.entries())
+  {
     if (dist[u] < min)
     {
       min = dist[u];
