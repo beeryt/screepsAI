@@ -89,6 +89,7 @@ const dijkstra_getNeighbors = (u) => {
     let v = x*50 + y;
     neighbors.push[v];
 
+    if (u > 50) continue; // only draw first 50 
     let room = Game.rooms['sim']
     let p1 = room.getPositionAt(Math.floor(v/50), v%50);
     let p2 = room.getPositionAt(Math.floor(u/50), u%50);
