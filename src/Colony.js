@@ -113,7 +113,7 @@ const dijkstra = (graph, source) => {
     prev[v] = undefined;
     Q.add(v);
   }
-  dist[Math.floor(Math.random()) % 2500] = 0;
+  dist[0] = 0;
 
   while (Q.size > 0)
   {
