@@ -93,6 +93,7 @@ const dijkstra_getNeighbors = (u) => {
     if (x<0||x>=50||y<0||y>=50) continue;
     let v = x*50 + y;
     neighbors.push[v];
+    console.log("Found nay:", v)
   }
   return neighbors;
 };
@@ -118,6 +119,7 @@ const dijkstra = (graph, source) => {
   let nays = dijkstra_getNeighbors(dijkstra_findMin(dist,Q));
   nays.forEach(n => {console.log("neighbor:", n)});
   if (nays.length == 0) {console.log("no nays")}
+  return [{},{}];
 
   while (Q.size > 0)
   {
