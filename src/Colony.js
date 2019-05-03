@@ -117,6 +117,7 @@ const dijkstra = (graph, source) => {
   console.log("first find:", dijkstra_findMin(dist, Q));
   let nays = dijkstra_getNeighbors(dijkstra_findMin(dist,Q));
   nays.forEach(n => {console.log("neighbor:", n)});
+  if (nays.length == 0) {console.log("no nays")}
 
   while (Q.size > 0)
   {
