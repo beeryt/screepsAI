@@ -90,10 +90,10 @@ const dijkstra_getNeighbors = (u) => {
     let v = x*50 + y;
     neighbors.push[v];
 
-    // let room = Game.rooms['sim']
-    // let p1 = room.getPositionAt(Math.floor(v/50), v%50);
-    // let p2 = room.getPositionAt(Math.floor(u/50), u%50);
-    // room.visual.line(p1,p2, {color: "#000"});
+    let room = Game.rooms['sim']
+    let p1 = room.getPositionAt(Math.floor(v/50), v%50);
+    let p2 = room.getPositionAt(Math.floor(u/50), u%50);
+    room.visual.line(p1,p2, {color: "#000"});
   }
   return neighbors;
 };
