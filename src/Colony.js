@@ -92,6 +92,7 @@ const dijkstra_getNeighbors = (u) => {
     let y = Math.floor(i%3) + Math.floor(u%50) - 1;
     if (x<0||x>=50||y<0||y>=50) continue;
     let v = x*50 + y;
+    if (u == v) continue;
     neighbors.push(v)
   }
   return neighbors;
