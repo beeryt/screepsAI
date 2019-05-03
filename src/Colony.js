@@ -133,9 +133,8 @@ const dijkstra = (graph, source) => {
         prev[v] = u;
       }
     }
-
-    return [dist, prev];
   }
+  return [dist, prev];
 };
 
 function getMineMap(room)
