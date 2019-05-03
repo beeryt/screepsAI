@@ -84,10 +84,9 @@ const dijkstra_getNeighbors = (u) => {
   for (let i = 0; i < 9; ++i) {
     let x = Math.floor(i/3) + Math.floor(u/50) - 1;
     let y = Math.floor(i%3) + Math.floor(u%50) - 1;
+    if (x<0||x>=50||y<0||y>=50) continue;
     let v = x*50 + y;
-    if (v < 0 || v >= 2500) continue;
     neighbors.push[v];
-    console.log(u,v)
 
     let room = Game.rooms['sim']
     let p1 = room.getPositionAt(Math.floor(v/50), v%50);
