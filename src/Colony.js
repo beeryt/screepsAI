@@ -167,7 +167,7 @@ function doThing(room)
   {
     let pos = room.getPositionAt(Math.floor(i/50), Math.floor(i%50));
     let color = "rgba(" + dist[i] + ",0,255,1)";
-    room.visual.circle(pos, {fill: color});
+    room.visual.circle(pos, {fill: "#"+((1<<24)*dist[i]|0).toString(16)});
   }
 }
 
