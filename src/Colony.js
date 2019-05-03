@@ -104,7 +104,6 @@ const dijkstra_length = (dist, prev, u, v) => {
 }
 
 const dijkstra = (graph, source) => {
-  return;
   let Q = new Set();
   let dist = {};
   let prev = {};
