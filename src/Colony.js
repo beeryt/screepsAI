@@ -116,7 +116,7 @@ const dijkstra = (graph, source) => {
   }
   dist[Math.floor(Math.random()) % 2500] = 0;
 
-  while (Q.size)
+  while (Q.size > 0)
   {
     let u = dijkstra_findMin(dist, Q);
 
