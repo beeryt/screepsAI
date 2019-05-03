@@ -124,12 +124,10 @@ const dijkstra = (graph, source) => {
     Q.delete(u);
 
     let neighbors = dijkstra_getNeighbors(u);
-    console.log("AfterNi:", neighbors)
-    return [{},{}]
     for (let i = 0; i < neighbors.length; ++i)
     {
       let v = neighbors[i];
-      if (!Q.has(v)) continue;
+      // if (!Q.has(v)) continue;
       let alt = dist[u] + dijkstra_length(dist,prev,u,v);
       if (alt < dist[v]) {
         console.log("altenating")
