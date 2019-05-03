@@ -121,13 +121,11 @@ const dijkstra = (graph, source) => {
     for (let i = 0; i < neighbors.length; ++i)
     {
       let v = neighbors[i];
-      if (Q.has(v))
-      {
-        let alt = dist[u] + Math.floor(Math.random()*1000);
-        if (alt < dist[v]) {
-          dist[v] = alt;
-          prev[v] = u;
-        }
+      if (!Q.has(v)) continue;
+      let alt = dist[u] + 1);
+      if (alt < dist[v]) {
+        dist[v] = alt;
+        prev[v] = u;
       }
     }
 
