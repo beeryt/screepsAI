@@ -126,20 +126,16 @@ const dijkstra = (graph, source) => {
     Q.delete(u);
 
     let neighbors = dijkstra_getNeighbors(u);
-    console.log("NeighborLength:", neighbors.length)
     for (let i = 0; i < neighbors.length; ++i)
     {
       let v = neighbors[i];
       if (!Q.has(v)) continue;
       let alt = dist[u] + dijkstra_length(dist,prev,u,v);
-      console.log("Hello", dist[u], alt)
       if (alt < dist[v]) {
-        console.log("altenating")
         dist[v] = alt;
         prev[v] = u;
       }
     }
-    return [{},{}]
   }
   return [dist, prev];
 };
