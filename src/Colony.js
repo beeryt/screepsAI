@@ -128,6 +128,7 @@ const dijkstra = (graph, source) => {
       if (!Q.has(v)) continue;
       let alt = dist[u] + dijkstra_length(dist,prev,u,v);
       if (alt < dist[v]) {
+        console.log("altenating")
         dist[v] = alt;
         prev[v] = u;
       }
