@@ -98,6 +98,11 @@ const dijkstra_getNeighbors = (u) => {
   return neighbors;
 };
 
+const dijkstra_length = (dist, prev, u, v) => {
+  let length = 0;
+  return 1;
+}
+
 const dijkstra = (graph, source) => {
   let Q = new Set();
   let dist = {};
@@ -122,7 +127,7 @@ const dijkstra = (graph, source) => {
     {
       let v = neighbors[i];
       if (!Q.has(v)) continue;
-      let alt = dist[u] + 1);
+      let alt = dist[u] + dijkstra_length(dist,prev,u,v);
       if (alt < dist[v]) {
         dist[v] = alt;
         prev[v] = u;
