@@ -121,12 +121,11 @@ const dijkstra = (graph, source) => {
   {
     let u = dijkstra_findMin(dist, Q);
 
-    console.log("Before:", u)
     Q.delete(u);
-    console.log("After:", u)
-    return [{},{}]
 
     let neighbors = dijkstra_getNeighbors(u);
+    console.log("AfterNi:", neighbors)
+    return [{},{}]
     for (let i = 0; i < neighbors.length; ++i)
     {
       let v = neighbors[i];
