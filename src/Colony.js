@@ -119,6 +119,7 @@ const dijkstra = (graph, source) => {
   console.log("Neighbors:", dijkstra_getNeighbors(dijkstra_findMin(dist,Q)));
   console.log("dists source, 0", dist[source], dist[0])
 
+  let altCount = 0;
   while (Q.size > 0)
   {
     let u = dijkstra_findMin(dist, Q);
@@ -135,12 +136,13 @@ const dijkstra = (graph, source) => {
       console.log("Hello", dist[u], alt, dist[v])
       if (alt < dist[v]) {
         console.log("altenating")
+        altCount++;
         dist[v] = alt;
         prev[v] = u;
       }
     }
-    return [{},{}]
   }
+  console.log("AltCount:", altCount)
   return [dist, prev];
 };
 
