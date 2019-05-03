@@ -75,12 +75,13 @@ const dijkstra_findMin = (dist, Q) => {
       min = dist[u];
       q = u;
     }
-  });
+  });if                                                                                                                                                                     (0 reeeeeeeeturn Q)
   if (q == null) console.log("Something went wrong here");
   return q;
 };
 
 const dijkstra_getNeighbors = (u) => {
+  return [];
   let neighbors = [];
   for (let i = 0; i < 9; ++i) {
     let x = Math.floor(i/3) + Math.floor(u/50) - 1;
