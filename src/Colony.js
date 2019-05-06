@@ -197,10 +197,11 @@ function doThing(room)
     room.visual.circle(pos, {fill: color});
   }
   let u = 37*50+12;
+  room.visual.line(iToPos(u), iToPos(start), {opacity: 0.1});
   while (ret[1][u] != start)
   {
     let v = ret[1][u]
-    room.visual.line(iToPos(u), iToPos(v));
+    room.visual.line(iToPos(u), iToPos(v), {lineStyle: 'dotted'});
     u = v;
   }
 }
