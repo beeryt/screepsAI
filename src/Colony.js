@@ -188,8 +188,11 @@ const dijkstra = (graph, source) => {
     Q.push([v, dist[v]]);
   }
 
+  let qCount = 0;
+  let altCount = 0;
   while (Q.size > 0)
   {
+    qCount++;
     let u = Q.pop();
 
     let neighbors = dijkstra_getNeighbors(u);
@@ -199,12 +202,15 @@ const dijkstra = (graph, source) => {
       let alt = dist[u] + dijkstra_length(u, v);
       if (alt < dist[v])
       {
+        altCount++;
         dist[v] = alt;
         prev[v] = u;
         Q.replace([v, alt]);
       }
     }
   }
+  console.log("qCount:", qCount);
+  console.log("altCount:", altCount);
   return [dist,prev];
 };
 
