@@ -79,11 +79,6 @@ const dijkstra_getNeighbors = (u) => {
   return neighbors;
 };
 
-const dijkstra_length = (dist, prev, u, v) => {
-  let length = 0;
-  return Game.rooms['sim'].getTerrain().get(Math.floor(v/50),v%50);
-}
-
 class PriorityQueue {
   constructor() {
     this.collection = [];
@@ -130,6 +125,11 @@ function iToPos(index) {
   let x = Math.floor(index/50);
   let y = Math.floor(index%50);
   return Game.rooms['sim'].getPositionAt(x,y);
+}
+
+function dijkstra_length(dist, prev, u, v) {
+  let pos = iToPos(v);
+  return Game.rooms['sim'].getTerrain().get(pos.x, pos.y);
 }
 
 const dijkstra = (graph, source) => {
