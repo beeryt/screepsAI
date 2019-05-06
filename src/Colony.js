@@ -203,7 +203,7 @@ function doThing(room)
   for (let i = 0; i < 2500; ++i)
   {
     let pos = iToPos(i);
-    room.visual.circle(pos, {radius: map(dist[i], 0, 50, 0, 0.5)});
+    room.visual.circle(pos, {radius: map(dist[i], 0, 150, 0, 0.5)});
   }
   let spot = 37*50+12;
   let u = spot;
