@@ -100,7 +100,7 @@ class PriorityQueue
     return this.size() == 0;
   }
 
-  peak() {
+  peek() {
     return this._heap[0];
   }
 
