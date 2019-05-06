@@ -103,8 +103,46 @@ const dijkstra_length = (dist, prev, u, v) => {
   return Game.rooms['sim'].getTerrain().get(Math.floor(u/50),u%50);
 }
 
+class PriorityQueue {
+  constructor() {
+    this.collection = [];
+  }
+
+  enqueue(element) {
+    if (this.isEmpty())
+    {
+      this.collection.push(element);
+    } else
+    {
+      let added = false;
+      for (let i = 1; i <= this.collection.length; ++i)
+      {
+        if (element[1] < this.collection[i-1][1])
+        {
+          this.collection.splice(i-1, 0, element);
+          added = true;
+          break;
+        }
+      }
+      if (!added)
+      {
+        this.collection.push(element);
+      }
+    }
+  }
+
+  dequeue() {
+    let value = this.collection.shift();
+    return value;
+  }
+
+  isEmpty() {
+    return (this.collection.length === 0);
+  }
+};
+
 const dijkstra = (graph, source) => {
-  let Q = new Set();
+  let Q = new PriorityQueue();
   let dist = {};
   let prev = {};
 
@@ -112,7 +150,7 @@ const dijkstra = (graph, source) => {
   {
     dist[v] = Number.POSITIVE_INFINITY;
     prev[v] = undefined;
-    Q.add(v);
+    Q.enqueue(v);
   }
   dist[source] = 0;
 
@@ -122,9 +160,7 @@ const dijkstra = (graph, source) => {
   let altCount = 0;
   while (Q.size > 0)
   {
-    let u = dijkstra_findMin(dist, Q);
-
-    Q.delete(u);
+    let u = Q.dequeue();
 
     let neighbors = dijkstra_getNeighbors(u);
     console.log("NeighborLength:", neighbors.length)
