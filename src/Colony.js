@@ -289,7 +289,6 @@ class Colony
       let color = colors[cost%colors.length];
       // this.room.visual.circle(iToPos(i), {radius: radius, fill: "#ffaa00"})
       this.room.visual.rect(p.x-0.5,p.y-0.5,1,1, {fill: color, opacity: 0.2});
-      this.room.visual.text(Math.round(cost/this.mines.length), iToPos(i));
     }
 
     this.mines.forEach((mine) => {
