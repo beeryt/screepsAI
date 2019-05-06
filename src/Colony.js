@@ -205,8 +205,8 @@ function doThing(room)
     u = v;
   }
   // visualize real path
-  let path = room.findPath(iToPos(u), iToPos(start));
   u = iToPos(spot);
+  let path = room.findPath(u, iToPos(start));
   path.forEach(p => {
     p = room.getPositionAt(p.x, p.y);
     room.visual.line(u, p, {opacity: 0.2});
