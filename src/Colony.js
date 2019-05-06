@@ -143,7 +143,6 @@ const dijkstra = (graph, source) => {
     let u = Q.poll().node;
 
     dijkstra_getNeighbors(u).forEach(v => {
-      console.log("Not Here", u, v, dijkstra_getNeighbors(u), "dist[u]:", dist[u]);
       let alt = dist[u] + dijkstra_length(u, v);
       if (alt < dist[v])
       {
@@ -193,7 +192,7 @@ function doThing(room)
   for (let i = 0; i < 2500; ++i)
   {
     let pos = iToPos(i);
-    let color = "rgba(" + dist[i] + ",0,255,1)";
+    let color = "rgba(" + (dist[i]/50)*255 + ",0,255,1)";
     room.visual.circle(pos, {fill: color});
   }
   let spot = 37*50+12;
