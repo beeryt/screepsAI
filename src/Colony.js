@@ -121,9 +121,8 @@ class PriorityQueue
       this._swap(0, bottom);
     }
     this._heap.pop();
-    console.log("pop debug")
     this._siftDown();
-    console.log("swap end")
+    console.log("pop end")
     return poppedValue;
   }
 
@@ -149,18 +148,18 @@ class PriorityQueue
   }
 
   _siftUp() {
-    console.log("siftUp start")
+    // console.log("siftUp start")
     let node = this.size() - 1;
     while (node > 0 && this._greater(node, nodeParent(node)))
     {
       this._swap(node, nodeParent(node));
       node = nodeParent(node);
     }
-    console.log("siftUp end")
+    // console.log("siftUp end")
   }
 
   _siftDown() {
-    console.log("siftDown start")
+    // console.log("siftDown start")
     let node = 0;
     while ((left(node) < this.size() && this._greater(left(node), node)) || (right(node) < this.size() && this._greater(right(node), node)))
     {
@@ -168,7 +167,7 @@ class PriorityQueue
       this._swap(node, maxChild);
       node = maxChild;
     }
-    console.log("siftDown end")
+    // console.log("siftDown end")
   }
 }
 
@@ -256,6 +255,7 @@ function doThing(room)
 
   let start = 1275;
   let ret = dijkstra(null,start);
+  console.log("dijkstra complete");
   room.visual.circle(iToPos(start), {radius: 0.5, fill: "#FF00FF"});
   let dist = ret[0];
   for (let i = 0; i < 2500; ++i)
