@@ -2,7 +2,7 @@
 var PriorityQueue = require('FastPriorityQueue');
 var Mine = require("Mine");
 
-const colors = ["#e6863c", "#e9db94", "#a97942", "#3f4747", "#281d24"];
+const colors = ["#5aa343", "#e0be2c", "#d86224", "#a11620", "#6d151b"];
 
 const floyd_warshall = graph =>
 {
@@ -286,7 +286,7 @@ class Colony
       let p = iToPos(i);
       let cost = this.combined_costs[i];
       let radius = map(cost, 0, 50*this.mines.length, 0, 0.45);
-      let color = colors[cost%colors.length];
+      let color = colors[cost%(colors.length-1)];
       // this.room.visual.circle(iToPos(i), {radius: radius, fill: "#ffaa00"})
       this.room.visual.rect(p.x-0.5,p.y-0.5,1,1, {fill: color, opacity: 0.2});
     }
