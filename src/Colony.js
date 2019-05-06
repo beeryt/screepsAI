@@ -66,25 +66,6 @@ const floyd_warshall = graph =>
   return dist;
 };
 
-const dijkstra_findMin = (dist, Q) => {
-  let min = Number.POSITIVE_INFINITY;
-  let q = Array.from(Q)[0];
-  let count = 0;
-  let udn = 0;
-  for (let u of Q.entries())
-  {
-    count++;
-    if (u == undefined) udn++;
-    if (dist[u] < min)
-    {
-      min = dist[u];
-      q = u;
-    }
-  }
-  if (q == null) console.log("Something went wrong here", count, udn);
-  return q;
-};
-
 const dijkstra_getNeighbors = (u) => {
   let neighbors = [];
   for (let i = 0; i < 9; ++i) {
@@ -154,7 +135,7 @@ const dijkstra = (graph, source) => {
   }
   dist[source] = 0;
 
-  console.log("Neighbors:", dijkstra_getNeighbors(dijkstra_findMin(dist,Q)));
+  console.log("Neighbors:", dijkstra_getNeighbors(source));
   console.log("dists source, 0", dist[source], dist[0])
 
   let altCount = 0;
