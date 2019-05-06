@@ -115,9 +115,9 @@ class PriorityQueue
   pop() {
     const poppedValue = this.peek();
     const bottom = this.size() - 1;
-    if (bottom > top)
+    if (bottom > 0)
     {
-      this._swap(top, bottom);
+      this._swap(0, bottom);
     }
     this._heap.pop();
     this._siftDown();
@@ -190,7 +190,7 @@ const dijkstra = (graph, source) => {
 
   let qCount = 0;
   let altCount = 0;
-  while (Q.size > 0)
+  while (Q.size() > 0)
   {
     qCount++;
     let u = Q.pop();
