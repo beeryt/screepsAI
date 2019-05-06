@@ -209,8 +209,9 @@ const dijkstra = (graph, source) => {
     let u = Q.pop();
 
     dijkstra_getNeighbors(u).forEach(v => {
+      console.log("Not Here", u, v, dijkstra_getNeighbors(u));
+      console.log(dist[u]);
       let alt = dist[u] + dijkstra_length(u, v);
-      console.log("Not Here", u, v, dijkstra_getNeighbors(u), alt, dist[u]);
       if (alt < dist[v])
       {
         altCount++;
