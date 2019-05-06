@@ -117,8 +117,8 @@ class PriorityQueue {
     return value;
   }
 
-  has(element) {
-    return this.collection.has(element);
+  includes(element) {
+    return this.collection.includes(element);
   }
 
   size() {
@@ -160,7 +160,7 @@ const dijkstra = (graph, source) => {
     for (let i = 0; i < neighbors.length; ++i)
     {
       let v = neighbors[i];
-      if (!Q.has(v)) continue;
+      if (!Q.includes(v)) continue;
       let alt = dist[u] + dijkstra_length(dist,prev,u,v);
       console.log("Hello", dist[u], alt, dist[v])
       if (alt < dist[v]) {
