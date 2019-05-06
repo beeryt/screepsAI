@@ -274,6 +274,8 @@ class Colony
     });
   }
 
+  const colors = ['#e6863c'. '#e9db94', '#a97942', '#3f4747', '#281d24']
+
   refresh()
   {
     console.log("Colony::refresh()");
@@ -281,9 +283,12 @@ class Colony
 
     for (let i = 0; i < 2500; ++i)
     {
+      let p = iToPos(i);
       let cost = this.combined_costs[i];
       let radius = map(cost, 0, 50*this.mines.length, 0, 0.45);
+      let color = colors[cost%colors.length]
       // this.room.visual.circle(iToPos(i), {radius: radius, fill: "#ffaa00"})
+      this.room.visual.rect(p.x-0.5,p.y-0.5,1,1, {fill: color, opacity: 0.2});
       this.room.visual.text(Math.round(cost/this.mines.length), iToPos(i))
     }
 
