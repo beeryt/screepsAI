@@ -133,17 +133,6 @@ function iToPos(index) {
 }
 
 const dijkstra = (graph, source) => {
-
-  source = 1250 + 25;
-  let neighs = dijkstra_getNeighbors(source);
-  let room = Game.rooms['sim']
-  // room.visual.circle(iToPos(source), {fill: "#00ffaa"});
-  neighs.forEach(n => {
-    room.visual.circle(iToPos(n), {fill: "#ffffff"});
-  })
-  return [{},{}];
-
-
   let Q = new PriorityQueue();
   let dist = {};
   let prev = {};
