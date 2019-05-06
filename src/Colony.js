@@ -1,5 +1,5 @@
 /*jshint bitwise: false*/
-
+var PriorityQueue = require('FastPriorityQueue');
 var Mine = require("Mine");
 
 const floyd_warshall = graph =>
@@ -85,84 +85,6 @@ const nodeParent = i => ((i + 1) >>> 1) - 1;
 const left = i => (i << 1) + 1;
 const right = i => (i + 1) << 1;
 
-class PriorityQueue
-{
-  constructor(comparator = (a, b) => a < b) {
-    this._heap = [];                // array-based heap
-    this._comparator = comparator;  // custom element comparator
-  }
-
-  size() {
-    return this._heap.length;
-  }
-
-  isEmpty() {
-    return this.size() == 0;
-  }
-
-  peek() {
-    return this._heap[0];
-  }
-
-  push(...values) {
-    values.forEach(value => {
-      this._heap.push(value);
-      this._siftUp();
-    });
-    return this.size();
-  }
-
-  pop() {
-    console.log("pop start");
-    const poppedValue = this.peek();
-    const bottom = this.size() - 1;
-    if (bottom > 0)
-    {
-      this._swap(0, bottom);
-    }
-    this._heap.pop();
-    this._siftDown();
-    console.log("pop end")
-    return poppedValue;
-  }
-
-  replace(value) {
-    const replacedValue = this.peek();
-    this._heap[0] = value;
-    this._siftDown();
-    return replacedValue;
-  }
-
-  _greater(i, j) {
-    return this._comparator(this._heap[i], this._heap[j]);
-  }
-
-  _swap(i, j) {
-    console.log("swap start")
-    [this._heap[i], this._heap[j]] = [this._heap[j], this._heap[i]];
-    console.log("swap end")
-  }
-
-  _siftUp() {
-    let node = this.size() - 1;
-    while (node > 0 && this._greater(node, nodeParent(node)))
-    {
-      this._swap(node, nodeParent(node));
-      node = nodeParent(node);
-    }
-  }
-
-  _siftDown() {
-    let node = 0;
-    while ((left(node) < this.size() && this._greater(left(node), node)) || (right(node) < this.size() && this._greater(right(node), node)))
-    {
-      let maxChild = (right(node) < this.size() && this._greater(right(node), left(node)));
-      this._swap(node, maxChild);
-      node = maxChild;
-    }
-  }
-}
-
 function iToPos(index) {
   let x = Math.floor(index/50);
   let y = Math.floor(index%50);
@@ -174,11 +96,25 @@ function dijkstra_length(u, v) {
   return Game.rooms.sim.getTerrain().get(pos.x, pos.y);
 }
 
+class Element
+{
+  constructor(node, priority)
+  {
+    this.node = node;
+    this.priority = priority;
+  }
+
+  valueOf()
+  {
+    return this.priority;
+  }
+}
+
 const dijkstra = (graph, source) => {
   source = 0;
   let dist = {};
   let prev = {};
-  let Q = new PriorityQueue((a,b)=>a[1] < b[1]);
+  let Q = new PriorityQueue();
 
   dist[source] = 0;
 
@@ -190,17 +126,15 @@ const dijkstra = (graph, source) => {
     }
     prev[v] = undefined;
 
-    Q.push([v, dist[v]]);
+    Q.add(new Element(v, dist[v]));
   }
-  console.log(Q._heap);
 
   let qCount = 0;
   let altCount = 0;
   while (Q.size() > 0)
   {
-    console.log("Got Here!");
     qCount++;
-    let u = Q.pop();
+    let u = Q.poll().node;
 
     dijkstra_getNeighbors(u).forEach(v => {
       console.log("Not Here", u, v, dijkstra_getNeighbors(u));
@@ -211,7 +145,7 @@ const dijkstra = (graph, source) => {
         altCount++;
         dist[v] = alt;
         prev[v] = u;
-        Q.replace([v, alt]);
+        Q.add(new Element(v, alt));
       }
     });
   }
