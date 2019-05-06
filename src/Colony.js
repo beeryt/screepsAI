@@ -166,8 +166,10 @@ const dijkstra = (graph, source) => {
   return [dist,prev];
 };
 
-function getMineMap(room)
-{}
+function map(x, in_min, in_max, out_min, out_max)
+{
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
 
 function doThing(room)
 {
@@ -190,11 +192,6 @@ function doThing(room)
   // sources bounding box
   room.visual.rect(minX-0.5, minY-0.5, width, height, {fill: '#00000000', stroke: '#0af000'});
 
-  function map(x, in_min, in_max, out_min, out_max)
-  {
-    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-  }
-
   let start = 1275;
   let ret = dijkstra(null,start);
   console.log("dijkstra complete");
@@ -203,7 +200,7 @@ function doThing(room)
   for (let i = 0; i < 2500; ++i)
   {
     let pos = iToPos(i);
-    room.visual.circle(pos, {opacity: 0.3, radius: map(dist[i], 0, 150, 0, 0.5)});
+    room.visual.circle(pos, {opacity: 0.3, radius: map(dist[i], 0, 150, 0, 0.49)});
   }
 
   // visualize random path
@@ -258,10 +255,21 @@ class Colony
     this.pos = this.room.getPositionAt(sumX/mass, sumY/mass);
     this.room.visual.circle(this.pos);
 
+    this.combined_costs = {};
+    for (let i = 0; i < 2500; ++i)
+    {
+      this.combined_costs[i] = 0;
+    }
+
     this.room.memory.mineMap = {};
     this.mines.forEach(mine => {
-      this.room.memory.mineMap[mine] = getMineMap(mine);
       mine.init();
+      let mineIndex = mine.pos.x*50+mine.pos.y;
+      let ret = dijkstra(null, mineIndex);
+      for (let i = 0; i < 2500; ++i)
+      {
+        this.combined_costs[i] += ret[0][i];
+      }
     });
   }
 
@@ -269,6 +277,13 @@ class Colony
   {
     console.log("Colony::refresh()");
     doThing(this.room);
+
+    for (let i = 0; i < 2500; ++i)
+    {
+      let cost = this.combined_costs[i];
+      let radius = map(cost, 0, this.mines.length*50, 0, 0.45);
+      this.room.visual.circle(iToPos(i), {radius: radius, fill: "#ffaa00"})
+    }
 
     this.mines.forEach((mine) => {
       mine.refresh();
