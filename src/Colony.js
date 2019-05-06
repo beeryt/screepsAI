@@ -118,16 +118,20 @@ const dijkstra = (graph, source) => {
 
   dist[source] = 0;
 
+  let infinityCount = 0;
   for (let v = 0; v < 2500; ++v)
   {
     if (v != source)
     {
+      infinityCount++;
       dist[v] = Math.POSITIVE_INFINITY;
     }
     prev[v] = undefined;
 
     Q.add(new Element(v, dist[v]));
   }
+  console.log("infinityCount:", infinityCount);
+  return [{},{}]
 
   let qCount = 0;
   let altCount = 0;
