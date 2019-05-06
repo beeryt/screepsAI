@@ -2,6 +2,8 @@
 var PriorityQueue = require('FastPriorityQueue');
 var Mine = require("Mine");
 
+const colors = ["#e6863c", "#e9db94", "#a97942", "#3f4747", "#281d24"];
+
 const floyd_warshall = graph =>
 {
   let V = 50*50;
@@ -209,7 +211,7 @@ function doThing(room)
   let u = spot;
   while (ret[1][u] != start)
   {
-    let v = ret[1][u]
+    let v = ret[1][u];
     room.visual.line(iToPos(u), iToPos(v), {lineStyle: 'dotted'});
     u = v;
   }
@@ -222,7 +224,7 @@ function doThing(room)
     p = room.getPositionAt(p.x, p.y);
     room.visual.line(u, p, {opacity: 0.2});
     u = p;
-  })
+  });
 }
 
 class Colony
@@ -274,8 +276,6 @@ class Colony
     });
   }
 
-  const colors = ['#e6863c'. '#e9db94', '#a97942', '#3f4747', '#281d24']
-
   refresh()
   {
     console.log("Colony::refresh()");
@@ -286,10 +286,10 @@ class Colony
       let p = iToPos(i);
       let cost = this.combined_costs[i];
       let radius = map(cost, 0, 50*this.mines.length, 0, 0.45);
-      let color = colors[cost%colors.length]
+      let color = colors[cost%colors.length];
       // this.room.visual.circle(iToPos(i), {radius: radius, fill: "#ffaa00"})
       this.room.visual.rect(p.x-0.5,p.y-0.5,1,1, {fill: color, opacity: 0.2});
-      this.room.visual.text(Math.round(cost/this.mines.length), iToPos(i))
+      this.room.visual.text(Math.round(cost/this.mines.length), iToPos(i));
     }
 
     this.mines.forEach((mine) => {
