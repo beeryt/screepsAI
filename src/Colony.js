@@ -139,27 +139,20 @@ class PriorityQueue
 
   _swap(i, j) {
     console.log("swap start")
-    if (i > this.size() || j > this.size())
-    {
-      console.log("swap debug", i, j);
-    }
     [this._heap[i], this._heap[j]] = [this._heap[j], this._heap[i]];
     console.log("swap end")
   }
 
   _siftUp() {
-    // console.log("siftUp start")
     let node = this.size() - 1;
     while (node > 0 && this._greater(node, nodeParent(node)))
     {
       this._swap(node, nodeParent(node));
       node = nodeParent(node);
     }
-    // console.log("siftUp end")
   }
 
   _siftDown() {
-    // console.log("siftDown start")
     let node = 0;
     while ((left(node) < this.size() && this._greater(left(node), node)) || (right(node) < this.size() && this._greater(right(node), node)))
     {
@@ -167,7 +160,6 @@ class PriorityQueue
       this._swap(node, maxChild);
       node = maxChild;
     }
-    // console.log("siftDown end")
   }
 }
 
