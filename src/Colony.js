@@ -183,6 +183,10 @@ function doThing(room)
   // sources bounding box
   room.visual.rect(minX-0.5, minY-0.5, width, height, {fill: '#00000000', stroke: '#0af000'});
 
+  function map(x, in_min, in_max, out_min, out_max)
+  {
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+  }
 
   let start = 1275;
   let ret = dijkstra(null,start);
@@ -192,8 +196,7 @@ function doThing(room)
   for (let i = 0; i < 2500; ++i)
   {
     let pos = iToPos(i);
-    let color = "rgba(" + (dist[i]/50)*255 + ",0,255,1)";
-    room.visual.circle(pos, {fill: color});
+    room.visual.circle(pos, {radius: map(dist[i], 0, 50, 0, 0.5)});
   }
   let spot = 37*50+12;
   let u = spot;
