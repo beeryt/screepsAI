@@ -140,6 +140,10 @@ class PriorityQueue
 
   _swap(i, j) {
     console.log("swap start")
+    if (i > this.size() || j > this.size())
+    {
+      console.log("swap debug", i, j);
+    }
     [this._heap[i], this._heap[j]] = [this._heap[j], this._heap[i]];
     console.log("swap end")
   }
