@@ -124,7 +124,7 @@ const dijkstra = (graph, source) => {
     if (v != source)
     {
       infinityCount++;
-      dist[v] = Math.POSITIVE_INFINITY;
+      dist[v] = Number.POSITIVE_INFINITY;
     }
     prev[v] = undefined;
 
