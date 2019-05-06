@@ -206,12 +206,11 @@ function doThing(room)
 
 
   let ret = dijkstra(null,1250);
-  room.visual.circle(Math.floor(Math.floor(1250/50),1250%50))
+  room.visual.circle(iToPos(1250), {radius: 0.5, fill: "#FF00FF"})
   let dist = ret[0];
   for (let i = 0; i < 2500; ++i)
   {
-    // console.log(dist[i])
-    let pos = room.getPositionAt(Math.floor(i/50), Math.floor(i%50));
+    let pos = iToPos(i);
     let color = "rgba(" + dist[i] + ",0,255,1)";
     // room.visual.circle(pos, {fill: "#"+((1<<24)*dist[i]|0).toString(16)});
     room.visual.circle(pos, {fill: color})
