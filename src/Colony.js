@@ -135,8 +135,13 @@ const dijkstra = (graph, source) => {
   }
   dist[source] = 0;
 
+  console.log("dists source,", dist[source], dist[0])
   console.log("Neighbors:", dijkstra_getNeighbors(source));
-  console.log("dists source, 0", dist[source], dist[0])
+  let str = "";
+  dijkstra_getNeighbors(source).forEach(n => {
+    str += dist[n] + ",";
+  });
+  console.log(str);
 
   let altCount = 0;
   while (Q.size > 0)
