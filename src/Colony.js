@@ -215,7 +215,7 @@ function doThing(room)
     room.visual.line(iToPos(u), iToPos(v), {lineStyle: 'dotted'});
     u = v;
   }
-  room.visual.line(iToPos(u), iToPos(start));
+  room.visual.line(iToPos(u), iToPos(start), {lineStyle: 'dotted'});
 
   // visualize real path
   u = iToPos(spot);
