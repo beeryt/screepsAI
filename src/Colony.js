@@ -118,7 +118,7 @@ const dijkstra = (graph, source) => {
 
   dist[source] = 0;
 
-  for (let v = 0; v < 5; ++v)
+  for (let v = 0; v < 2500; ++v)
   {
     if (v != source)
     {
@@ -137,8 +137,7 @@ const dijkstra = (graph, source) => {
     let u = Q.poll().node;
 
     dijkstra_getNeighbors(u).forEach(v => {
-      console.log("Not Here", u, v, dijkstra_getNeighbors(u));
-      console.log(dist[u]);
+      console.log("Not Here", u, v, dijkstra_getNeighbors(u), "dist[u]:", dist[u]);
       let alt = dist[u] + dijkstra_length(u, v);
       if (alt < dist[v])
       {
