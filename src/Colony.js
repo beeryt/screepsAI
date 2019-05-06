@@ -81,7 +81,7 @@ const dijkstra_getNeighbors = (u) => {
 
 const dijkstra_length = (dist, prev, u, v) => {
   let length = 0;
-  return Game.rooms['sim'].getTerrain().get(Math.floor(u/50),u%50);
+  return Game.rooms['sim'].getTerrain().get(Math.floor(v/50),v%50);
 }
 
 class PriorityQueue {
