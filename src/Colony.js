@@ -1,3 +1,5 @@
+/*jshint bitwise: false*/
+
 var Mine = require("Mine");
 
 const floyd_warshall = graph =>
@@ -74,16 +76,16 @@ const dijkstra_getNeighbors = (u) => {
     if (x<0||x>=50||y<0||y>=50) continue;
     let v = x*50 + y;
     if (u == v) continue;
-    neighbors.push(v)
+    neighbors.push(v);
   }
   return neighbors;
 };
 
-const parent = i => ((i + 1) >>> 1) - 1;
+const nodeParent = i => ((i + 1) >>> 1) - 1;
 const left = i => (i << 1) + 1;
 const right = i => (i + 1) << 1;
 
-class PriorityQueue()
+class PriorityQueue
 {
   constructor(comparator = (a, b) => a > b) {
     this._heap = [];                // array-based heap
@@ -138,18 +140,17 @@ class PriorityQueue()
   }
 
   _siftUp() {
-    let node = this.size(0 - 1;
-    while (node > 0 && this._greater(node, parent(node)))
+    let node = this.size() - 1;
+    while (node > 0 && this._greater(node, nodeParent(node)))
     {
-      this._swap(node, parent(node));
-      node = parent(node);
+      this._swap(node, nodeParent(node));
+      node = nodeParent(node);
     }
   }
 
   _siftDown() {
     let node = 0;
-    while ((left(node) < this.size() && this._greater(left(node), node))
-        || (right(node) < this.size() && this._greater(right(node), node)))
+    while ((left(node) < this.size() && this._greater(left(node), node)) || (right(node) < this.size() && this._greater(right(node), node)))
     {
       let maxChild = (right(node) < this.size() && this._greater(right(node), left(node)));
       this._swap(node, maxChild);
@@ -161,12 +162,12 @@ class PriorityQueue()
 function iToPos(index) {
   let x = Math.floor(index/50);
   let y = Math.floor(index%50);
-  return Game.rooms['sim'].getPositionAt(x,y);
+  return Game.rooms.sim.getPositionAt(x,y);
 }
 
 function dijkstra_length(u, v) {
   let pos = iToPos(v);
-  return Game.rooms['sim'].getTerrain().get(pos.x, pos.y);
+  return Game.rooms.sim.getTerrain().get(pos.x, pos.y);
 }
 
 const dijkstra = (graph, source) => {
@@ -184,7 +185,7 @@ const dijkstra = (graph, source) => {
     }
     prev[v] = undefined;
 
-    Q.push([v, dist[v]])
+    Q.push([v, dist[v]]);
   }
 
   while (Q.size > 0)
@@ -200,11 +201,11 @@ const dijkstra = (graph, source) => {
       {
         dist[v] = alt;
         prev[v] = u;
-        Q.replace([v, alt])
+        Q.replace([v, alt]);
       }
     }
   }
-  return [dist,prev]
+  return [dist,prev];
 };
 
 function getMineMap(room)
@@ -229,19 +230,19 @@ function doThing(room)
   let height = maxY - minY+1;
 
   // sources bounding box
-  room.visual.rect(minX-.5, minY-.5, width, height, {fill: '#00000000', stroke: '#0af000'});
+  room.visual.rect(minX-0.5, minY-0.5, width, height, {fill: '#00000000', stroke: '#0af000'});
 
 
-  let start = 1275
+  let start = 1275;
   let ret = dijkstra(null,start);
-  room.visual.circle(iToPos(start), {radius: 0.5, fill: "#FF00FF"})
+  room.visual.circle(iToPos(start), {radius: 0.5, fill: "#FF00FF"});
   let dist = ret[0];
   for (let i = 0; i < 2500; ++i)
   {
     let pos = iToPos(i);
     let color = "rgba(" + dist[i] + ",0,255,1)";
     // room.visual.circle(pos, {fill: "#"+((1<<24)*dist[i]|0).toString(16)});
-    room.visual.circle(pos, {fill: color})
+    room.visual.circle(pos, {fill: color});
   }
 }
 
