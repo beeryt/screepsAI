@@ -93,7 +93,14 @@ function iToPos(index) {
 
 function dijkstra_length(u, v) {
   let pos = iToPos(v);
-  return Game.rooms.sim.getTerrain().get(pos.x, pos.y);
+  let terrain = Game.rooms.sim.getTerrain().get(pos.x, pos.y);
+  switch (terrain)
+  {
+    case TERRAIN_MASK_WALL: return 150;
+    case TERRAIN_MASK_SWAMP: return 10;
+    // TODO add road logic
+    default: return 1;
+  }
 }
 
 class Element
