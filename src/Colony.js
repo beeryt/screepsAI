@@ -205,8 +205,9 @@ function doThing(room)
   room.visual.rect(minX-.5, minY-.5, width, height, {fill: '#00000000', stroke: '#0af000'});
 
 
-  let ret = dijkstra(null,1250);
-  room.visual.circle(iToPos(1250), {radius: 0.5, fill: "#FF00FF"})
+  let start = 1275
+  let ret = dijkstra(null,start);
+  room.visual.circle(iToPos(start), {radius: 0.5, fill: "#FF00FF"})
   let dist = ret[0];
   for (let i = 0; i < 2500; ++i)
   {
