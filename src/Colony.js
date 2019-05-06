@@ -205,6 +205,8 @@ function doThing(room)
     let pos = iToPos(i);
     room.visual.circle(pos, {radius: map(dist[i], 0, 150, 0, 0.5)});
   }
+
+  // visualize random path
   let spot = 37*50+12;
   let u = spot;
   while (ret[1][u] != start)
@@ -213,6 +215,8 @@ function doThing(room)
     room.visual.line(iToPos(u), iToPos(v), {lineStyle: 'dotted'});
     u = v;
   }
+  room.visual.line(iToPos(u), iToPos(start));
+
   // visualize real path
   u = iToPos(spot);
   let path = room.findPath(u, iToPos(start));
