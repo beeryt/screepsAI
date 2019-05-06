@@ -194,8 +194,14 @@ function doThing(room)
   {
     let pos = iToPos(i);
     let color = "rgba(" + dist[i] + ",0,255,1)";
-    // room.visual.circle(pos, {fill: "#"+((1<<24)*dist[i]|0).toString(16)});
     room.visual.circle(pos, {fill: color});
+  }
+  let u = 37*50+12;
+  for (let i = 0; i < 5; ++i)
+  {
+    let v = ret[1][u]
+    room.visual.line(iToPos(u), iToPos(v));
+    u = v;
   }
 }
 
