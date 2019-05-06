@@ -116,12 +116,12 @@ class PriorityQueue
     console.log("pop start");
     const poppedValue = this.peek();
     const bottom = this.size() - 1;
-    console.log("pop debug")
     if (bottom > 0)
     {
       this._swap(0, bottom);
     }
     this._heap.pop();
+    console.log("pop debug")
     this._siftDown();
     return poppedValue;
   }
