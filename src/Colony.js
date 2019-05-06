@@ -283,7 +283,8 @@ class Colony
     {
       let cost = this.combined_costs[i];
       let radius = map(cost, 0, 50*this.mines.length, 0, 0.45);
-      this.room.visual.circle(iToPos(i), {radius: radius, fill: "#ffaa00"})
+      // this.room.visual.circle(iToPos(i), {radius: radius, fill: "#ffaa00"})
+      this.room.visual.text(cost, iToPos(i))
     }
 
     this.mines.forEach((mine) => {
