@@ -142,6 +142,7 @@ const dijkstra = (graph, source) => {
     str += dist[n] + ",";
   });
   console.log(str);
+  console.log("Q.size():", Q.size());
 
   let altCount = 0;
   let qCount = 0;
