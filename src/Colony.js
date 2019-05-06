@@ -192,12 +192,14 @@ const dijkstra = (graph, source) => {
   let altCount = 0;
   while (Q.size() > 0)
   {
+    console.log("Got Here!");
     qCount++;
     let u = Q.pop();
 
     let neighbors = dijkstra_getNeighbors(u);
     for (let i = 0; i < neighbors.length; ++i)
     {
+      console.log("Not Here");
       let v = neighbors[u];
       let alt = dist[u] + dijkstra_length(u, v);
       if (alt < dist[v])
