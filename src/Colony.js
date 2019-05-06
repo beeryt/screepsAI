@@ -156,7 +156,6 @@ const dijkstra = (graph, source) => {
     let u = Q.dequeue();
 
     let neighbors = dijkstra_getNeighbors(u);
-    console.log("NeighborLength:", neighbors.length)
     for (let i = 0; i < neighbors.length; ++i)
     {
       let v = neighbors[i];
