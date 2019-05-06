@@ -87,7 +87,7 @@ const right = i => (i + 1) << 1;
 
 class PriorityQueue
 {
-  constructor(comparator = (a, b) => a > b) {
+  constructor(comparator = (a, b) => a < b) {
     this._heap = [];                // array-based heap
     this._comparator = comparator;  // custom element comparator
   }
