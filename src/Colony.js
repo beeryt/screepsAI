@@ -209,7 +209,7 @@ const dijkstra = (graph, source) => {
     let u = Q.pop();
 
     dijkstra_getNeighbors(u).forEach(v => {
-      console.log("Not Here", u, v);
+      console.log("Not Here", u, v, dijkstra_getNeighbors(u));
       let alt = dist[u] + dijkstra_length(u, v);
       if (alt < dist[v])
       {
