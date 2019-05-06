@@ -144,8 +144,10 @@ const dijkstra = (graph, source) => {
   console.log(str);
 
   let altCount = 0;
+  let qCount = 0;
   while (Q.size > 0)
   {
+    qCount++;
     let u = Q.dequeue();
 
     let neighbors = dijkstra_getNeighbors(u);
@@ -165,6 +167,7 @@ const dijkstra = (graph, source) => {
     }
   }
   console.log("AltCount:", altCount)
+  console.log("qCount:", qCount);
   return [dist, prev];
 };
 
