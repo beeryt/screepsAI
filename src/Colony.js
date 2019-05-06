@@ -212,7 +212,6 @@ function doThing(room)
     room.visual.line(u, p, {opacity: 0.2});
     u = p;
   })
-  room.visual.line(iToPos(u), iToPos(start), {opacity: 0.1});
 }
 
 class Colony
