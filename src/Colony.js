@@ -203,7 +203,7 @@ function doThing(room)
   for (let i = 0; i < 2500; ++i)
   {
     let pos = iToPos(i);
-    room.visual.circle(pos, {radius: map(dist[i], 0, 150, 0, 0.5)});
+    room.visual.circle(pos, {opacity: 0.3, radius: map(dist[i], 0, 150, 0, 0.5)});
   }
 
   // visualize random path
