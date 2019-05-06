@@ -90,7 +90,7 @@ class PriorityQueue {
   }
 
   enqueue(element) {
-    if (this.isEmpty())
+    if (this.size() === 0)
     {
       this.collection.push(element);
     } else
@@ -117,8 +117,8 @@ class PriorityQueue {
     return value;
   }
 
-  isEmpty() {
-    return (this.collection.length === 0);
+  size() {
+    return this.collection.length;
   }
 };
 
