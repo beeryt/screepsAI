@@ -131,7 +131,7 @@ const dijkstra = (graph, source) => {
 
   let qCount = 0;
   let altCount = 0;
-  while (Q.size() > 0)
+  while (!Q.isEmpty())
   {
     qCount++;
     let u = Q.poll().node;
