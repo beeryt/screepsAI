@@ -146,7 +146,7 @@ const dijkstra = (graph, source) => {
 
   let altCount = 0;
   let qCount = 0;
-  while (Q.size > 0)
+  while (Q.size() > 0)
   {
     qCount++;
     let u = Q.dequeue();
