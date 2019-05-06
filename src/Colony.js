@@ -110,6 +110,10 @@ class Element
   }
 }
 
+function comparator(a,b) {
+  return a[1] < b[1];
+}
+
 const dijkstra = (graph, source) => {
   let dist = {};
   let prev = {};
@@ -144,9 +148,10 @@ const dijkstra = (graph, source) => {
       if (alt < dist[v])
       {
         altCount++;
+        Q.remove(new Element(v, dist[v]));
+        Q.add(new Element(v, alt));
         dist[v] = alt;
         prev[v] = u;
-        Q.add(new Element(v, alt));
       }
     });
   }
