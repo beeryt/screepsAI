@@ -127,57 +127,47 @@ function iToPos(index) {
   return Game.rooms['sim'].getPositionAt(x,y);
 }
 
-function dijkstra_length(dist, prev, u, v) {
+function dijkstra_length(u, v) {
   let pos = iToPos(v);
   return Game.rooms['sim'].getTerrain().get(pos.x, pos.y);
 }
 
 const dijkstra = (graph, source) => {
-  let Q = new PriorityQueue();
   let dist = {};
   let prev = {};
+  let Q = new PriorityQueue();
+
+  dist[source] = 0;
 
   for (let v = 0; v < 2500; ++v)
   {
-    dist[v] = Number.POSITIVE_INFINITY;
+    if (v != source)
+    {
+      dist[v] = Math.POSITIVE_INFINITY;
+    }
     prev[v] = undefined;
-    Q.enqueue(v);
+
+    Q.enqueue([v, dist[v]])
   }
-  dist[source] = 0;
 
-  console.log("dists source,", dist[source], dist[0])
-  console.log("Neighbors:", dijkstra_getNeighbors(source));
-  let str = "";
-  dijkstra_getNeighbors(source).forEach(n => {
-    str += dist[n] + ",";
-  });
-  console.log(str);
-  console.log("Q.size():", Q.size());
-
-  let altCount = 0;
-  let qCount = 0;
-  while (Q.size() > 0)
+  while (Q.size > 0)
   {
-    qCount++;
     let u = Q.dequeue();
 
     let neighbors = dijkstra_getNeighbors(u);
     for (let i = 0; i < neighbors.length; ++i)
     {
-      let v = neighbors[i];
-      if (!Q.includes(v)) continue;
-      let alt = dist[u] + dijkstra_length(dist,prev,u,v);
-      if (alt < dist[v]) {
-        console.log("Hello", [u,v], dist[u], alt, dist[v])
-        altCount++;
+      let v = neighbors[u];
+      let alt = dist[u] + dijkstra_length(u, v);
+      if (alt < dist[v])
+      {
         dist[v] = alt;
         prev[v] = u;
+        Q.enqueue([v, alt])
       }
     }
   }
-  console.log("AltCount:", altCount)
-  console.log("qCount:", qCount);
-  return [dist, prev];
+  return [dist,prev]
 };
 
 function getMineMap(room)
