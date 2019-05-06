@@ -197,7 +197,7 @@ function doThing(room)
     room.visual.circle(pos, {fill: color});
   }
   let u = 37*50+12;
-  for (let i = 0; i < 5; ++i)
+  while (ret[1][u] != start)
   {
     let v = ret[1][u]
     room.visual.line(iToPos(u), iToPos(v));
