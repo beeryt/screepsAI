@@ -126,7 +126,24 @@ class PriorityQueue {
   }
 };
 
+function iToPos(index) {
+  let x = Math.floor(index/50);
+  let y = Math.floor(index%50);
+  return Game.rooms['sim'].getPositionAt(x,y);
+}
+
 const dijkstra = (graph, source) => {
+
+  source = 1250 + 25;
+  let neighs = dijkstra_getNeighbors(source);
+  let room = Game.rooms['sim']
+  room.visual.circle(iToPos(source), {fill: "#00ffaa"});
+  neighs.forEach(n => {
+    room.visual.circle(iToPos(n), {fill: "#ffffff"});
+  })
+  return [{},{}];
+
+
   let Q = new PriorityQueue();
   let dist = {};
   let prev = {};
