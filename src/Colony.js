@@ -131,7 +131,6 @@ const dijkstra = (graph, source) => {
     Q.add(new Element(v, dist[v]));
   }
   console.log("infinityCount:", infinityCount, dist[source+1]);
-  return [{},{}]
 
   let qCount = 0;
   let altCount = 0;
