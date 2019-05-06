@@ -168,6 +168,7 @@ const dijkstra = (graph, source) => {
 
 function map(x, in_min, in_max, out_min, out_max)
 {
+  if (x > in_max) x = in_max;
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
@@ -281,7 +282,7 @@ class Colony
     for (let i = 0; i < 2500; ++i)
     {
       let cost = this.combined_costs[i];
-      let radius = map(cost, 0, this.mines.length*50, 0, 0.45);
+      let radius = map(cost, 0, 50, 0, 0.45);
       this.room.visual.circle(iToPos(i), {radius: radius, fill: "#ffaa00"})
     }
 
