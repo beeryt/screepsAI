@@ -79,47 +79,84 @@ const dijkstra_getNeighbors = (u) => {
   return neighbors;
 };
 
-class PriorityQueue {
-  constructor() {
-    this.collection = [];
-  }
+const parent = i => ((i + 1) >>> 1) - 1;
+const left = i => (i << 1) + 1;
+const right = i => (i + 1) << 1;
 
-  enqueue(element) {
-    if (this.size() === 0)
-    {
-      this.collection.push(element);
-    } else
-    {
-      let added = false;
-      for (let i = 1; i <= this.collection.length; ++i)
-      {
-        if (element[1] < this.collection[i-1][1])
-        {
-          this.collection.splice(i-1, 0, element);
-          added = true;
-          break;
-        }
-      }
-      if (!added)
-      {
-        this.collection.push(element);
-      }
-    }
-  }
-
-  dequeue() {
-    let value = this.collection.shift();
-    return value;
-  }
-
-  includes(element) {
-    return this.collection.includes(element);
+class PriorityQueue()
+{
+  constructor(comparator = (a, b) => a > b) {
+    this._heap = [];                // array-based heap
+    this._comparator = comparator;  // custom element comparator
   }
 
   size() {
-    return this.collection.length;
+    return this._heap.length;
   }
-};
+
+  isEmpty() {
+    return this.size() == 0;
+  }
+
+  peak() {
+    return this._heap[0];
+  }
+
+  push(...values) {
+    values.forEach(value => {
+      this._heap.push(value);
+      this._siftUp();
+    });
+    return this.size();
+  }
+
+  pop() {
+    const poppedValue = this.peek();
+    const bottom = this.size() - 1;
+    if (bottom > top)
+    {
+      this._swap(top, bottom);
+    }
+    this._heap.pop();
+    this._siftDown();
+    return poppedValue;
+  }
+
+  replace(value) {
+    const replacedValue = this.peek();
+    this._heap[0] = value;
+    this._siftDown();
+    return replacedValue;
+  }
+
+  _greater(i, j) {
+    return this._comparator(this._heap[i], this._heap[j]);
+  }
+
+  _swap(i, j) {
+    [this._heap[i], this.heap[j]] = [this.heap[j], this._heap[i]];
+  }
+
+  _siftUp() {
+    let node = this.size(0 - 1;
+    while (node > 0 && this._greater(node, parent(node)))
+    {
+      this._swap(node, parent(node));
+      node = parent(node);
+    }
+  }
+
+  _siftDown() {
+    let node = 0;
+    while ((left(node) < this.size() && this._greater(left(node), node))
+        || (right(node) < this.size() && this._greater(right(node), node)))
+    {
+      let maxChild = (right(node) < this.size() && this._greater(right(node), left(node)));
+      this._swap(node, maxChild);
+      node = maxChild;
+    }
+  }
+}
 
 function iToPos(index) {
   let x = Math.floor(index/50);
@@ -135,7 +172,7 @@ function dijkstra_length(u, v) {
 const dijkstra = (graph, source) => {
   let dist = {};
   let prev = {};
-  let Q = new PriorityQueue();
+  let Q = new PriorityQueue((a,b)=>a[1] < b[1]);
 
   dist[source] = 0;
 
@@ -147,12 +184,12 @@ const dijkstra = (graph, source) => {
     }
     prev[v] = undefined;
 
-    Q.enqueue([v, dist[v]])
+    Q.push([v, dist[v]])
   }
 
   while (Q.size > 0)
   {
-    let u = Q.dequeue();
+    let u = Q.pop();
 
     let neighbors = dijkstra_getNeighbors(u);
     for (let i = 0; i < neighbors.length; ++i)
@@ -163,7 +200,7 @@ const dijkstra = (graph, source) => {
       {
         dist[v] = alt;
         prev[v] = u;
-        Q.enqueue([v, alt])
+        Q.replace([v, alt])
       }
     }
   }
