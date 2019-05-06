@@ -140,7 +140,7 @@ class PriorityQueue
 
   _swap(i, j) {
     console.log("swap start")
-    [this._heap[i], this.heap[j]] = [this.heap[j], this._heap[i]];
+    [this._heap[i], this._heap[j]] = [this._heap[j], this._heap[i]];
     console.log("swap end")
   }
 
