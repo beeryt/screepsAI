@@ -183,14 +183,14 @@ function dijkstra_length(u, v) {
 }
 
 const dijkstra = (graph, source) => {
-  source = 1275;
+  source = 0;
   let dist = {};
   let prev = {};
   let Q = new PriorityQueue((a,b)=>a[1] < b[1]);
 
   dist[source] = 0;
 
-  for (let v = 0; v < 2500; ++v)
+  for (let v = 0; v < 5; ++v)
   {
     if (v != source)
     {
@@ -200,6 +200,7 @@ const dijkstra = (graph, source) => {
 
     Q.push([v, dist[v]]);
   }
+  console.log(Q._heap);
 
   let qCount = 0;
   let altCount = 0;
