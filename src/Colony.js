@@ -196,14 +196,23 @@ function doThing(room)
     let color = "rgba(" + dist[i] + ",0,255,1)";
     room.visual.circle(pos, {fill: color});
   }
-  let u = 37*50+12;
-  room.visual.line(iToPos(u), iToPos(start), {opacity: 0.1});
+  let spot = 37*50+12;
+  let u = spot;
   while (ret[1][u] != start)
   {
     let v = ret[1][u]
     room.visual.line(iToPos(u), iToPos(v), {lineStyle: 'dotted'});
     u = v;
   }
+  // visualize real path
+  let path = room.findPath(iToPos(u), iToPos(start));
+  u = iToPos(spot);
+  path.forEach(p => {
+    p = room.getPositionAt(p.x, p.y);
+    room.visual.line(u, p, {opacity: 0.2});
+    u = p;
+  })
+  room.visual.line(iToPos(u), iToPos(start), {opacity: 0.1});
 }
 
 class Colony
