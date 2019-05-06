@@ -211,8 +211,8 @@ const dijkstra = (graph, source) => {
     let neighbors = dijkstra_getNeighbors(u);
     for (let i = 0; i < neighbors.length; ++i)
     {
-      console.log("Not Here");
       let v = neighbors[u];
+      console.log("Not Here", u, v);
       let alt = dist[u] + dijkstra_length(u, v);
       if (alt < dist[v])
       {
