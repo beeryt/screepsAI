@@ -111,7 +111,6 @@ class Element
 }
 
 const dijkstra = (graph, source) => {
-  source = 0;
   let dist = {};
   let prev = {};
   let Q = new PriorityQueue();
