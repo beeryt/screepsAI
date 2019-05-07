@@ -289,7 +289,7 @@ class Colony
       let p = iToPos(i);
       let cost = this.combined_costs[i];
       let radius = map(cost, 0, 100, 0, 0.45);
-      let colorIndex = 255 - Math.round(map(cost, 90, 115, 0, 255));
+      let colorIndex = 255 - Math.round(map(cost, 115, 150, 0, 255));
       let color = "rgba(255," + colorIndex + ",0,1)";
       this.room.visual.rect(p.x-0.45,p.y-0.45,0.9,0.9, {fill: color, opacity: 0.45});
     }
