@@ -309,9 +309,31 @@ class Colony
   {
     console.log("Colony::update()");
 
+    let CoM = {x:0, y:0, m:0};
+
     this.mines.forEach((mine) => {
       mine.update();
+      CoM.m += mine.source.energyCapacity;
+      CoM.x += mine.source.energyCapacity * mine.pos.x;
+      CoM.y += mine.source.energyCapacity * mine.pos.y;
     });
+
+    CoM.x /= CoM.m;
+    CoM.y /= CoM.m;
+    CoM.p = this.room.getPositionAt(CoM.x, CoM.y);
+
+    this.mines.forEach(mine => {
+      this.room.visual.line(mine.pos, CoM.p, {opacity: 0.5});
+    });
+
+    CoM.x = (CoM.x*CoM.m + this.room.controller.pos.x * 2000) / (CoM.m + 2000);
+    CoM.y = (CoM.y*CoM.m + this.room.controller.pos.y * 2000) / (CoM.m + 2000);
+    CoM.p = this.room.getPositionAt(CoM.x, CoM.y);
+    CoM.m += 2000;
+    this.mines.forEach(mine => {
+      this.room.visual.line(mine.pos, CoM.p, {opacity: 0.5});
+    });
+
   }
 
   run()
