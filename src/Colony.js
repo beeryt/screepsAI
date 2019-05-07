@@ -297,7 +297,7 @@ class Colony
       let colorIndex = Math.round(map(cost, 25, 30, 0, 255));
       let color = "rgba(" + colorIndex + "," + (255-colorIndex) + ",0,1)";
       console.log("color:", color)
-      this.room.visual.rect(p.x-0.45,p.y-0.45,0.9,0.9, {fill: color, opacity: 0.45});
+      this.room.visual.rect(p.x-0.25,p.y-0.25,0.5,0.5, {fill: color, opacity: 0.45});
     }
 
     this.mines.forEach((mine) => {
