@@ -200,11 +200,6 @@ function doThing(room)
   console.log("dijkstra complete");
   room.visual.circle(iToPos(start), {radius: 0.5, fill: "#FF00FF"});
   let dist = ret[0];
-  for (let i = 0; i < 2500; ++i)
-  {
-    let pos = iToPos(i);
-    room.visual.circle(pos, {opacity: 0.3, radius: map(dist[i], 0, 150, 0, 0.49)});
-  }
 
   // visualize random path
   let spot = 37*50+12;
@@ -296,7 +291,7 @@ class Colony
       let radius = map(cost, 0, 100, 0, 0.45);
       let colorIndex = Math.round(map(cost, min_cost, 1.05*min_cost, 0, 255));
       let color = "rgba(" + colorIndex + "," + (255-colorIndex) + ",0,1)";
-      this.room.visual.rect(p.x-0.25,p.y-0.25,0.5,0.5, {fill: color, opacity: 0.45});
+      this.room.visual.rect(p.x-0.5,p.y-0.5,1,1, {fill: color, opacity: 0.1});
     }
 
     this.mines.forEach((mine) => {
