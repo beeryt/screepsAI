@@ -326,10 +326,10 @@ class Colony
       this.room.visual.line(mine.pos, CoM.p, {opacity: 0.5});
     });
 
-    CoM.x = (CoM.x*CoM.m + this.room.controller.pos.x * 2000) / (CoM.m + 2000);
-    CoM.y = (CoM.y*CoM.m + this.room.controller.pos.y * 2000) / (CoM.m + 2000);
+    CoM.x = (CoM.x*CoM.m + this.room.controller.pos.x * CoM.m) / (CoM.m + CoM.m);
+    CoM.y = (CoM.y*CoM.m + this.room.controller.pos.y * CoM.m) / (CoM.m + CoM.m);
     CoM.p = this.room.getPositionAt(CoM.x, CoM.y);
-    CoM.m += 2000;
+    CoM.m += CoM.m;
     this.mines.forEach(mine => {
       this.room.visual.line(mine.pos, CoM.p, {opacity: 0.5});
     });
