@@ -282,6 +282,8 @@ class Colony
     doThing(this.room);
 
     let maxCost = _.max(this.combined_costs);
+    let min_cost = _.min(this.combined_costs);
+    console.log("max:", maxCost, "min:", min_cost);
     for (let i = 0; i < 2500; ++i)
     {
       let p = iToPos(i);
