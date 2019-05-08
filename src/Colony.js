@@ -233,8 +233,8 @@ class Colony
     let maxCost = _.max(this.combined_costs);
     let min_cost = _.min(this.combined_costs);
 
-    let in = this.combined_costs.indexOf(min_cost);
-    let Q = flood(in, min_cost);
+    let ind = this.combined_costs.indexOf(min_cost);
+    let Q = flood(ind, min_cost);
     Q.forEach(n => {
       let x = Math.floor(n/50);
       let y = Math.floor(n%50);
