@@ -176,6 +176,7 @@ class Colony
     this.controller = room.controller;
     this.pos = this.controller.pos;
     this.mines = [];
+    this.room.find(FIND_SOURCES).forEach(source => this.mines.push(source));
   }
 
   init()
