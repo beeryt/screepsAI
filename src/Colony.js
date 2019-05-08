@@ -144,18 +144,14 @@ const dijkstra = (graph, source) => {
   }
   console.log("infinityCount:", infinityCount, dist[source+1]);
 
-  let qCount = 0;
-  let altCount = 0;
   while (!Q.isEmpty())
   {
-    qCount++;
     let u = Q.poll().node;
 
     dijkstra_getNeighbors(u).forEach(v => {
       let alt = dist[u] + dijkstra_length(u, v);
       if (alt < dist[v])
       {
-        altCount++;
         Q.remove(new Element(v, dist[v]));
         Q.add(new Element(v, alt));
         dist[v] = alt;
@@ -163,8 +159,6 @@ const dijkstra = (graph, source) => {
       }
     });
   }
-  console.log("qCount:", qCount);
-  console.log("altCount:", altCount);
   return [dist,prev];
 };
 
