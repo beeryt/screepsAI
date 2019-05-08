@@ -192,6 +192,7 @@ class Colony
       mine.init();
       let mineIndex = mine.pos.x*50+mine.pos.y;
       let ret = dijkstra(null, mineIndex);
+      console.log("first dijkstra max:", _.max(ret[0]))
       for (let i = 0; i < 2500; ++i)
       {
         this.combined_costs[i] += ret[0][i] / mine.source.energyCapacity;
