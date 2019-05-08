@@ -86,13 +86,13 @@ class Mine {
 
     // draw mineables
     this.mineables.forEach(mineable => {
-      this.room.visual.circle(mineable);
+      this.room.visual.circle(mineable, {opacity: 0.1});
     })
 
-    // draw costs
-    this.locale.forEach(o => {
-      this.room.visual.text(o.cost, o.pos);
-    });
+    // // draw costs
+    // this.locale.forEach(o => {
+    //   this.room.visual.text(o.cost, o.pos);
+    // });
 
     // determine real distances
     let dist = new Array(2500);
