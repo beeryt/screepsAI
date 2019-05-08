@@ -172,6 +172,7 @@ function flood(graph, node, target_val)
     let neighbors = dijkstra_getNeighbors(n);
     for (let i = 0; i < neighbors.length; ++i)
     {
+      if (out.includes(neighbors[i])) continue;
       Q.push(neighbors[i]);
       out.push(neighbors[i]);
     }
