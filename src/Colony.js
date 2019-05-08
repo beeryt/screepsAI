@@ -218,7 +218,7 @@ class Colony
       let ret = dijkstra(null, mineIndex);
       for (let i = 0; i < 2500; ++i)
       {
-        this.combined_costs[i] += ret[0][i] / mine.source.energyCapacity;
+        this.combined_costs[i] += ret[0][i] * -mine.source.energyCapacity;
       }
     });
 
@@ -226,13 +226,13 @@ class Colony
     let ret = dijkstra(null, cindex);
     for (let i = 0; i < 2500; ++i)
     {
-      this.combined_costs[i] += ret[0][i] / -2000;
+      this.combined_costs[i] += ret[0][i] * 2000;
     }
 
-    // for (let i = 0; i < 2500; ++i)
-    // {
-    //   this.combined_costs[i] /= (this.mines.length + 1);
-    // }
+    for (let i = 0; i < 2500; ++i)
+    {
+      this.combined_costs[i] /= (this.mines.length + 1);
+    }
 
     this.pos = iToPos(this.combined_costs.indexOf(_.min(this.combined_costs)));
     this.mines.forEach(mine => {
