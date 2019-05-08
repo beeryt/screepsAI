@@ -213,7 +213,7 @@ class Colony
       let ret = dijkstra(null, mineIndex);
       for (let i = 0; i < 2500; ++i)
       {
-        this.combined_costs[i] += ret[0][i] / mine.source.energyCapacity;
+        this.combined_costs[i] += ret[0][i];// / mine.source.energyCapacity;
       }
     });
 
