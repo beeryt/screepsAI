@@ -159,6 +159,21 @@ const dijkstra = (graph, source) => {
   return [dist,prev];
 };
 
+function flood(node, target_val)
+{
+  if (this.combined_costs[i] != target_val) return;
+  let Q = [];
+  Q.push(node);
+  while (Q.length > 0)
+  {
+    let n = Q.shift();
+    dijkstra_getNeighbors(n).forEach(neighbor => {
+      Q.push(neighbor);
+    });
+  }
+  return Q;
+}
+
 function map(x, in_min, in_max, out_min, out_max)
 {
   // if (x > in_max) x = in_max;
@@ -217,6 +232,14 @@ class Colony
 
     let maxCost = _.max(this.combined_costs);
     let min_cost = _.min(this.combined_costs);
+
+    let Q = flood(this.combined_costs.indexOf(min_cost), min_cost);
+    Q.forEach(n => {
+      let x = Math.floor(n/50);
+      let y = Math.floor(n%50);
+      this.room.visual.rect(x-0.5, y-0.5, 1, 1, {fill: "#ffffff", opacity: 0.2});
+    });
+
     for (let i = 0; i < 2500; ++i)
     {
       let p = iToPos(i);
