@@ -209,7 +209,6 @@ class Colony
     }
 
     this.mines.forEach(mine => {
-      mine.init();
       let mineIndex = mine.pos.x*50+mine.pos.y;
       let ret = dijkstra(null, mineIndex);
       for (let i = 0; i < 2500; ++i)
@@ -229,6 +228,11 @@ class Colony
     {
       this.combined_costs[i] /= this.mines.length;
     }
+
+    this.pos = iToPos(this.combined_costs.indexOf(_.min(this.combined_costs)));
+    this.mines.forEach(mine => {
+      mine.init();
+    })
 
     console.log("max:", _.max(this.combined_costs), "min:", _.min(this.combined_costs));
   }
