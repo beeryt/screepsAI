@@ -163,7 +163,9 @@ function flood(graph, node, target_val)
 {
   if (graph[node] != target_val) return;
   let Q = [];
+  let out = [];
   Q.push(node);
+  out.push(node);
   while (Q.length > 0)
   {
     let n = Q.shift();
@@ -171,9 +173,10 @@ function flood(graph, node, target_val)
     for (let i = 0; i < neighbors.length; ++i)
     {
       Q.push(neighbors[i]);
+      out.push(neighbors[i]);
     }
   }
-  return Q;
+  return out;
 }
 
 function map(x, in_min, in_max, out_min, out_max)
