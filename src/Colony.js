@@ -159,6 +159,11 @@ const dijkstra = (graph, source) => {
   return [dist,prev];
 };
 
+function fuzzyCompare(a,b)
+{
+  return Math.abs(a-b) < Number.EPSILON;
+}
+
 function flood(graph, node, target_val)
 {
   if (graph[node] != target_val) return;
@@ -172,7 +177,7 @@ function flood(graph, node, target_val)
     let neighbors = dijkstra_getNeighbors(n);
     for (let i = 0; i < neighbors.length; ++i)
     {
-      if (graph[neighbors[i]] != target_val) continue;
+      if (!fuzzyCompare(graph[neighbors[i]], target_val)) continue;
       if (out.includes(neighbors[i])) continue;
       Q.push(neighbors[i]);
       out.push(neighbors[i]);
