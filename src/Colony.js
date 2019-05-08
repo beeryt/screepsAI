@@ -226,7 +226,7 @@ class Colony
     let ret = dijkstra(null, cindex);
     for (let i = 0; i < 2500; ++i)
     {
-      this.combined_costs[i] += ret[0][i] * 2000;
+      this.combined_costs[i] += ret[0][i] * -2000;
     }
 
     for (let i = 0; i < 2500; ++i)
