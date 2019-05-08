@@ -218,12 +218,12 @@ class Colony
       }
     });
 
-    let cindex = this.room.controller.pos.x*50+this.room.controller.pos.y;
-    let ret = dijkstra(null, cindex);
-    for (let i = 0; i < 2500; ++i)
-    {
-      this.combined_costs[i] += ret[0][i] / 2000;
-    }
+    // let cindex = this.room.controller.pos.x*50+this.room.controller.pos.y;
+    // let ret = dijkstra(null, cindex);
+    // for (let i = 0; i < 2500; ++i)
+    // {
+    //   this.combined_costs[i] += ret[0][i] / 50000;
+    // }
 
     for (let i = 0; i < 2500; ++i)
     {
