@@ -162,14 +162,16 @@ const dijkstra = (graph, source) => {
 function flood(graph, node, target_val)
 {
   if (graph[i] != target_val) return;
-  var Q = [];
+  let Q = [];
   Q.push(node);
   while (Q.length > 0)
   {
     let n = Q.shift();
-    dijkstra_getNeighbors(n).forEach(neighbor => {
+    let neighbors = dijkstra_getNeighbors(n);
+    for (let i = 0; i < neighbors.length; ++i)
+    {
       Q.push(neighbor);
-    });
+    }
   }
   return Q;
 }
