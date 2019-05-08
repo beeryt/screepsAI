@@ -277,10 +277,10 @@ class Colony
       this.combined_costs[i] += ret[0][i] / (3000*this.mines.length);
     }
 
-    // for (let i = 0; i < 2500; ++i)
-    // {
-    //   this.combined_costs[i] /= this.mines.length;
-    // }
+    for (let i = 0; i < 2500; ++i)
+    {
+      this.combined_costs[i] /= this.mines.length;
+    }
   }
 
   refresh()
