@@ -162,7 +162,7 @@ const dijkstra = (graph, source) => {
 function flood(graph, node, target_val)
 {
   if (graph[i] != target_val) return;
-  let Q = [];
+  var Q = [];
   Q.push(node);
   while (Q.length > 0)
   {
