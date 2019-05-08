@@ -93,6 +93,21 @@ class Mine {
     this.locale.forEach(o => {
       this.room.visual.text(o.cost, o.pos);
     });
+
+    // determine real distances
+    let dist = new Array(2500);
+    let x_0 = this.colony.pos.x;
+    let y_0 = this.colony.pos.y;
+    this.locale.forEach(o => {
+      let x = o.pos.x;
+      let y = o.pos.y;
+      let i = x*50+y;
+      dist[i] = Math.sqrt(Math.pow((x - x_0),2) + Math.pow((y - y_0),2));
+    });
+
+    let minDist = _.min(dist);
+    let minDistI = dist.indexOf(minDist);
+    this.room.visual.circle(Math.floor(minDistI/50), minDistI%50, {fill: "#000000"});
   }
 
   run()
