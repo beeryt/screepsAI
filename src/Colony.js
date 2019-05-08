@@ -130,19 +130,16 @@ const dijkstra = (graph, source) => {
 
   dist[source] = 0;
 
-  let infinityCount = 0;
   for (let v = 0; v < 2500; ++v)
   {
     if (v != source)
     {
-      infinityCount++;
       dist[v] = Number.POSITIVE_INFINITY;
     }
     prev[v] = undefined;
 
     Q.add(new Element(v, dist[v]));
   }
-  console.log("infinityCount:", infinityCount, dist[source+1]);
 
   while (!Q.isEmpty())
   {
@@ -193,7 +190,6 @@ class Colony
       mine.init();
       let mineIndex = mine.pos.x*50+mine.pos.y;
       let ret = dijkstra(null, mineIndex);
-      console.log("first dijkstra max:", _.max(ret[0]))
       for (let i = 0; i < 2500; ++i)
       {
         this.combined_costs[i] += ret[0][i] / mine.source.energyCapacity;
