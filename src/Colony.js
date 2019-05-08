@@ -168,54 +168,6 @@ function map(x, in_min, in_max, out_min, out_max)
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-function doThing(room)
-{
-  let minX, minY, maxX, maxY;
-  minX = minY = 50;
-  maxX = maxY = 0;
-
-  room.find(FIND_SOURCES).forEach(source => {
-    let x = source.pos.x;
-    let y = source.pos.y;
-    if (x < minX) minX = x;
-    if (y < minY) minY = y;
-    if (x > maxX) maxX = x;
-    if (y > maxY) maxY = y;
-  });
-
-  let width = maxX - minX+1;
-  let height = maxY - minY+1;
-
-  // sources bounding box
-  room.visual.rect(minX-0.5, minY-0.5, width, height, {fill: '#00000000', stroke: '#0af000'});
-
-  let start = 1275;
-  let ret = dijkstra(null,start);
-  console.log("dijkstra complete");
-  room.visual.circle(iToPos(start), {radius: 0.5, fill: "#FF00FF"});
-  let dist = ret[0];
-
-  // visualize random path
-  let spot = 37*50+12;
-  let u = spot;
-  while (ret[1][u] != start)
-  {
-    let v = ret[1][u];
-    room.visual.line(iToPos(u), iToPos(v), {lineStyle: 'dotted'});
-    u = v;
-  }
-  room.visual.line(iToPos(u), iToPos(start), {lineStyle: 'dotted'});
-
-  // visualize real path
-  u = iToPos(spot);
-  let path = room.findPath(u, iToPos(start));
-  path.forEach(p => {
-    p = room.getPositionAt(p.x, p.y);
-    room.visual.line(u, p, {opacity: 0.2});
-    u = p;
-  });
-}
-
 class Colony
 {
   constructor(room)
@@ -230,30 +182,12 @@ class Colony
   {
     console.log("Colony::init()");
 
-    let sumX = 0;
-    let sumY = 0;
-    let mass = 0;
-    this.room.find(FIND_SOURCES).forEach(source => {
-      sumX += source.pos.x * source.energyCapacity;
-      sumY += source.pos.y * source.energyCapacity;
-      mass += source.energyCapacity;
-      this.mines.push(new Mine(this, source));
-    });
-
-    sumX += this.controller.pos.x * mass;
-    sumY += this.controller.pos.y * mass;
-    mass += mass;
-
-    this.pos = this.room.getPositionAt(sumX/mass, sumY/mass);
-    this.room.visual.circle(this.pos);
-
     this.combined_costs = {};
     for (let i = 0; i < 2500; ++i)
     {
       this.combined_costs[i] = 0;
     }
 
-    this.room.memory.mineMap = {};
     this.mines.forEach(mine => {
       mine.init();
       let mineIndex = mine.pos.x*50+mine.pos.y;
@@ -280,7 +214,6 @@ class Colony
   refresh()
   {
     console.log("Colony::refresh()");
-    doThing(this.room);
 
     let maxCost = _.max(this.combined_costs);
     let min_cost = _.min(this.combined_costs);
@@ -302,22 +235,6 @@ class Colony
   update()
   {
     console.log("Colony::update()");
-
-    let CoM = {x:0, y:0, m:0};
-
-    this.mines.forEach((mine) => {
-      mine.update();
-      CoM.m += mine.source.energyCapacity;
-      CoM.x += mine.source.energyCapacity * mine.pos.x;
-      CoM.y += mine.source.energyCapacity * mine.pos.y;
-    });
-
-    CoM.x /= CoM.m;
-    CoM.y /= CoM.m;
-    CoM.p = this.room.getPositionAt(CoM.x, CoM.y);
-
-    this.room.visual.circle(CoM.p, {radius: 0.5, fill: colors[0]});
-
   }
 
   run()
