@@ -229,10 +229,10 @@ class Colony
       this.combined_costs[i] += ret[0][i] / -2000;
     }
 
-    for (let i = 0; i < 2500; ++i)
-    {
-      this.combined_costs[i] /= (this.mines.length + 1);
-    }
+    // for (let i = 0; i < 2500; ++i)
+    // {
+    //   this.combined_costs[i] /= (this.mines.length + 1);
+    // }
 
     this.pos = iToPos(this.combined_costs.indexOf(_.min(this.combined_costs)));
     this.mines.forEach(mine => {
