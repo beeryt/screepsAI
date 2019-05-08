@@ -213,7 +213,7 @@ class Colony
 
   refresh()
   {
-    console.log("Colony::refresh()");
+    // console.log("Colony::refresh()");
 
     let maxCost = _.max(this.combined_costs);
     let min_cost = _.min(this.combined_costs);
@@ -233,12 +233,12 @@ class Colony
 
   update()
   {
-    console.log("Colony::update()");
+    // console.log("Colony::update()");
   }
 
   run()
   {
-    console.log("Colony::run()");
+    // console.log("Colony::run()");
 
     this.mines.forEach((mine) => {
       mine.run();
