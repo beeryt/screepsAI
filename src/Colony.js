@@ -159,9 +159,9 @@ const dijkstra = (graph, source) => {
   return [dist,prev];
 };
 
-function flood(node, target_val)
+function flood(graph, node, target_val)
 {
-  if (this.combined_costs[i] != target_val) return;
+  if (graph[i] != target_val) return;
   let Q = [];
   Q.push(node);
   while (Q.length > 0)
@@ -234,7 +234,7 @@ class Colony
     let min_cost = _.min(this.combined_costs);
 
     let ind = this.combined_costs.indexOf(min_cost);
-    let Q = flood(ind, min_cost);
+    let Q = flood(this.combined_costs, ind, min_cost);
     Q.forEach(n => {
       let x = Math.floor(n/50);
       let y = Math.floor(n%50);
