@@ -195,7 +195,7 @@ class Colony
   {
     console.log("Colony::init()");
 
-    this.combined_costs = {};
+    this.combined_costs = new Array(2500);
     for (let i = 0; i < 2500; ++i)
     {
       this.combined_costs[i] = 0;
@@ -233,7 +233,8 @@ class Colony
     let maxCost = _.max(this.combined_costs);
     let min_cost = _.min(this.combined_costs);
 
-    let Q = flood(this.combined_costs.indexOf(min_cost), min_cost);
+    let in = this.combined_costs.indexOf(min_cost);
+    let Q = flood(in, min_cost);
     Q.forEach(n => {
       let x = Math.floor(n/50);
       let y = Math.floor(n%50);
