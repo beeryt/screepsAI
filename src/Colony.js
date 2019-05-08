@@ -272,6 +272,9 @@ class Colony
   update()
   {
     // console.log("Colony::update()");
+    this.mines.forEach(mine => {
+      mine.update();
+    });
   }
 
   run()
