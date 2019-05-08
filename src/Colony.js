@@ -244,7 +244,7 @@ class Colony
     Q.forEach(n => {
       let x = Math.floor(n/50);
       let y = Math.floor(n%50);
-      this.room.visual.rect(x-0.5, y-0.5, 1, 1, {fill: "#ffffff", opacity: 0.2});
+      this.room.visual.rect(x-0.5, y-0.5, 1, 1, {fill: "#ffffff", opacity: 0.5});
     });
 
     for (let i = 0; i < 2500; ++i)
