@@ -207,6 +207,8 @@ class Colony
     {
       this.combined_costs[i] /= this.mines.length;
     }
+
+    console.log("max:", _.max(this.combined_costs), "min:", _.min(this.combined_costs));
   }
 
   refresh()
@@ -215,7 +217,6 @@ class Colony
 
     let maxCost = _.max(this.combined_costs);
     let min_cost = _.min(this.combined_costs);
-    console.log("max:", maxCost, "min:", min_cost);
     for (let i = 0; i < 2500; ++i)
     {
       let p = iToPos(i);
