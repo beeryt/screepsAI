@@ -246,6 +246,8 @@ class Colony
       let x = Math.floor(n/50);
       let y = Math.floor(n%50);
       this.room.visual.rect(x-0.25, y-0.25, .5, .5, {fill: "#ffffff", opacity: 0.25});
+      this.room.visual.rect(x-.5,y-.1,1,.2, {fill: "#ffffff", opacity: 0.25});
+      this.room.visual.rect(x-.1,y-.5,.2,1, {fill: "#ffffff", opacity: 0.25});
     });
 
     for (let i = 0; i < 2500; ++i)
