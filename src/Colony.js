@@ -249,6 +249,7 @@ class Colony
       this.room.visual.rect(x-.5,y-.1,1,.2, {fill: "#ffffff", opacity: 0.25});
       this.room.visual.rect(x-.1,y-.5,.2,1, {fill: "#ffffff", opacity: 0.25});
     });
+    this.room.visual.circle(iToPos(ind), {radius: 0.5, fill: "#deadbeaf"})
 
     for (let i = 0; i < 2500; ++i)
     {
