@@ -213,7 +213,7 @@ class Colony
       let ret = dijkstra(null, mineIndex);
       for (let i = 0; i < 2500; ++i)
       {
-        this.combined_costs[i] += ret[0][i];// / mine.source.energyCapacity;
+        this.combined_costs[i] += ret[0][i] / mine.source.energyCapacity;
       }
     });
 
@@ -262,7 +262,7 @@ class Colony
       let colorIndex = Math.round(map(cost, min_cost, 1.05*min_cost, 0, 255));
       let color = "rgba(" + colorIndex + "," + (255-colorIndex) + ",0,1)";
       this.room.visual.rect(p.x-0.5,p.y-0.5,1,1, {fill: color, opacity: 0.1});
-      this.room.visual.text(Math.round(map(cost,_.min(this.combined_costs),1.1*_.min(this.combined_costs),0,9)),p)
+      this.room.visual.text(Math.round(100*map(cost,_.min(this.combined_costs),1.1*_.min(this.combined_costs),0,9)),p)
     }
 
     this.mines.forEach((mine) => {
