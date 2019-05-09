@@ -12,6 +12,8 @@ class Colony
     this.mines = [];
     this.room.find(FIND_SOURCES).forEach(source => this.mines.push(new Mine(this, source)));
     this.room.find(FIND_MINERALS).forEach(mineral => this.mines.push(new Mine(this, mineral)));
+
+    this.costs = [];
   }
 
   init()
@@ -19,7 +21,8 @@ class Colony
     console.log("Colony::init()");
 
     this.mines.forEach(mine=>mine.init());
-    this.costMatrix = this.findWallDistance();
+    this.costs = this.findWallDistance();
+    this.maxCost = _.max(this.costs);
   }
 
   refresh()
@@ -34,6 +37,33 @@ class Colony
   {
     console.log("Colony::update()");
     this.room.visual.clear();
+
+    this.room.visual.circle(this.mines[0].pos, {radius:1, opacity:0.1})
+    let array = this.mines[0].costs;
+    // array = this.costs;
+
+    let maxCost = _.max(array);
+    let minCost = _.min(array);
+    let avgCost = _.sum(array)/array.length;
+
+    console.log("Max:", maxCost, "Min:", minCost, "Mean:", avgCost)
+
+    for (let i = 0; i < 2500; ++i)
+    {
+      let p = Util.iToPos(i);
+      let cost = array[i];
+      cost = maxCost - array[i];
+      let intensity = Util.map(cost, .9*maxCost, maxCost, 0, 1);
+      let color = Math.floor(255*intensity);
+
+      let r = 255 - color;
+      let g = color;
+      let b = 0;
+      let a = 0.25 * intensity;
+      let colorStr = "rgba("+ r +","+ g +","+ b +","+ a +")"
+      this.room.visual.rect(p.x-0.5,p.y-0.5,1,1, {fill: colorStr});
+    }
+
     this.mines.forEach(mine => {
       mine.update();
     });
@@ -41,15 +71,16 @@ class Colony
 
   findWallDistance()
   {
-    let costs = new PathFinder.CostMatrix;
+    let costs = new Array(2500);
 
     for (let i = 0; i < 2500; ++i)
     {
+      costs[i] = 0;
       let x = Math.floor(i/50);
       let y = Math.floor(i%50);
       if ((x in [0,1,2,47,48,49] && y in [0,1,2,47,48,49]) || this.room.getTerrain().get(x,y) === TERRAIN_MASK_WALL)
       {
-        costs.set(x,y,1);
+        costs[i] = 1;
       }
     }
 
@@ -64,7 +95,7 @@ class Colony
       {
         let x = Math.floor(i/50);
         let y = Math.floor(i%50);
-        if (costs.get(x,y) === distance)
+        if (costs[i] === distance)
         {
           for (let x1 of [-1, 0, 1])
           {
@@ -72,10 +103,11 @@ class Colony
             {
               let x2 = x+x1;
               let y2 = y+y1;
-              if (costs.get(x2,y2) === 0)
+              let i2 = Util.xyToI(x2,y2);
+              if (costs[i2] === 0)
               {
                 max = distance + 1;
-                costs.set(x2,y2, max);
+                costs[i2] = max;
                 found = true;
               }
             }

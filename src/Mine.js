@@ -26,6 +26,8 @@ class Mine {
     this.pos = this.source.pos;
     this.room = this.source.room;
 
+    this.costs = [];
+
     this.populateStructures();
   }
 
@@ -45,7 +47,8 @@ class Mine {
   init()
   {
     this.mineables = [];
-    this.costs = Util.dijkstra(null, Util.posToI(this.pos));
+    this.costs = Util.dijkstra(null, Util.posToI(this.pos))[0];
+    this.maxCost = _.max(this.costs);
   }
 
   refresh()
