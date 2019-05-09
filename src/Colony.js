@@ -43,14 +43,15 @@ class Colony
     console.log("Colony::plan()");
     let dt = DT.distanceTransform(this.room.name);
     let cts = new Array(2500);
-    this.displayCostArray(cts);
+    // this.displayCostArray(cts);
 
     for (let x = 0; x < 50; ++x) for (let y = 0; y < 50; ++y)
     {
       cts[x*50+y] = dt.get(x,y);
     }
     let mts = [];
-    this.mines.forEach(mine=>mts.push(dijkstra(null,mine.pos)[0]));
+    this.mines.forEach(mine=>mts.push(Util.dijkstra(null,mine.pos)[0]));
+    this.displayCostArray(mts[0])
   }
 
   update()
