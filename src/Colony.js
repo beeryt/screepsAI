@@ -23,6 +23,7 @@ class Colony
     console.log("Colony::init()");
 
     this.dt = DT.distanceTransform(Game.spawns.Spawn1.room.name);
+    this.plan();
 
     // this.mines.forEach(mine=>mine.init());
     // this.costs = this.findWallDistance();
@@ -36,6 +37,13 @@ class Colony
     this.mines.forEach((mine) => {
       mine.refresh();
     });
+  }
+
+  plan()
+  {
+    let dt = DT.distanceTransform(this.room.name);
+    let mts = [];
+    this.mines.forEach(mine=>mts.push(dijkstra(null,mine.pos)[0]));
   }
 
   update()

@@ -125,8 +125,7 @@
         return costMatrix;
     }
     // Visualize a given costMatrix globally
-    function displayCostMatrix(costMatrix, color, vis = new RoomVisual()) {
-        if (color === void 0) { color = '#ff0000'; }
+    function displayCostMatrix(costMatrix, color = "#ff0000", vis = new RoomVisual()) {
         var max = 1;
         for (var y = 0; y < 50; ++y) {
             for (var x = 0; x < 50; ++x) {
