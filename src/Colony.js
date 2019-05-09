@@ -2,6 +2,8 @@
 var Mine = require("Mine");
 var Util = require("Util");
 
+var DT = require("OvermindDistances");
+
 class Colony
 {
   constructor(room)
@@ -20,10 +22,12 @@ class Colony
   {
     console.log("Colony::init()");
 
-    this.mines.forEach(mine=>mine.init());
-    this.costs = this.findWallDistance();
-    this.maxCost = _.max(this.costs);
-    this.candidates = this.findSpawnLocation();
+    this.dt = DT.distanceTransform(Game.spawns.Spawn1.room.name);
+
+    // this.mines.forEach(mine=>mine.init());
+    // this.costs = this.findWallDistance();
+    // this.maxCost = _.max(this.costs);
+    // this.candidates = this.findSpawnLocation();
   }
 
   refresh()
@@ -38,6 +42,8 @@ class Colony
   {
     console.log("Colony::update()");
     this.room.visual.clear();
+    DT.displayCostMatrix(this.dt,"blue", this.room.visual);
+    return;
 
     this.candidates[0].forEach(c=>this.room.visual.circle(c, {fill: "green"}))
     this.candidates[1].forEach(c=>this.room.visual.circle(c, {fill: "orange"}))
