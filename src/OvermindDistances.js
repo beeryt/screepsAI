@@ -131,9 +131,10 @@
       for (var x = 0; x < 50; ++x) for (var y = 0; y < 50; ++y)
       {
         let i = x*50+y;
+        let value = costArray[i]
         if (value > 0)
         {
-          vis.circle(x,y, {radius: costArray[i] / max / 2, fill: color});
+          vis.circle(x,y, {radius: value / max / 2, fill: color});
         }
       }
     }
@@ -151,7 +152,7 @@
             for (var x = 0; x < 50; ++x) {
                 var value = costMatrix.get(x, y);
                 if (value > 0) {
-                    vis.circle(x, y, { radius: costMatrix.get(x, y) / max / 2, fill: color });
+                    vis.circle(x, y, { radius: value / max / 2, fill: color });
                 }
             }
         }
