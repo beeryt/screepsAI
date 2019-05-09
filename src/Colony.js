@@ -90,12 +90,13 @@ const right = i => (i + 1) << 1;
 function iToPos(index) {
   let x = Math.floor(index/50);
   let y = Math.floor(index%50);
-  return Game.rooms.sim.getPositionAt(x,y);
+  let room = Game.spawns.Spawn1.room;
+  return room.getPositionAt(x,y);
 }
 
 function dijkstra_length(u, v) {
   let pos = iToPos(v);
-  let terrain = Game.rooms.sim.getTerrain().get(pos.x, pos.y);
+  let terrain = Game.spawns.Spawn1.room.getTerrain().get(pos.x, pos.y);
   switch (terrain)
   {
     case TERRAIN_MASK_WALL: return 150;
@@ -201,6 +202,7 @@ class Colony
     this.pos = this.controller.pos;
     this.mines = [];
     this.room.find(FIND_SOURCES).forEach(source => this.mines.push(new Mine(this, source)));
+    this.room.find(FIND_MINERALS).forEach(mineral => this.mines.push(new Mine(this, mineral)));
   }
 
   init()
@@ -218,7 +220,7 @@ class Colony
       let ret = dijkstra(null, mineIndex);
       for (let i = 0; i < 2500; ++i)
       {
-        this.combined_costs[i] += ret[0][i] * mine.source.energyCapacity;
+        this.combined_costs[i] += ret[0][i] / 3000;
       }
     });
 
@@ -226,7 +228,7 @@ class Colony
     let ret = dijkstra(null, cindex);
     for (let i = 0; i < 2500; ++i)
     {
-      this.combined_costs[i] += ret[0][i] * 2000;
+      this.combined_costs[i] += ret[0][i] / 2000;
     }
 
     for (let i = 0; i < 2500; ++i)
@@ -265,7 +267,7 @@ class Colony
       let p = iToPos(i);
       let cost = this.combined_costs[i];
       let colorIndex = Math.round(map(cost, min_cost, 1.05*min_cost, 0, 255));
-      let color = "rgba(" + colorIndex + "," + (255-colorIndex) + ",0,1)";
+      let color = "rgba(" + colorIndex + "," + (255-colorIndex) + ",0,"+ (255-colorIndex)/255 + ")";
       this.room.visual.rect(p.x-0.5,p.y-0.5,1,1, {fill: color, opacity: 0.1});
     }
 
@@ -285,6 +287,94 @@ class Colony
   run()
   {
     // console.log("Colony::run()");
+
+    let costs = new PathFinder.CostMatrix;
+
+    for (let x of [0, 1, 2, 47, 48, 49])
+    {
+      for (let y of _.range(0, 50))
+      {
+        costs.set(x, y, 1);
+      }
+    }
+
+    for (let y of [0, 1, 2, 47, 48, 49])
+    {
+      for (let x of _.range(3, 47))
+      {
+        costs.set(x, y, 1);
+      }
+    }
+
+    for (let x of _.range(3,47))
+    {
+      for (let y of _.range(3,47))
+      {
+        if (this.room.getTerrain().get(x,y) === TERRAIN_MASK_WALL)
+        {
+          costs.set(x, y, 1);
+        }
+      }
+    }
+
+    let distance = 0;
+    let found = true;
+    let max = 1;
+    while (distance < 25)
+    {
+      distance++;
+      found = false;
+      for (let x of _.range(1,49))
+      {
+        for (let y of _.range(1,49))
+        {
+          if (costs.get(x,y) === distance)
+          {
+            for (let x2 of [-1, 0, 1])
+            {
+              for (let y2 of [-1, 0, 1])
+              {
+                if (costs.get(x+x2,y+y2) === 0)
+                {
+                  max = distance + 1;
+                  costs.set(x+x2,y+y2, max);
+                  found = true;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    if (max < 5)
+    {
+      console.log("Did not find a spawn position for room", this.room.name);
+    }
+
+    let perfect = [];
+    for (let x of _.range(7,43))
+    {
+      for (let y of _.range(7,40))
+      {
+        if (costs.get(x,y) >= 5 && costs.get(x,y+3) >= 4)
+        {
+          let pos = this.room.getPositionAt(x,y);
+          if (costs.get(x+4, y-7) >= 3 && costs.get(x-4,y-7) >= 5)
+          {
+            perfect.push(pos);
+          }
+        }
+      }
+    }
+    perfect.forEach(pos => this.room.visual.rect(pos.x-0.5,pos.y-0.5,1,1));
+
+    for (let i = 0; i < 2500; ++i)
+    {
+      let x = Math.floor(i/50);
+      let y = Math.floor(i%50);
+      this.room.visual.text(costs.get(x,y), x, y);
+    }
 
     this.mines.forEach((mine) => {
       mine.run();
