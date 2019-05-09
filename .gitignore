@@ -1,0 +1,5 @@
+screeps.json
+
+/dist
+/node_modules
+/tsc-out

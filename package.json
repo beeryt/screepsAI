@@ -1,0 +1,11 @@
+{
+  "name": "screepsAI",
+  "description": "An in development bot for screeps.com",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "tsc -p .",
+    "lint": "tslint \"src/**/*.ts\"",
+    "clean": "rm -rf tsc-out && rm -rf dist",
+    "test": "npm run clean && npm run build"
+  }
+}
