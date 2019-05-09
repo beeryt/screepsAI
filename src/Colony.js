@@ -41,6 +41,7 @@ class Colony
 
   plan()
   {
+    console.log("Colony::plan()");
     let dt = DT.distanceTransform(this.room.name);
     let mts = [];
     this.mines.forEach(mine=>mts.push(dijkstra(null,mine.pos)[0]));
