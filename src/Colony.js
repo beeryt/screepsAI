@@ -278,6 +278,7 @@ class Colony
 
   update()
   {
+    this.room.visual.clear()
     // console.log("Colony::update()");
     this.mines.forEach(mine => {
       mine.update();
@@ -367,13 +368,62 @@ class Colony
         }
       }
     }
-    perfect.forEach(pos => this.room.visual.rect(pos.x-0.5,pos.y-0.5,1,1));
+    perfect.forEach(pos => this.room.visual.rect(pos.x-0.5,pos.y-0.5,1,1, {opacity: 0.05}));
 
+    let filtered = this.filterDistanceToVitalPositions(perfect);
+    filtered.forEach(pos=>this.room.visual.circle(pos));
+
+    let notricks = [];
+    let spawn = Game.spawns.Spawn1;
+    let allowed = [];
+    let count = 0;
+    for (let p of perfect)
+    {
+      if ((p.x !== spawn.pos.x || (p.y !== spawn.pos.y && p.y !== spawn.pos.y - 1)) && (p.x !== spawn.pos.x - 2 || p.y !== spawn.pos.y + 1))
+      {
+        allowed.push(p);
+      } else
+      {
+        count++;
+      }
+    }
+    console.log("Filtered out", count, "tricky position from possible base positions");
+    allowed.forEach(pos=>this.room.visual.rect(pos.x-0.3,pos.y-0.3,.6,.6, {opacity: 0.05}));
+
+    let chosen = allowed[0];
+    distance = this.getTargetDistance(this.room.name, chosen);
+    for (let p of allowed)
+    {
+      let d = this.getTargetDistance(this.room.name, p);
+      if (d < distance)
+      {
+        chosen = p;
+        distance = d;
+      }
+    }
+    this.room.visual.circle(chosen, {radius: 0.5, opacity: 0.25, fill: 'green'})
+
+    let costArray = new Array(2500);
     for (let i = 0; i < 2500; ++i)
     {
       let x = Math.floor(i/50);
       let y = Math.floor(i%50);
-      this.room.visual.text(costs.get(x,y), x, y);
+      costArray[i] = costs.get(x,y)
+    }
+
+    let minCost = _.min(costArray);
+    let maxCost = _.max(costArray);
+    console.log("maxcost:", maxCost, "minCost:", minCost)
+    for (let i = 0; i < 2500; ++i)
+    {
+      let x = Math.floor(i/50);
+      let y = Math.floor(i%50);
+      let color = Math.round(map(costArray[i], 0, maxCost, 0, 255));
+      let alpha = map(costArray[i], 0, maxCost, 0, 0.5);
+      color = "rgba("+(255-color)+","+color+",0,"+alpha+")"
+      this.room.visual.rect(x-0.5,y-0.5,1,1, {fill:color})
+      this.room.visual.text(costs.get(x,y), x, y, {opacity: 0.1});
+      // this.room.visual.text(this.getTargetDistance(this.room.name, this.room.getPositionAt(x,y)), x, y, {opacity: 0.1});
     }
 
     this.mines.forEach((mine) => {
@@ -381,10 +431,57 @@ class Colony
     });
   }
 
+  filterDistanceToVitalPositions(positions)
+  {
+    let filtered = [];
+    let vitalTargets = this.mines;
+
+    for (let p of positions)
+    {
+      let validPosition = true;
+      for (let v of vitalTargets)
+      {
+        if (p.getRangeTo(v) < 6)
+        {
+          validPosition = false;
+        }
+      }
+      let cPos = this.room.controller;
+      if (p.getRangeTo(cPos) < 8)
+      {
+        validPosition = false;
+      }
+      if (validPosition)
+      {
+        filtered.push(p);
+      }
+    }
+    return filtered;
+  }
+
+
+  getTargetDistance(roomName, basePos)
+  {
+    let room = Game.rooms[roomName];
+    let theDistance = 0;
+
+    for (let source of this.mines)
+    {
+      theDistance += basePos.getRangeTo(source.pos);
+    }
+
+    let cPos = room.controller.pos;
+    theDistance += basePos.getRangeTo(cPos);
+    return theDistance;
+
+  }
+
+
   visuals()
   {
 
   }
 }
+
 
 module.exports = Colony;
