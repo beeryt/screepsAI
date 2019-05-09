@@ -1,3 +1,5 @@
+var Util = require("Util");
+
 function isWalkable(pos)
 {
   pos.look().forEach(object => {
@@ -39,24 +41,11 @@ class Mine {
     }
   }
 
+  // Find mineable positions around source and place container
   init()
   {
     this.mineables = [];
-    let ret = PathFinder.search(this.colony.pos, {pos: this.pos, range: 1});
-    this.path = ret.path;
-
-    this.locale = [];
-    for (let i = 0; i < 9; ++i)
-    {
-      let x = Math.floor(i/3) + this.pos.x - 1;
-      let y = Math.floor(i%3) + this.pos.y - 1;
-      let p = this.room.getPositionAt(x,y);
-      if (!isWalkable(p)) continue;
-      this.mineables.push(p);
-      let ret = PathFinder.search(this.colony.pos, {pos: p, range: 1})
-      if (ret.incomplete) { continue; }
-      this.locale.push({pos: p, cost: ret.cost});
-    }
+    this.costs = Util.dijkstra(null, Util.posToI(this.pos));
   }
 
   refresh()
@@ -70,44 +59,6 @@ class Mine {
 
   update()
   {
-    let path = PathFinder.search(this.colony.pos, {pos: this.pos, range: 1});
-    if (path.incomplete) { console.log("Path was incomplete"); }
-    let pos = _.find(path.path, pos => pos.getRangeTo(this) == 1);
-
-    this.room.visual.circle(this.pos, {radius: 0.3});
-    this.room.visual.circle(pos, {radius: 0.3});
-
-    // draw path
-    let lastPoint = this.colony.pos;
-    this.path.forEach(point => {
-      this.room.visual.line(lastPoint, point, {lineStyle: 'dashed'});
-      lastPoint = point;
-    })
-
-    // draw mineables
-    this.mineables.forEach(mineable => {
-      this.room.visual.circle(mineable, {opacity: 0.1});
-    })
-
-    // // draw costs
-    // this.locale.forEach(o => {
-    //   this.room.visual.text(o.cost, o.pos);
-    // });
-
-    // determine real distances
-    let dist = new Array(2500);
-    let x_0 = this.colony.pos.x;
-    let y_0 = this.colony.pos.y;
-    this.locale.forEach(o => {
-      let x = o.pos.x;
-      let y = o.pos.y;
-      let i = x*50+y;
-      dist[i] = Math.sqrt(Math.pow((x - x_0),2) + Math.pow((y - y_0),2));
-    });
-
-    let minDist = _.min(dist);
-    let minDistI = dist.indexOf(minDist);
-    this.room.visual.circle(Math.floor(minDistI/50), minDistI%50, {fill: "#000000"});
   }
 
   run()
