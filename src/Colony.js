@@ -23,6 +23,7 @@ class Colony
     this.mines.forEach(mine=>mine.init());
     this.costs = this.findWallDistance();
     this.maxCost = _.max(this.costs);
+    this.candidates = this.findSpawnLocation();
   }
 
   refresh()
@@ -38,9 +39,12 @@ class Colony
     console.log("Colony::update()");
     this.room.visual.clear();
 
+    this.candidates[0].forEach(c=>this.room.visual.circle(c, {fill: "green"}))
+    this.candidates[1].forEach(c=>this.room.visual.circle(c, {fill: "orange"}))
+    this.candidates[2].forEach(c=>this.room.visual.circle(c, {fill: "red"}))
+
     this.room.visual.circle(this.mines[0].pos, {radius:1, opacity:0.1})
-    let array = this.mines[0].costs;
-    // array = this.costs;
+    let array = this.costs;
 
     let maxCost = _.max(array);
     let minCost = _.min(array);
@@ -52,7 +56,6 @@ class Colony
     {
       let p = Util.iToPos(i);
       let cost = array[i];
-      cost = Math.round(maxCost/cost);
 
       let intensity = Util.map(cost, 0, maxCost, 0, 1);
       if (intensity < 0) intensity = 0;
@@ -68,7 +71,7 @@ class Colony
       this.room.visual.rect(p.x-0.5,p.y-0.5,1,1, {fill: colorStr});
       if (i % 4 == 0)
       {
-        this.room.visual.text(cost,p);
+        // this.room.visual.text(cost,p);
       }
     }
 
@@ -137,21 +140,22 @@ class Colony
     {
       let x = Math.floor(i/50);
       let y = Math.floor(i%50);
-      maxCost = Math.max(maxCost, this.costMatrix.get(x,y));
+      maxCost = Math.max(maxCost, this.costs[i]);
     }
 
     for (let x of _.range(7,43))
     {
       for (let y of _.range(7,40))
       {
-        if (this.costMatrix.get(x,y) >= 5 && this.costMatrix.get(x,y+3) >= 4)
+        let i = x*50+y;
+        if (this.costs[i] >= 5 && this.costs[i+3] >= 4)
         {
           let pos = this.room.getPositionAt(x,y);
-          if (this.costMatrix.get(x+4,y-7) >= 3 && this.costMatrix.get(y-4,y-7) >= 5)
+          if (this.costs[i+(4*50-7)] >= 3 && this.costs[i+(-4*50-7)] >= 5)
           {
             perfect.push(pos);
           }
-          else if (this.costMatrix.get(x-2,y) >= 7)
+          else if (this.costs[i-2*50] >= 7)
           {
             okey.push(pos);
           }
@@ -164,6 +168,8 @@ class Colony
       okey = this.removeTrickyPosistions(okey);
       possible = this.removeTrickyPosistions(possible);
     }
+
+    return [perfect,okey,possible]
   }
 
   removeTrickyPosistions(positions)

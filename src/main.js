@@ -2,6 +2,7 @@ var _Sovereign = require('Sovereign');
 
 module.exports.loop = function() {
 
+  console.log(Game.cpu.bucket, Game.cpu.tickLimit)
   for (var name in Memory.creeps) {
     if (!Game.creeps[name]) {
       delete Memory.creeps[name];
