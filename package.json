@@ -9,6 +9,8 @@
     "test": "npm run clean && npm run build"
   },
   "devDependencies": {
+    "@types/lodash": "^3.10.1",
+    "@types/screeps": "^2.5.2",
     "typescript": ""
   }
 }
