@@ -13,7 +13,7 @@ class NodeElement
 {
   node: number;
   priority: number;
-  constructor(node, priority)
+  constructor(node: number, priority: number)
   {
     this.node = node;
     this.priority = priority;
@@ -52,7 +52,7 @@ function dijkstra_getNeighbors(u:number): number[]
   return neighbors;
 }
 
-function dijkstra(start: RoomPosition): number[]
+function dijkstra(start: number): number[]
 {
   let dist: number[] = new Array(2500);
   let prev = {}; // TODO js
