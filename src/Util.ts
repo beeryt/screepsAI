@@ -1,5 +1,5 @@
 
-import {PriorityQueue} from ('./FastPriorityQueue.js');
+import {PriorityQueue} from './FastPriorityQueue.js';
 
 function iToPos(index: number): RoomPosition
 {
