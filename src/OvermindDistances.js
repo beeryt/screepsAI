@@ -124,6 +124,21 @@
         }
         return costMatrix;
     }
+
+    function displayCostArray(costArray, color = "#ff0000", vis = new RoomVisual())
+    {
+      var max = _.max(costArray);
+      for (var x = 0; x < 50; ++x) for (var y = 0; y < 50; ++y)
+      {
+        let i = x*50+y;
+        if (value > 0)
+        {
+          vis.circle(x,y, {radius: costArray[i] / max / 2, fill: color});
+        }
+      }
+    }
+    exports.displayCostArray = displayCostArray;
+
     // Visualize a given costMatrix globally
     function displayCostMatrix(costMatrix, color = "#ff0000", vis = new RoomVisual()) {
         var max = 1;

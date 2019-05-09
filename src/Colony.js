@@ -22,10 +22,9 @@ class Colony
   {
     console.log("Colony::init()");
 
-    this.dt = DT.distanceTransform(Game.spawns.Spawn1.room.name);
-    this.plan();
-
+    // this.dt = DT.distanceTransform(Game.spawns.Spawn1.room.name);
     // this.mines.forEach(mine=>mine.init());
+    // this.plan();
     // this.costs = this.findWallDistance();
     // this.maxCost = _.max(this.costs);
     // this.candidates = this.findSpawnLocation();
@@ -43,6 +42,13 @@ class Colony
   {
     console.log("Colony::plan()");
     let dt = DT.distanceTransform(this.room.name);
+    let cts = new Array(2500);
+    this.displayCostArray(cts);
+
+    for (let x = 0; x < 50; ++x) for (let y = 0; y < 50; ++y)
+    {
+      cts[x*50+y] = dt.get(x,y);
+    }
     let mts = [];
     this.mines.forEach(mine=>mts.push(dijkstra(null,mine.pos)[0]));
   }
@@ -51,7 +57,8 @@ class Colony
   {
     console.log("Colony::update()");
     this.room.visual.clear();
-    DT.displayCostMatrix(this.dt,"blue", this.room.visual);
+    this.plan();
+    // DT.displayCostMatrix(this.dt,"blue", this.room.visual);
     return;
 
     this.candidates[0].forEach(c=>this.room.visual.circle(c, {fill: "green"}))
