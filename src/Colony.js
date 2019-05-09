@@ -52,16 +52,24 @@ class Colony
     {
       let p = Util.iToPos(i);
       let cost = array[i];
-      cost = maxCost - array[i];
-      let intensity = Util.map(cost, .9*maxCost, maxCost, 0, 1);
+      cost = Math.round(maxCost/cost);
+
+      let intensity = Util.map(cost, 0, maxCost, 0, 1);
+      if (intensity < 0) intensity = 0;
+      if (intensity > 1) intensity = 1;
       let color = Math.floor(255*intensity);
+      let text = Math.floor(9*intensity)
 
       let r = 255 - color;
       let g = color;
       let b = 0;
-      let a = 0.25 * intensity;
+      let a = 0.5*intensity;
       let colorStr = "rgba("+ r +","+ g +","+ b +","+ a +")"
       this.room.visual.rect(p.x-0.5,p.y-0.5,1,1, {fill: colorStr});
+      if (i % 4 == 0)
+      {
+        this.room.visual.text(cost,p);
+      }
     }
 
     this.mines.forEach(mine => {

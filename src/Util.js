@@ -107,8 +107,8 @@ function dijkstra_length(u, v) {
   let terrain = Game.spawns.Spawn1.room.getTerrain().get(pos.x, pos.y);
   switch (terrain)
   {
-    case TERRAIN_MASK_WALL: return 150;
-    case TERRAIN_MASK_SWAMP: return 10;
+    case TERRAIN_MASK_WALL: return 75;
+    case TERRAIN_MASK_SWAMP: return 5;
     // TODO add road logic
     default: return 1;
   }
@@ -134,7 +134,7 @@ function comparator(a,b) {
 }
 
 const dijkstra = (graph, source) => {
-  let dist = {};
+  let dist = new Array(2500);
   let prev = {};
   let Q = new PriorityQueue();
 
