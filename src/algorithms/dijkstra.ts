@@ -10,7 +10,7 @@ export interface Vertex
 
 export interface Edge
 {
-  vertices: [Vertex, Vertex];
+  vertices?: [Vertex, Vertex];
   weight: number;
   directional?: boolean;
 }
@@ -20,6 +20,7 @@ export interface Graph
   vertices: Vertex[];
   edges: Edge[];
   neighbors(v: Vertex): Vertex[];
+  adjacent(v:Vertex, u:Vertex): boolean;
 }
 
 export function dijkstra(graph: Graph, node: Vertex): any
