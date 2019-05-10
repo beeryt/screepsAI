@@ -1,32 +1,18 @@
 {
+  "include": [ "src/**/*", "node_modules/@types/screeps/index.d.ts"],
+  "exclude": [ "node_modules" ],
   "compilerOptions": {
-    "allowJs": true,
-    "module": "es2015",
+    "lib": ["es6"],
+    "types": ["node"],
     "target": "es6",
-    "lib": [
-      "dom",
-      "es2016"
-    ],
-    "newLine": "CRLF",
-    "outDir": "tsc-out",
-    "baseUrl": "src/",
-    "sourceMap": false,
-    "strict": true,
-    "strictPropertyInitialization": false,
-    "noImplicitThis": false,
-    "skipLibCheck": true,
+    "module": "commonjs",
+    "outDir": "./tsc-out",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowUnusedLabels": true,
     "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": false,
-    "removeComments": false
+    "sourceMap": true
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
   "typedocOptions": {
     "mode": "file",
     "out": "../docs",

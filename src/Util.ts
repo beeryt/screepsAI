@@ -1,5 +1,5 @@
-
-import {PriorityQueue} from './FastPriorityQueue.js';
+import "screeps";
+import { FibonacciHeap } from '@tyriar/fibonacci-heap';
 
 function iToPos(index: number): RoomPosition
 {
@@ -56,7 +56,7 @@ function dijkstra(start: number): number[]
 {
   let dist: number[] = new Array(2500);
   let prev = {}; // TODO js
-  let Q: PriorityQueue = new PriorityQueue();
+  let Q: FibonacciHeap<number,number> = new FibonacciHeap<number, number>();
 
   dist[start] = 0;
 
@@ -67,19 +67,18 @@ function dijkstra(start: number): number[]
       dist[v] = Infinity;
     }
     prev[v] = undefined;
-    Q.add(new NodeElement(v, dist[v]));
+    Q.insert(dist[v], v);
   }
 
   while (!Q.isEmpty())
   {
-    let u: number = Q.poll().node;
+    let u: number = Q.extractMinimum().value;
 
     dijkstra_getNeighbors(u).forEach(v => {
       let alt: number = dist[u] + dijkstra_length(u,v);
       if (alt < dist[v])
       {
-        Q.remove(new NodeElement(v, dist[v]));
-        Q.add(new NodeElement(v, alt));
+        Q.decreaseKey({key:dist[v],value:v}, alt);
         dist[v] = alt;
         prev[v] = u;
       }

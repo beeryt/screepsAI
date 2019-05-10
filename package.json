@@ -3,12 +3,15 @@
   "description": "An in development bot for screeps.com",
   "version": "0.0.1",
   "scripts": {
+    "start": "node tsc-out/main.js",
     "build": "tsc -p .",
     "lint": "tslint \"src/**/*.ts\"",
     "clean": "rm -rf tsc-out && rm -rf dist",
     "test": "npm run clean && npm run build"
   },
   "devDependencies": {
+    "@types/node": "",
+    "@tyriar/fibonacci-heap": "^2.0.9",
     "@types/lodash": "^3.10.1",
     "@types/screeps": "^2.5.2",
     "typescript": ""
