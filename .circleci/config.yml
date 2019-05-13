@@ -2,9 +2,9 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2
+version: 2.1
 jobs:
-  build:
+  install:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
@@ -33,7 +33,43 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: yarn lint
+  build:
+    docker:
+      -image: circleci/node:7.10
+      working_directory: ~/repo
+      steps:
+        - checkout
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
 
-      # run tests!
-      - run: yarn test
+        - run: yarn build
+
+  lint:
+    docker:
+      -image: circleci/node:7.10
+      working_directory: ~/repo
+      steps:
+        -checkout
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
+
+        - run: yarn lint
+
+
+workflows:
+  version: 2
+  checkout_lint_build:
+    jobs:
+      - install
+      - lint:
+        requires:
+          - install
+      - build:
+        requires:
+          - install
