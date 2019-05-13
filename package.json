@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node tsc-out/main.js",
     "build": "tsc -p .",
-    "lint": "tslint \"src/**/*.ts\"",
+    "lint": "tslint --project .",
     "clean": "rm -rf tsc-out && rm -rf dist",
     "test": "npm run clean && npm run build"
   },
