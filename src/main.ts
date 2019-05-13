@@ -30,15 +30,15 @@ class AdjacencyList<V extends Vertex> implements Iterable<[V,V]>
   *[Symbol.iterator](): Iterator<[V,V]>
   {
     let i = -1;
-    for (let data of this.data)
+    for (let odata of this.data)
     {
       let j = -1;
       ++i;
-      if (data === undefined) continue;
-      for (let data of this.data[i])
+      if (odata === undefined) continue;
+      for (let idata of this.data[i])
       {
         ++j;
-        if (data === undefined) continue;
+        if (idata === undefined) continue;
         yield [i as V, j as V];
       }
     }

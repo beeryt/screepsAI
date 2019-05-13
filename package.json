@@ -15,6 +15,7 @@
     "@types/screeps": "^2.5.2",
     "@tyriar/avl-tree": "^2.0.6",
     "@tyriar/fibonacci-heap": "^2.0.9",
+    "tslint": "^5.16.0",
     "typescript": ""
   }
 }
