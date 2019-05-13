@@ -1,56 +1,49 @@
 import {FibonacciHeap, INode} from "@tyriar/fibonacci-heap";
 
-export interface Iterable<K>
-{
-  [Symbol.iterator]() :Iterator<K>;
-}
+export type Vertex = number;
 
-export interface Graph<V,E>
+export type Edge = [Vertex, Vertex];
+
+export interface IGraph<V,E>
 {
   vertices: Iterable<V>;
   edges: Iterable<E>;
-  neighbors(v: V): V[];
-  weight(u: V, v: V): number;
+  weight(u:V, v:V): number
+  neighbors(v:V): Iterable<V>;
 }
 
-export interface Vertex
+export function dijkstra<V extends Vertex, E extends Edge>(graph: IGraph<V,E>, source: V): any
 {
-  id: number;
-}
-
-export interface Edge
-{
-  weight: number;
-}
-
-export function dijkstra<V extends Vertex, E extends Edge|never>(graph: Graph<V,E>, node: V): any
-{
-  let dist: Array<number> = [];
+  let dist: number[] = [];
+  let node: INode<number,V>[] = [];
   let prev: Array<number|undefined> = [];
   let Q: FibonacciHeap<number,V> = new FibonacciHeap<number,V>();
 
-  dist[node.id] = 0;
+  dist[source] = 0;
   for (let v of graph.vertices)
   {
-    dist.push(Infinity);
-    prev.push(undefined);
-    Q.insert(dist[v.id],v);
+    if (v !== source)
+    {
+      dist[v] = Infinity;
+    }
+    prev[v] = undefined;
+    node[v] = Q.insert(dist[v],v);
   }
 
   while (!Q.isEmpty())
   {
     let u:V = (Q.extractMinimum() as {key:number, value:V}).value;
 
-    graph.neighbors(u).forEach(v =>
+    for (let v of graph.neighbors(u))
     {
-      let alt: number = dist[u.id] + 1;
-      if (alt < dist[v.id])
+      let alt: number = dist[u] + graph.weight(u,v);
+      if (alt < dist[v])
       {
-        Q.decreaseKey({key:dist[v.id], value:v}, alt);
-        dist[v.id] = alt;
-        prev[v.id] = alt;
+        dist[v] = alt;
+        prev[v] = u;
+        Q.decreaseKey(node[v], alt);
       }
-    });
+    }
   }
   return [dist,prev];
 }
