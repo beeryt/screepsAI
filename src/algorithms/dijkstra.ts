@@ -12,11 +12,11 @@ export interface IGraph<V,E>
   neighbors(v:V): Iterable<V>;
 }
 
-export function dijkstra<V extends Vertex, E extends Edge>(graph: IGraph<V,E>, source: V): any
+export function dijkstra<V extends Vertex>(graph: IGraph<V,[V,V]>, source: V): [number[], number[]]
 {
-  let dist: number[] = [];
   let node: INode<number,V>[] = [];
-  let prev: Array<number|undefined> = [];
+  let dist: number[] = [];
+  let prev: number[] = [];
   let Q: FibonacciHeap<number,V> = new FibonacciHeap<number,V>();
 
   dist[source] = 0;
@@ -26,7 +26,6 @@ export function dijkstra<V extends Vertex, E extends Edge>(graph: IGraph<V,E>, s
     {
       dist[v] = Infinity;
     }
-    prev[v] = undefined;
     node[v] = Q.insert(dist[v],v);
   }
 

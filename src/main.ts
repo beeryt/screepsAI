@@ -9,7 +9,7 @@ class AdjacencyList<V extends Vertex> implements Iterable<[V,V]>
     this.data = [];
   }
 
-  link(v:V, u:V, directed:boolean = false, w:number = 1)
+  link(v:V, u:V, w:number = 1, directed:boolean = false)
   {
     if (this.data[v as number] === undefined)
     {
@@ -29,36 +29,28 @@ class AdjacencyList<V extends Vertex> implements Iterable<[V,V]>
 
   *[Symbol.iterator](): Iterator<[V,V]>
   {
-    let datai: number[] = []
-    let dataj: number[][] = []
-
     let i = -1;
     for (let data of this.data)
     {
-      ++i;
-      if (this.data[i] === undefined) continue;
       let j = -1;
-      for (let datai of this.data[i])
+      ++i;
+      if (data === undefined) continue;
+      for (let data of this.data[i])
       {
         ++j;
-        if (this.data[i][j] === undefined) continue;
+        if (data === undefined) continue;
         yield [i as V, j as V];
       }
     }
   }
 }
 
-let a:AdjacencyList<number> = new AdjacencyList()
-a.link(0,1,false, 66);
-console.log("AdjacencyList:");
-for (let b of a) console.log(b, a.data[b[0]][b[1]]);
-console.log();
-
 class Graph<V extends Vertex> implements IGraph<V,[V,V]>
 {
+  private _edges = new AdjacencyList<V>();
   vertices: V[] = [];
-  _edges = new AdjacencyList<V>();
   edges: Iterable<[V,V]> = this._edges;
+
   constructor(n:number = 3)
   {
     for (let i = 0; i < n; ++i)
@@ -114,7 +106,7 @@ let g:IGraph<Vertex, Edge> = new Graph<Vertex>();
 
 for (let v of g.vertices)
 {
-  console.log(g.neighbors(v));
+  console.log("Neighbors", v+':', g.neighbors(v));
 }
 
-console.log(dijkstra(g,0));
+console.log("Dijkstra:", dijkstra(g,0));
