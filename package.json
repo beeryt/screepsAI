@@ -10,10 +10,11 @@
     "test": "npm run clean && npm run build"
   },
   "devDependencies": {
-    "@types/node": "",
-    "@tyriar/fibonacci-heap": "^2.0.9",
     "@types/lodash": "^3.10.1",
+    "@types/node": "",
     "@types/screeps": "^2.5.2",
+    "@tyriar/avl-tree": "^2.0.6",
+    "@tyriar/fibonacci-heap": "^2.0.9",
     "typescript": ""
   }
 }

@@ -1,40 +1,45 @@
 import {FibonacciHeap, INode} from "@tyriar/fibonacci-heap";
 
+export interface Iterable<K>
+{
+  [Symbol.iterator]() :Iterator<K>;
+}
+
+export interface Graph<V,E>
+{
+  vertices: Iterable<V>;
+  edges: Iterable<E>;
+  neighbors(v: V): V[];
+  weight(u: V, v: V): number;
+}
+
 export interface Vertex
 {
   id: number;
-  edges: Edge[];
-  value: any;
-  neighbors: Vertex[];
 }
 
 export interface Edge
 {
-  vertices?: [Vertex, Vertex];
   weight: number;
-  directional?: boolean;
 }
 
-export interface Graph
+export function dijkstra<V extends Vertex, E extends Edge|never>(graph: Graph<V,E>, node: V): any
 {
-  vertices: Vertex[];
-  edges: Edge[];
-  neighbors(v: Vertex): Vertex[];
-  adjacent(v:Vertex, u:Vertex): boolean;
-}
-
-export function dijkstra(graph: Graph, node: Vertex): any
-{
-  let dist: number[] = new Array(2500).fill(Infinity);
-  let prev: number[] = new Array(2500).fill(undefined);
-  let Q: FibonacciHeap<number,Vertex> = new FibonacciHeap<number,Vertex>();
+  let dist: Array<number> = [];
+  let prev: Array<number|undefined> = [];
+  let Q: FibonacciHeap<number,V> = new FibonacciHeap<number,V>();
 
   dist[node.id] = 0;
-  graph.vertices.forEach(v => Q.insert(dist[v.id], v));
+  for (let v of graph.vertices)
+  {
+    dist.push(Infinity);
+    prev.push(undefined);
+    Q.insert(dist[v.id],v);
+  }
 
   while (!Q.isEmpty())
   {
-    let u:Vertex = (Q.extractMinimum() as {key:number, value:Vertex}).value;
+    let u:V = (Q.extractMinimum() as {key:number, value:V}).value;
 
     graph.neighbors(u).forEach(v =>
     {
