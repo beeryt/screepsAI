@@ -20,6 +20,10 @@ jobs:
             keys:
               - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
         - run: yarn install
+        - save_cache:
+            key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+            paths:
+              - ~/repo
 
   build:
     docker:
@@ -28,7 +32,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - v1-repo{{ .Environment.CIRCLE_SHA1 }}
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run: yarn build
 
   lint:
@@ -38,7 +42,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - v1-repo{{ .Environment.CIRCLE_SHA1 }}
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run: yarn build
 
 workflows:
