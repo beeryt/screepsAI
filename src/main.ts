@@ -2,14 +2,14 @@ import { dijkstra, IGraph, Vertex, Edge } from "./algorithms/dijkstra";
 
 class AdjacencyList<V extends Vertex> implements Iterable<[V, V]>
 {
-  data: number[][] = [];
+  public data: number[][] = [];
 
-  constructor()
+  public constructor()
   {
     this.data = [];
   }
 
-  link(v: V, u: V, w: number = 1, directed: boolean = false)
+  public link(v: V, u: V, w: number = 1, directed: boolean = false): void
   {
     if (this.data[v as number] === undefined)
     {
@@ -27,7 +27,7 @@ class AdjacencyList<V extends Vertex> implements Iterable<[V, V]>
     }
   }
 
-  *[Symbol.iterator](): Iterator<[V, V]>
+  public *[Symbol.iterator](): Iterator<[V, V]>
   {
     let i = -1;
     for (const odata of this.data)
@@ -48,10 +48,10 @@ class AdjacencyList<V extends Vertex> implements Iterable<[V, V]>
 class Graph<V extends Vertex> implements IGraph<V, [V, V]>
 {
   private readonly _edges = new AdjacencyList<V>();
-  vertices: V[] = [];
-  edges: Iterable<[V, V]> = this._edges;
+  public vertices: V[] = [];
+  public edges: Iterable<[V, V]> = this._edges;
 
-  constructor(n: number = 3)
+  public constructor(n: number = 3)
   {
     for (let i = 0; i < n; ++i)
     {
@@ -64,7 +64,7 @@ class Graph<V extends Vertex> implements IGraph<V, [V, V]>
     }
   }
 
-  linkNeighbors(v: number, n: number): void
+  protected linkNeighbors(v: number, n: number): void
   {
     const x1 = Math.floor(v / n);
     const y1 = v % n;
@@ -81,7 +81,7 @@ class Graph<V extends Vertex> implements IGraph<V, [V, V]>
     }
   }
 
-  neighbors(v: V): V[]
+  public neighbors(v: V): V[]
   {
     if (this._edges.data[v as number] === undefined) return [];
     const neighbors: V[] = [];
@@ -96,7 +96,7 @@ class Graph<V extends Vertex> implements IGraph<V, [V, V]>
     return neighbors;
   }
 
-  weight(u: V, v: V): number
+  public weight(u: V, v: V): number
   {
     return Math.abs(v - u) + 1;
   }

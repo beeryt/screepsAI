@@ -1,4 +1,4 @@
-var Colony = require("Colony");
+import { Colony } from "Colony";
 
 class Sovereign
 {
@@ -18,7 +18,7 @@ class Sovereign
   {
     console.log("Sovereign::init()");
     this.populateColonies();
-    this.colonies.forEach(function(colony) 
+    this.colonies.forEach(function(colony)
     {
       colony.init();
     });
@@ -27,7 +27,7 @@ class Sovereign
   refresh()
   {
     // console.log("Sovereign::refresh()");
-    this.colonies.forEach(function(colony) 
+    this.colonies.forEach(function(colony)
     {
       colony.refresh();
     });
@@ -36,7 +36,7 @@ class Sovereign
   update()
   {
     // console.log("Sovereign::update()");
-    this.colonies.forEach(function(colony) 
+    this.colonies.forEach(function(colony)
     {
       colony.update();
     });
@@ -45,7 +45,7 @@ class Sovereign
   run()
   {
     // console.log("Sovereign::run()");
-    this.colonies.forEach(function(colony) 
+    this.colonies.forEach(function(colony)
     {
       colony.run();
     });

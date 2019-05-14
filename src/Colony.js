@@ -1,7 +1,6 @@
-var Mine = require("Mine");
-var Util = require("Util");
-
-var DT = require("OvermindDistances");
+import { Mine } from "Mine";
+import { Util } from "Util";
+import { DT } from "OvermindDistances";
 
 class Colony
 {
