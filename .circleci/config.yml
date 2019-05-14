@@ -1,50 +1,57 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
-version: 2.1
+version: 2.0
 jobs:
-  install:
+  checkout_code:
     docker:
-      # specify the version you desire here
       - image: circleci/node:7.10
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
     working_directory: ~/repo
-
     steps:
       - checkout
-      - run: yarn install
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/repo
+
+  install_dependencies:
+    docker:
+      - image: circleci/node:7.10
+    working_directory: ~/repo
+    steps:
+        - restore_cache:
+            keys:
+              - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+        - run: yarn install
 
   build:
     docker:
-      -image: circleci/node:7.10
-      working_directory: ~/repo
-      steps:
-        - checkout
-        - run: yarn build
+      - image: circleci/node:7.10
+    working_directory: ~/repo
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo{{ .Environment.CIRCLE_SHA1 }}
+      - run: yarn build
 
   lint:
     docker:
-      -image: circleci/node:7.10
-      working_directory: ~/repo
-      steps:
-        -checkout
-        - run: yarn lint
-
+      - image: circleci/node:7.10
+    working_directory: ~/repo
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo{{ .Environment.CIRCLE_SHA1 }}
+      - run: yarn build
 
 workflows:
   version: 2
-  checkout_lint_build:
+  lint_and_build:
     jobs:
-      - install
-      - lint:
-        requires:
-          - install
+      - checkout_code
+      - install_dependencies:
+          requires:
+            - checkout_code
       - build:
-        requires:
-          - install
+          requires:
+            - install_dependencies
+      - lint:
+          requires:
+            - install_dependencies
