@@ -1,5 +1,4 @@
 import "@types/lodash";
-import "@types/screeps";
 import { dijkstra } from "./algorithms/dijkstra";
 
 interface ILookStructure {type: string; structure: Structure};
@@ -37,7 +36,7 @@ export class Mine
   public pos: RoomPosition|undefined;
   public room: Room|undefined;
   public costs: number[];
-  public maxCost: number;
+  public maxCost: number = Infinity;
   public constructionSite: ConstructionSite|undefined;
   public container: StructureContainer|undefined;
   public link: StructureLink|undefined;

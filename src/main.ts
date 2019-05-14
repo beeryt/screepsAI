@@ -1,5 +1,10 @@
 import { dijkstra, IGraph, Vertex, Edge } from "./algorithms/dijkstra";
 
+let a: RoomPosition = new RoomPosition(25,25,'sim');
+console.log(a.isWalkable);
+let b: Game = Game;
+console.log(b);
+
 class AdjacencyList<V extends Vertex> implements Iterable<[V, V]>
 {
   public data: number[][] = [];

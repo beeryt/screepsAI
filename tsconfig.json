@@ -5,10 +5,9 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "module": "commonjs",
-    "types": ["node"],
     "target": "es6",
-    "lib": ["es6"],
     "outDir": "./tsc-out",
+    "strict": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
     "emitDecoratorMetadata": true,
