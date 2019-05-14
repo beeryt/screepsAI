@@ -3,21 +3,31 @@
   "description": "An in development bot for screeps.com",
   "version": "0.0.1",
   "scripts": {
-    "start":  "node tsc-out/main.js",
-    "build":  "tsc -p .",
-    "lint":   "eslint src --ext .js,.ts",
-    "clean":  "rm -rf tsc-out && rm -rf dist",
-    "test":   "npm run clean && npm run build"
+    "clean": "rm -rf tsc-out && rm -rf dist",
+    "lint": "eslint src --ext .js,.ts",
+    "build": "tsc -p .",
+    "test": "npm run clean && npm run lint && npm run build",
+    "start": "node tsc-out/main.js",
+    "deploy": "rollup -c --environment DEST:main"
   },
   "devDependencies": {
     "@types/lodash": "^3.10.1",
-    "@types/node": "",
     "@types/screeps": "^2.5.2",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
     "@tyriar/avl-tree": "^2.0.6",
-    "@tyriar/fibonacci-heap": "^2.0.9",
     "eslint": "^5.16.0",
-    "typescript": ""
+    "node": "^12.2.0",
+    "rollup": "^1.11.3",
+    "rollup-plugin-clear": "^2.0.7",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-node-resolve": "^4.2.4",
+    "rollup-plugin-screeps": "^0.1.2",
+    "rollup-plugin-terser": "^4.0.4",
+    "rollup-plugin-typescript2": "^0.21.0",
+    "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "@tyriar/fibonacci-heap": "^2.0.9"
   }
 }
