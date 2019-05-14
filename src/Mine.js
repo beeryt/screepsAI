@@ -2,7 +2,8 @@ var Util = require("Util");
 
 function isWalkable(pos)
 {
-  pos.look().forEach(object => {
+  pos.look().forEach(object => 
+  {
     if (object.type == 'structure' && object.structure.type == 'road')
     {
       return true;
@@ -17,7 +18,8 @@ function isWalkable(pos)
   return terrain.get(pos.x, pos.y) != TERRAIN_MASK_WALL;
 }
 
-class Mine {
+class Mine 
+{
   constructor(colony, source)
   {
     this.colony = colony;

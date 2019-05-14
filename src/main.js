@@ -1,10 +1,13 @@
 var _Sovereign = require('Sovereign');
 
-module.exports.loop = function() {
+module.exports.loop = function() 
+{
 
-  console.log(Game.cpu.bucket, Game.cpu.tickLimit)
-  for (var name in Memory.creeps) {
-    if (!Game.creeps[name]) {
+  console.log(Game.cpu.bucket, Game.cpu.tickLimit);
+  for (var name in Memory.creeps) 
+  {
+    if (!Game.creeps[name]) 
+    {
       delete Memory.creeps[name];
       console.log("Farewell", name);
     }
@@ -23,7 +26,8 @@ module.exports.loop = function() {
   // console.log();
 };
 
-function reset() {
+function reset() 
+{
   console.log("Welcome to Sovereign!\nCode updated or global reset.");
   global.Sovereign = new _Sovereign();
   Sovereign.init();

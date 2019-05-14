@@ -6,7 +6,16 @@
         "sourceType": "module"
     },
     "plugins": ["@typescript-eslint"],
+    "extends": ["plugin:@typescript-eslint/recommended"],
     "rules": {
-      "@typescript-eslint/camelcase": "warn"
+      "brace-style": ["error", "allman"],
+      "indent": "off",
+      "@typescript-eslint/indent": ["warn", 2],
+      "@typescript-eslint/interface-name-prefix": ["warn", "always"],
+      "@typescript-eslint/no-unnecessary-type-assertion": ["warn"],
+      "@typescript-eslint/prefer-string-starts-ends-with": ["error"],
+      "semi": "off",
+      "@typescript-eslint/semi": ["error"],
+      "@typescript-eslint/type-annotation-spacing": ["warn"]
     }
 }

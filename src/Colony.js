@@ -1,4 +1,3 @@
-/*jshint bitwise: false*/
 var Mine = require("Mine");
 var Util = require("Util");
 
@@ -33,7 +32,8 @@ class Colony
   refresh()
   {
     // console.log("Colony::refresh()");
-    this.mines.forEach((mine) => {
+    this.mines.forEach((mine) =>
+    {
       mine.refresh();
     });
   }
@@ -51,7 +51,7 @@ class Colony
     }
     let mts = [];
     this.mines.forEach(mine=>mts.push(Util.dijkstra(null,mine.pos)[0]));
-    DT.displayCostArray(mts[0])
+    DT.displayCostArray(mts[0]);
   }
 
   update()
@@ -62,18 +62,18 @@ class Colony
     // DT.displayCostMatrix(this.dt,"blue", this.room.visual);
     return;
 
-    this.candidates[0].forEach(c=>this.room.visual.circle(c, {fill: "green"}))
-    this.candidates[1].forEach(c=>this.room.visual.circle(c, {fill: "orange"}))
-    this.candidates[2].forEach(c=>this.room.visual.circle(c, {fill: "red"}))
+    this.candidates[0].forEach(c=>this.room.visual.circle(c, {fill: "green"}));
+    this.candidates[1].forEach(c=>this.room.visual.circle(c, {fill: "orange"}));
+    this.candidates[2].forEach(c=>this.room.visual.circle(c, {fill: "red"}));
 
-    this.room.visual.circle(this.mines[0].pos, {radius:1, opacity:0.1})
+    this.room.visual.circle(this.mines[0].pos, {radius:1, opacity:0.1});
     let array = this.costs;
 
     let maxCost = _.max(array);
     let minCost = _.min(array);
     let avgCost = _.sum(array)/array.length;
 
-    console.log("Max:", maxCost, "Min:", minCost, "Mean:", avgCost)
+    console.log("Max:", maxCost, "Min:", minCost, "Mean:", avgCost);
 
     for (let i = 0; i < 2500; ++i)
     {
@@ -84,13 +84,13 @@ class Colony
       if (intensity < 0) intensity = 0;
       if (intensity > 1) intensity = 1;
       let color = Math.floor(255*intensity);
-      let text = Math.floor(9*intensity)
+      let text = Math.floor(9*intensity);
 
       let r = 255 - color;
       let g = color;
       let b = 0;
       let a = 0.5*intensity;
-      let colorStr = "rgba("+ r +","+ g +","+ b +","+ a +")"
+      let colorStr = "rgba("+ r +","+ g +","+ b +","+ a +")";
       this.room.visual.rect(p.x-0.5,p.y-0.5,1,1, {fill: colorStr});
       if (i % 4 == 0)
       {
@@ -98,7 +98,8 @@ class Colony
       }
     }
 
-    this.mines.forEach(mine => {
+    this.mines.forEach(mine =>
+    {
       mine.update();
     });
   }
@@ -192,14 +193,14 @@ class Colony
       possible = this.removeTrickyPosistions(possible);
     }
 
-    return [perfect,okey,possible]
+    return [perfect,okey,possible];
   }
 
   removeTrickyPosistions(positions)
   {
-    if (this.room === undefined) { return positions; }
+    if (this.room === undefined) return positions;
     let spawn = this.room.getSpawn();
-    if (spawn === undefined) { return positions; }
+    if (spawn === undefined) return positions;
     let allowed = [];
     for (let p of positions)
     {
@@ -214,7 +215,8 @@ class Colony
   run()
   {
     // console.log("Colony::run()");
-    this.mines.forEach((mine) => {
+    this.mines.forEach((mine) =>
+    {
       mine.run();
     });
   }

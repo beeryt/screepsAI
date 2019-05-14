@@ -31,7 +31,7 @@ export function dijkstra<V extends Vertex>(graph: IGraph<V, [V, V]>, source: V):
 
   while (!Q.isEmpty())
   {
-    const u: V = (Q.extractMinimum() as { key: number, value: V}).value;
+    const u: V = (Q.extractMinimum() as { key: number; value: V}).value;
 
     for (const v of graph.neighbors(u))
     {
