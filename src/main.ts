@@ -1,9 +1,6 @@
 import { dijkstra, IGraph, Vertex, Edge } from "./algorithms/dijkstra";
-
-let a: RoomPosition = new RoomPosition(25,25,'sim');
-console.log(a.isWalkable);
-let b: Game = Game;
-console.log(b);
+import "./prototypes/RoomPosition";
+import "./prototypes/Structure";
 
 class AdjacencyList<V extends Vertex> implements Iterable<[V, V]>
 {
@@ -52,7 +49,7 @@ class AdjacencyList<V extends Vertex> implements Iterable<[V, V]>
 
 class Graph<V extends Vertex> implements IGraph<V, [V, V]>
 {
-  private readonly _edges = new AdjacencyList<V>();
+  protected readonly _edges = new AdjacencyList<V>();
   public vertices: V[] = [];
   public edges: Iterable<[V, V]> = this._edges;
 
@@ -107,12 +104,41 @@ class Graph<V extends Vertex> implements IGraph<V, [V, V]>
   }
 }
 
-
-const g: IGraph<Vertex, Edge> = new Graph<Vertex>();
-
-for (const v of g.vertices)
+class RoomGraph extends Graph<number>
 {
-  console.log("Neighbors", v + ":", g.neighbors(v));
+  protected room: Room;
+  
+  public constructor(roomname: string)
+  {
+    super(50);
+    this.room = Game.rooms[roomname];
+  }
+
+  public weight(u: number, v: number): number
+  {
+    let terrain = this.room.getTerrain().get(Math.floor(v/50), v%50);
+    if (terrain === TERRAIN_MASK_WALL) return 75;
+    if (terrain === TERRAIN_MASK_SWAMP) return 5;
+    return 1;
+  }
 }
 
-console.log("Dijkstra:", dijkstra(g, 0));
+function process(roomName: string): void
+{
+  let g = new RoomGraph(roomName);
+  let r = dijkstra(g, 25*50+25);
+  let max = _.max(r[0]);
+  r[0].forEach((w,i) =>
+  {
+    let x = Math.floor(i/50);
+    let y = i%50;
+    let pos = new RoomPosition(x,y,roomName);
+    let color = `rgba(${Math.max(0,255-Math.floor(255*w/25))},0,0,.5)`;
+    Game.rooms[roomName].visual.rect(x-0.5,y-0.5,1,1, {fill:color});
+  });
+}
+
+for (let room in Game.rooms)
+{
+  process(room);
+}

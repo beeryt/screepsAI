@@ -5,6 +5,6 @@ interface Structure
 
 interface RoomPosition
 {
-  isWalkable(ignoreCreeps: boolean): boolean;
+  isWalkable(ignoreCreeps?: boolean): boolean;
   isVisible: boolean;
 }
