@@ -3,14 +3,17 @@ function neighbors(dist: CostMatrix, x: number, y: number, dirs: DirectionConsta
   let n: number[] = [];
   for (let d of dirs)
   {
-    if (d === TOP_LEFT && x > 0 && y > 0) n.push(dist.get(x-1,y-1));
-    if (d === TOP && y > 0) n.push(dist.get(x,y-1));
-    if (d === TOP_RIGHT && x <= 50 && y > 0) n.push(dist.get(x+1,y-1));
-    if (d === RIGHT && x <= 50) n.push(dist.get(x+1,y));
-    if (d === BOTTOM_RIGHT && x <= 50 && y <= 50) n.push(dist.get(x+1,y+1));
-    if (d === BOTTOM && y <= 50) n.push(dist.get(x,y+1));
-    if (d === BOTTOM_LEFT && x > 0 && y <= 50) n.push(dist.get(x-1,y+1));
-    if (d === LEFT && x > 0) n.push(dist.get(x-1,y));
+    switch (d)
+    {
+      case TOP_LEFT: n.push(dist.get(x-1,y-1)); break;
+      case TOP: n.push(dist.get(x,y-1)); break;
+      case TOP_RIGHT: n.push(dist.get(x+1,y-1)); break;
+      case RIGHT: n.push(dist.get(x+1,y)); break;
+      case BOTTOM_RIGHT: n.push(dist.get(x+1,y+1)); break;
+      case BOTTOM: n.push(dist.get(x,y+1)); break;
+      case BOTTOM_LEFT: n.push(dist.get(x-1,y+1)); break;
+      case LEFT: n.push(dist.get(x-1,y)); break;
+    }
   }
   return n;
 }
@@ -18,6 +21,22 @@ function neighbors(dist: CostMatrix, x: number, y: number, dirs: DirectionConsta
 export function distanceTransform(foreground: CostMatrix): CostMatrix
 {
   const dist = foreground;
+
+  const product = (...args: number[][]): any[] =>
+    args.reduce(
+      (a, b): any =>
+        _.flatten(a.map((x: any): any[] => b.map((y: any): any[] => x.concat([y])))),
+      [[]]
+    );
+
+  const moore = product([-1,0,1],[-1,0,1]);
+
+  console.log("oob:", foreground.get(-1,0), _.min([undefined, 1]));
+  var kernel = _.fill(Array(3), [-1, 0, 1]);
+  console.log("Kernel:", kernel);
+  console.log("moore:", moore);
+  for (let k of moore) console.log(k);
+
 
   // forward pass
   for (let x of _.range(50))
@@ -61,69 +80,6 @@ export function walkablePixelsForRoom(roomName: string): CostMatrix
   return costMatrix;
 }
 
-function wallOrAdjacentToExit(x: number, y: number, roomName: string): boolean
-{
-
-  const terrain = Game.map.getRoomTerrain(roomName);
-
-  if (1 < x && x < 48 && 1 < y && y < 48)
-  {
-    return terrain.get(x, y) == TERRAIN_MASK_WALL;
-  }
-  if (0 == x || 0 == y || 49 == x || 49 == y)
-  {
-    return true;
-  }
-  if (terrain.get(x, y) == TERRAIN_MASK_WALL)
-  {
-    return true;
-  }
-  // If we've reached here then position is a walkable neighbor to an exit tile
-  let A, B, C;
-  if (x == 1)
-  {
-    A = terrain.get(0, y - 1);
-    B = terrain.get(0, y);
-    C = terrain.get(0, y + 1);
-  }
-  else if (x == 48)
-  {
-    A = terrain.get(49, y - 1);
-    B = terrain.get(49, y);
-    C = terrain.get(49, y + 1);
-  }
-  if (y == 1)
-  {
-    A = terrain.get(x - 1, 0);
-    B = terrain.get(x, 0);
-    C = terrain.get(x + 1, 0);
-  }
-  else if (y == 48)
-  {
-    A = terrain.get(x - 1, 49);
-    B = terrain.get(x, 49);
-    C = terrain.get(x + 1, 49);
-  }
-  return !(A == TERRAIN_MASK_WALL && B == TERRAIN_MASK_WALL && C == TERRAIN_MASK_WALL);
-}
-
-// Compute positions where you can build movement-blocking structures in a room
-function blockablePixelsForRoom(roomName: string): CostMatrix
-{
-  const costMatrix = new PathFinder.CostMatrix();
-  for (let y = 0; y < 50; ++y)
-  {
-    for (let x = 0; x < 50; ++x)
-    {
-      if (!wallOrAdjacentToExit(x, y, roomName))
-      {
-        costMatrix.set(x, y, 1);
-      }
-    }
-  }
-  return costMatrix;
-}
-
 // Visualize a given costMatrix globally
 export function displayCostMatrix(costMatrix: CostMatrix, color = '#fff000'): void
 {
@@ -151,7 +107,7 @@ export function displayCostMatrix(costMatrix: CostMatrix, color = '#fff000'): vo
   }
 }
 
-export function testDistanceTransform(roomName = 'sim')
+export function testDistanceTransform(roomName = 'sim'): void
 {
   const dt = distanceTransform(walkablePixelsForRoom(roomName));
   displayCostMatrix(dt);
