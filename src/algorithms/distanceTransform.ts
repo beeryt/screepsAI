@@ -22,22 +22,6 @@ export function distanceTransform(foreground: CostMatrix): CostMatrix
 {
   const dist = foreground;
 
-  const product = (...args: number[][]): any[] =>
-    args.reduce(
-      (a, b): any =>
-        _.flatten(a.map((x: any): any[] => b.map((y: any): any[] => x.concat([y])))),
-      [[]]
-    );
-
-  const moore = product([-1,0,1],[-1,0,1]);
-
-  console.log("oob:", foreground.get(-1,0), _.min([undefined, 1]));
-  var kernel = _.fill(Array(3), [-1, 0, 1]);
-  console.log("Kernel:", kernel);
-  console.log("moore:", moore);
-  for (let k of moore) console.log(k);
-
-
   // forward pass
   for (let x of _.range(50))
   {

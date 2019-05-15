@@ -1,8 +1,7 @@
-import { dijkstra, IGraph, Vertex, Edge } from "./algorithms/dijkstra";
+import { dijkstra, IGraph, Vertex } from "./algorithms/dijkstra";
 import "./prototypes/RoomPosition";
 import "./prototypes/Structure";
-import {osi} from "./algorithms/osi";
-import {testDistanceTransform} from "./algorithms/distanceTransform";
+import {distanceTransform, walkablePixelsForRoom, displayCostMatrix} from "./algorithms/distanceTransform";
 
 class AdjacencyList<V extends Vertex> implements Iterable<[V, V]>
 {
@@ -125,25 +124,9 @@ class RoomGraph extends Graph<number>
   }
 }
 
-function process(roomName: string): void
-{
-  let g = new RoomGraph(roomName);
-  let r = dijkstra(g, 25*50+25);
-  let max = _.max(r[0]);
-  r[0].forEach((w,i) =>
-  {
-    let x = Math.floor(i/50);
-    let y = i%50;
-    let pos = new RoomPosition(x,y,roomName);
-    let color = `rgba(${Math.max(0,255-Math.floor(255*w/25))},0,0,.5)`;
-    // Game.rooms[roomName].visual.rect(x-0.5,y-0.5,1,1, {fill:color});
-  });
-}
-
-testDistanceTransform();
-
 for (let room in Game.rooms)
 {
-  process(room);
-  osi(room);
+  let walk = walkablePixelsForRoom(room);
+  let dt = distanceTransform(walk);
+  displayCostMatrix(dt);
 }
