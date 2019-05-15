@@ -1,6 +1,7 @@
 import { dijkstra, IGraph, Vertex, Edge } from "./algorithms/dijkstra";
 import "./prototypes/RoomPosition";
 import "./prototypes/Structure";
+import {osi} from "./algorithms/osi";
 
 class AdjacencyList<V extends Vertex> implements Iterable<[V, V]>
 {
@@ -107,7 +108,7 @@ class Graph<V extends Vertex> implements IGraph<V, [V, V]>
 class RoomGraph extends Graph<number>
 {
   protected room: Room;
-  
+
   public constructor(roomname: string)
   {
     super(50);
@@ -141,4 +142,5 @@ function process(roomName: string): void
 for (let room in Game.rooms)
 {
   process(room);
+  osi(room);
 }
