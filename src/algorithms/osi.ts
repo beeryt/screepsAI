@@ -55,7 +55,7 @@ export function osi(roomName: string): CostMatrix|undefined
   for (let x of _.range(50)) for (let y of _.range(50))
   {
     let color = `rgba(0,0,${Math.floor(255*dist.get(x,y)/10)}, 0.5)`;
-    Game.rooms[roomName].visual.rect(x-0.5,y-0.5,1,1,{fill:color});
+    // Game.rooms[roomName].visual.rect(x-0.5,y-0.5,1,1,{fill:color});
   }
   return dist;
 }
