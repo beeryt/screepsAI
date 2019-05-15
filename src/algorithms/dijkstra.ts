@@ -12,21 +12,21 @@ export interface IGraph<V, E>
   neighbors(v: V): Iterable<V>;
 }
 
-export function dijkstra<V extends Vertex>(graph: IGraph<V, [V, V]>, source: V): [number[], number[]]
+export function dijkstra<V extends Vertex>(graph: IGraph<V, [V, V]>, source: V): [Map<V,number>, Map<V,V>]
 {
-  const node: INode<number, V>[] = [];
-  const dist: number[] = [];
-  const prev: number[] = [];
+  const node: Map<V, INode<number, V>> = new Map<V, INode<number,V>>();
+  const dist: Map<V,number> = new Map<V,number>();
+  const prev: Map<V,V> = new Map<V,V>();
   const Q: FibonacciHeap<number, V> = new FibonacciHeap<number, V>();
 
-  dist[source] = 0;
+  dist.set(source, 0);
   for (const v of graph.vertices)
   {
     if (v !== source)
     {
-      dist[v] = Infinity;
+      dist.set(v, Infinity);
     }
-    node[v] = Q.insert(dist[v], v);
+    node.set(v, Q.insert(dist.get(v)!, v));
   }
 
   while (!Q.isEmpty())
@@ -35,12 +35,13 @@ export function dijkstra<V extends Vertex>(graph: IGraph<V, [V, V]>, source: V):
 
     for (const v of graph.neighbors(u))
     {
-      const alt: number = dist[u] + graph.weight(u, v);
-      if (alt < dist[v])
+      const alt: number = dist.get(u)! + graph.weight(u, v);
+
+      if (alt < dist.get(v)!)
       {
-        dist[v] = alt;
-        prev[v] = u;
-        Q.decreaseKey(node[v], alt);
+        dist.set(v, alt);
+        prev.set(v, u);
+        Q.decreaseKey(node.get(v)!, alt);
       }
     }
   }

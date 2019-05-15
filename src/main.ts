@@ -124,9 +124,26 @@ class RoomGraph extends Graph<number>
   }
 }
 
+let rp = new RoomPosition(0,0,'sim');
+let cm = new Map<RoomPosition,number>();
+let rm = new Map<RoomPosition,RoomPosition>();
+
+cm.set(rp, 58);
+cm.get(rp);
+console.log(rp, cm.get(rp));
+
+
 for (let room in Game.rooms)
 {
+  console.log(`Processing ${room}...`);
   let walk = walkablePixelsForRoom(room);
   let dt = distanceTransform(walk);
+  let sources = Game.rooms[room].find(FIND_SOURCES);
+  let rg = new RoomGraph(room);
+  for (let s of sources)
+  {
+    let r = dijkstra(rg, s.pos.x*50+s.pos.y);
+    console.log(_.min(r[0]), _.min(r[1]));
+  }
   displayCostMatrix(dt);
 }
