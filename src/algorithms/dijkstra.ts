@@ -1,13 +1,9 @@
 import { FibonacciHeap, INode } from "@tyriar/fibonacci-heap";
 
-export type Vertex = number;
-
-export type Edge = [Vertex, Vertex];
-
-export interface IGraph<V, E>
+export interface IGraph<V>
 {
   vertices: Iterable<V>;
-  edges: Iterable<E>;
+  edges: Iterable<[V,V]>;
   weight(u: V, v: V): number;
   neighbors(v: V): Iterable<V>;
 }
@@ -22,7 +18,7 @@ export function dijkstra<V extends Vertex>(graph: IGraph<V, [V, V]>, source: V):
   dist.set(source, 0);
   for (const v of graph.vertices)
   {
-    if (v !== source)
+    if (!_.isEqual(v,source))
     {
       dist.set(v, Infinity);
     }

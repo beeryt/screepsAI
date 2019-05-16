@@ -14,22 +14,26 @@ Object.defineProperty(RoomPosition.prototype, "isVisible", {
   configurable: true
 });
 
+const product = (...args: number[][]): any[] =>
+  args.reduce(
+    (a, b): any =>
+      _.flatten(a.map((x: any): any[] => b.map((y: any): any[] => x.concat([y])))),
+    [[]]
+  );
+
+const moore = product([-1,0,1],[-1,0,1]);
+
 Object.defineProperty(RoomPosition.prototype, 'neighbors', {
   get: function(): RoomPosition[]
   {
     const adjPos: RoomPosition[] = [];
-    for (const dx of [-1, 0, 1])
+    for (let candidate of moore)
     {
-      for (const dy of [-1, 0, 1])
-      {
-        if (dx == 0 && dy == 0) continue;
-        const x = this.x + dx;
-        const y = this.y + dy;
-        if (x < 0 || x > 49 || y < 0 || y > 49)
-        {
-          adjPos.push(new RoomPosition(x, y, this.roomName));
-        }
-      }
+      let x = this.x + candidate[0];
+      let y = this.y + candidate[1];
+      if (this.x == x && this.y == y) continue;
+      if (x < 0 || x >= 50 || y < 0 || y >= 50) continue;
+      adjPos.push(new RoomPosition(x, y, this.roomName));
     }
     return adjPos;
   },
