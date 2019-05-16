@@ -8,7 +8,7 @@ export interface IGraph<V>
   neighbors(v: V): Iterable<V>;
 }
 
-export function dijkstra<V extends Vertex>(graph: IGraph<V, [V, V]>, source: V): [Map<V,number>, Map<V,V>]
+export function dijkstra<V>(graph: IGraph<V>, source: V): [Map<V,number>, Map<V,V>]
 {
   const node: Map<V, INode<number, V>> = new Map<V, INode<number,V>>();
   const dist: Map<V,number> = new Map<V,number>();

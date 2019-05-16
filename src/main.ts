@@ -104,9 +104,10 @@ for (let room in Game.rooms)
   let dt = distanceTransform(walk);
   displayCostMatrix(dt);
 
-  let a = Game.rooms[room].getPositionAt(0,0);
+  let a = new RoomPosition(0,0,room);
   let b = Game.rooms[room].getPositionAt(0,0);
   console.log(a,b,a==b,a===b, _.isEqual(a,b));
+  console.log(a, a.valueOf());
 
   let sources = Game.rooms[room].find(FIND_SOURCES);
   let rg = new RoomGraph(room);
