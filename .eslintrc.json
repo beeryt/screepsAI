@@ -12,6 +12,7 @@
       "indent": "off",
       "@typescript-eslint/indent": ["warn", 2],
       "@typescript-eslint/interface-name-prefix": ["warn", "always"],
+      "@typescript-eslint/no-non-null-assertion": ["warn"],
       "@typescript-eslint/no-unnecessary-type-assertion": ["warn"],
       "@typescript-eslint/prefer-string-starts-ends-with": ["error"],
       "semi": "off",
