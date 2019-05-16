@@ -6,24 +6,19 @@ import {distanceTransform, walkablePixelsForRoom, displayCostMatrix} from "./alg
 
 class AdjacencyList<V> implements Iterable<[V, V]>
 {
-  public data: Map<V, Map<V, number>>;
+  public data = new Map<string, Map<string, number>>();
 
   public [Symbol.toStringTag] = "AdjacencyList";
 
-  public constructor()
-  {
-    this.data = new Map<V, Map<V, number>>();
-  }
-
   public link(v: V, u: V, w: number = 1, directed: boolean = false): void
   {
-    if (!this.data.has(v)) this.data.set(v, new Map<V, number>());
-    this.data.get(v)!.set(u,w);
+    if (!this.data.has(v.toString())) this.data.set(v.toString(), new Map<string, number>());
+    this.data.get(v.toString())!.set(u.toString(),w);
 
     if (!directed)
     {
-      if (!this.data.has(u)) this.data.set(u, new Map<V, number>());
-      this.data.get(u)!.set(v,w);
+      if (!this.data.has(u.toString())) this.data.set(u.toString(), new Map<string, number>());
+      this.data.get(u.toString())!.set(v.toString(),w);
     }
   }
 
@@ -33,7 +28,9 @@ class AdjacencyList<V> implements Iterable<[V, V]>
     {
       for (const v of this.data.get(u)!.keys())
       {
-        yield [u, v];
+        const urp = new RoomPosition(0,0,'sim');
+        const vrp = urp;
+        yield [urp as unknown as V, vrp as unknown as V];
       }
     }
   }
@@ -49,11 +46,12 @@ class Graph<V> implements IGraph<V>
 
   public neighbors(v: V): V[]
   {
-    if (!this._edges.data.has(v)) return [];
+    if (!this._edges.data.has(v.toString())) return [];
     const neighbors: V[] = [];
-    for (const u of this._edges.data.get(v)!.keys())
+    for (const us of this._edges.data.get(v.toString())!.keys())
     {
-      neighbors.push(u);
+      let u = new RoomPosition(0,0,'sim');
+      neighbors.push(u as unknown as V);
     }
 
     return neighbors;
@@ -96,6 +94,17 @@ class RoomGraph extends Graph<RoomPosition>
 }
 
 
+function reverse(str:string): RoomPosition|undefined
+{
+  let s = str.slice(1,-1).split(' ');
+  let pos = s[3].split(',');
+  let x = Number(pos[0]);
+  let y = Number(pos[1]);
+  let room = s[1];
+
+  return new RoomPosition(x,y,room);
+}
+
 for (let room in Game.rooms)
 {
   console.log(`Processing ${room}...`);
@@ -107,7 +116,9 @@ for (let room in Game.rooms)
   let a = new RoomPosition(0,0,room);
   let b = Game.rooms[room].getPositionAt(0,0);
   console.log(a,b,a==b,a===b, _.isEqual(a,b));
-  console.log(a, a.valueOf());
+  console.log(a, a.valueOf(), a.toString());
+  console.log(typeof a, typeof a.valueOf(), typeof a.toString());
+  console.log("TEST", a, a.toString(), reverse(a.toString()), reverse(a.toString())!.toString());
 
   let sources = Game.rooms[room].find(FIND_SOURCES);
   let rg = new RoomGraph(room);
