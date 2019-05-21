@@ -6,8 +6,7 @@ interface ILookTerrain {type: string; terrain: string};
 
 function isWalkable(pos: RoomPosition): boolean {
   for (let object of pos.look()) {
-    if (object.type === LOOK_STRUCTURES)// && object!.structure!.structureType === STRUCTURE_ROAD)
-    {
+    if (object.type === LOOK_STRUCTURES && object.structure!.structureType === STRUCTURE_ROAD) {
       let structure: Structure = object.structure as Structure;
       if (structure.structureType === STRUCTURE_ROAD) {
         return true;
