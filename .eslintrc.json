@@ -8,7 +8,7 @@
     "plugins": ["@typescript-eslint"],
     "extends": ["plugin:@typescript-eslint/recommended"],
     "rules": {
-      "brace-style": ["error", "allman"],
+      "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
       "indent": "off",
       "@typescript-eslint/indent": ["warn", 2],
       "@typescript-eslint/interface-name-prefix": ["warn", "always"],

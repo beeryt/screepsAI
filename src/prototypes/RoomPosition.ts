@@ -1,14 +1,12 @@
 Object.defineProperty(RoomPosition.prototype, 'room', {
-  get: function(): Room
-  {
+  get: function(): Room {
     return Game.rooms[this.roomName];
   },
   configurable: true,
 });
 
 Object.defineProperty(RoomPosition.prototype, "isVisible", {
-  get: function(): boolean
-  {
+  get: function(): boolean {
     return Game.rooms[this.roomName] !== undefined;
   },
   configurable: true
@@ -24,11 +22,9 @@ const product = (...args: number[][]): any[] =>
 const moore = product([-1,0,1],[-1,0,1]);
 
 Object.defineProperty(RoomPosition.prototype, 'neighbors', {
-  get: function(): RoomPosition[]
-  {
+  get: function(): RoomPosition[] {
     const adjPos: RoomPosition[] = [];
-    for (let candidate of moore)
-    {
+    for (let candidate of moore) {
       let x = this.x + candidate[0];
       let y = this.y + candidate[1];
       if (this.x == x && this.y == y) continue;
@@ -41,11 +37,9 @@ Object.defineProperty(RoomPosition.prototype, 'neighbors', {
 });
 
 // RoomPosition.prototype.isWalkable = (ignoreCreeps: boolean = false): boolean =>
-RoomPosition.prototype.isWalkable = function(ignoreCreeps: boolean = false): boolean
-{
+RoomPosition.prototype.isWalkable = function(ignoreCreeps: boolean = false): boolean {
   if (Game.map.getRoomTerrain(this.roomName).get(this.x, this.y) === TERRAIN_MASK_WALL) return false;
-  if (this.isVisible)
-  {
+  if (this.isVisible) {
     if (!ignoreCreeps && this.lookFor(LOOK_CREEPS).length > 0)  return false;
     if (_.filter(this.lookFor(LOOK_STRUCTURES), (s: Structure): boolean => !s.isWalkable).length > 0) return false;
   }

@@ -2,10 +2,8 @@ import { Mine } from "Mine";
 import { Util } from "Util";
 import { DT } from "OvermindDistances";
 
-class Colony
-{
-  constructor(room)
-  {
+class Colony {
+  constructor(room) {
     this.room = room;
     this.controller = room.controller;
     this.pos = this.controller.pos;
@@ -16,8 +14,7 @@ class Colony
     this.costs = [];
   }
 
-  init()
-  {
+  init() {
     console.log("Colony::init()");
 
     // this.dt = DT.distanceTransform(Game.spawns.Spawn1.room.name);
@@ -28,24 +25,20 @@ class Colony
     // this.candidates = this.findSpawnLocation();
   }
 
-  refresh()
-  {
+  refresh() {
     // console.log("Colony::refresh()");
-    this.mines.forEach((mine) =>
-    {
+    this.mines.forEach((mine) => {
       mine.refresh();
     });
   }
 
-  plan()
-  {
+  plan() {
     console.log("Colony::plan()");
     let dt = DT.distanceTransform(this.room.name);
     let cts = new Array(2500);
     // DT.displayCostArray(cts);
 
-    for (let x = 0; x < 50; ++x) for (let y = 0; y < 50; ++y)
-    {
+    for (let x = 0; x < 50; ++x) for (let y = 0; y < 50; ++y) {
       cts[x*50+y] = dt.get(x,y);
     }
     let mts = [];
@@ -53,8 +46,7 @@ class Colony
     DT.displayCostArray(mts[0]);
   }
 
-  update()
-  {
+  update() {
     console.log("Colony::update()");
     this.room.visual.clear();
     this.plan();
@@ -74,8 +66,7 @@ class Colony
 
     console.log("Max:", maxCost, "Min:", minCost, "Mean:", avgCost);
 
-    for (let i = 0; i < 2500; ++i)
-    {
+    for (let i = 0; i < 2500; ++i) {
       let p = Util.iToPos(i);
       let cost = array[i];
 
@@ -91,29 +82,24 @@ class Colony
       let a = 0.5*intensity;
       let colorStr = "rgba("+ r +","+ g +","+ b +","+ a +")";
       this.room.visual.rect(p.x-0.5,p.y-0.5,1,1, {fill: colorStr});
-      if (i % 4 == 0)
-      {
+      if (i % 4 == 0) {
         // this.room.visual.text(cost,p);
       }
     }
 
-    this.mines.forEach(mine =>
-    {
+    this.mines.forEach(mine => {
       mine.update();
     });
   }
 
-  findWallDistance()
-  {
+  findWallDistance() {
     let costs = new Array(2500);
 
-    for (let i = 0; i < 2500; ++i)
-    {
+    for (let i = 0; i < 2500; ++i) {
       costs[i] = 0;
       let x = Math.floor(i/50);
       let y = Math.floor(i%50);
-      if ((x in [0,1,2,47,48,49] && y in [0,1,2,47,48,49]) || this.room.getTerrain().get(x,y) === TERRAIN_MASK_WALL)
-      {
+      if ((x in [0,1,2,47,48,49] && y in [0,1,2,47,48,49]) || this.room.getTerrain().get(x,y) === TERRAIN_MASK_WALL) {
         costs[i] = 1;
       }
     }
@@ -121,25 +107,19 @@ class Colony
     let distance = 0;
     let found = true;
     let max = 1;
-    while (distance < 25)
-    {
+    while (distance < 25) {
       distance++;
       found = false;
-      for (let i = 0; i < 2500; ++i)
-      {
+      for (let i = 0; i < 2500; ++i) {
         let x = Math.floor(i/50);
         let y = Math.floor(i%50);
-        if (costs[i] === distance)
-        {
-          for (let x1 of [-1, 0, 1])
-          {
-            for (let y1 of [-1, 0, 1])
-            {
+        if (costs[i] === distance) {
+          for (let x1 of [-1, 0, 1]) {
+            for (let y1 of [-1, 0, 1]) {
               let x2 = x+x1;
               let y2 = y+y1;
               let i2 = Util.xyToI(x2,y2);
-              if (costs[i2] === 0)
-              {
+              if (costs[i2] === 0) {
                 max = distance + 1;
                 costs[i2] = max;
                 found = true;
@@ -152,41 +132,32 @@ class Colony
     return costs;
   }
 
-  findSpawnLocation(firstRoom = false)
-  {
+  findSpawnLocation(firstRoom = false) {
     let perfect = [];
     let okey = [];
     let possible = [];
 
     let maxCost = 0;
-    for (let i = 0; i < 2500; ++i)
-    {
+    for (let i = 0; i < 2500; ++i) {
       let x = Math.floor(i/50);
       let y = Math.floor(i%50);
       maxCost = Math.max(maxCost, this.costs[i]);
     }
 
-    for (let x of _.range(7,43))
-    {
-      for (let y of _.range(7,40))
-      {
+    for (let x of _.range(7,43)) {
+      for (let y of _.range(7,40)) {
         let i = x*50+y;
-        if (this.costs[i] >= 5 && this.costs[i+3] >= 4)
-        {
+        if (this.costs[i] >= 5 && this.costs[i+3] >= 4) {
           let pos = this.room.getPositionAt(x,y);
-          if (this.costs[i+(4*50-7)] >= 3 && this.costs[i+(-4*50-7)] >= 5)
-          {
+          if (this.costs[i+(4*50-7)] >= 3 && this.costs[i+(-4*50-7)] >= 5) {
             perfect.push(pos);
-          }
-          else if (this.costs[i-2*50] >= 7)
-          {
+          } else if (this.costs[i-2*50] >= 7) {
             okey.push(pos);
           }
         }
       }
     }
-    if (firstRoom)
-    {
+    if (firstRoom) {
       perfect = this.removeTrickyPosistions(perfect);
       okey = this.removeTrickyPosistions(okey);
       possible = this.removeTrickyPosistions(possible);
@@ -195,53 +166,42 @@ class Colony
     return [perfect,okey,possible];
   }
 
-  removeTrickyPosistions(positions)
-  {
+  removeTrickyPosistions(positions) {
     if (this.room === undefined) return positions;
     let spawn = this.room.getSpawn();
     if (spawn === undefined) return positions;
     let allowed = [];
-    for (let p of positions)
-    {
-      if ((p.x !== spawn.pos.x || (p.y !== spawn.pos.y && p.y !== spawn.pos.y - 1)) && (p.x !== spawn.pos.x - 2 || p.y !== spawn.pos.y + 1))
-      {
+    for (let p of positions) {
+      if ((p.x !== spawn.pos.x || (p.y !== spawn.pos.y && p.y !== spawn.pos.y - 1)) && (p.x !== spawn.pos.x - 2 || p.y !== spawn.pos.y + 1)) {
         allowed.push(p);
       }
     }
     return allowed;
   }
 
-  run()
-  {
+  run() {
     // console.log("Colony::run()");
-    this.mines.forEach((mine) =>
-    {
+    this.mines.forEach((mine) => {
       mine.run();
     });
   }
 
-  filterDistanceToVitalPositions(positions)
-  {
+  filterDistanceToVitalPositions(positions) {
     let filtered = [];
     let vitalTargets = this.mines;
 
-    for (let p of positions)
-    {
+    for (let p of positions) {
       let validPosition = true;
-      for (let v of vitalTargets)
-      {
-        if (p.getRangeTo(v) < 6)
-        {
+      for (let v of vitalTargets) {
+        if (p.getRangeTo(v) < 6) {
           validPosition = false;
         }
       }
       let cPos = this.room.controller;
-      if (p.getRangeTo(cPos) < 8)
-      {
+      if (p.getRangeTo(cPos) < 8) {
         validPosition = false;
       }
-      if (validPosition)
-      {
+      if (validPosition) {
         filtered.push(p);
       }
     }
@@ -249,13 +209,11 @@ class Colony
   }
 
 
-  getTargetDistance(roomName, basePos)
-  {
+  getTargetDistance(roomName, basePos) {
     let room = Game.rooms[roomName];
     let theDistance = 0;
 
-    for (let source of this.mines)
-    {
+    for (let source of this.mines) {
       theDistance += basePos.getRangeTo(source.pos);
     }
 
@@ -266,8 +224,7 @@ class Colony
   }
 
 
-  visuals()
-  {
+  visuals() {
 
   }
 }
