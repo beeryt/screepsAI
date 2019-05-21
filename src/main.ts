@@ -93,6 +93,20 @@ class RoomGraph extends Graph<RoomPosition>
   }
 }
 
+class ByValue
+{
+  public x: number;
+  public constructor(n:number = 5)
+  {
+    this.x = n;
+  }
+  public valueOf(): string
+  {
+    return 'ByValue:'+this.x;
+  }
+}
+
+
 
 function reverse(str:string): RoomPosition|undefined
 {
@@ -119,6 +133,14 @@ for (let room in Game.rooms)
   console.log(a, a.valueOf(), a.toString());
   console.log(typeof a, typeof a.valueOf(), typeof a.toString());
   console.log("TEST", a, a.toString(), reverse(a.toString()), reverse(a.toString())!.toString());
+
+  let c = new ByValue();
+  let d: Map<string, string> = new Map<string, string>();
+  d.set(c.valueOf(), "Hello");
+  console.log(c, c.toString(), c.valueOf(), d.get(c.valueOf()));
+  let e = new ByValue();
+  d.set(e.valueOf(), "Hello World");
+  console.log(d.get(c.valueOf()), d.get(e.valueOf()));
 
   let sources = Game.rooms[room].find(FIND_SOURCES);
   let rg = new RoomGraph(room);
