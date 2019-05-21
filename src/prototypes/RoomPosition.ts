@@ -12,10 +12,10 @@ Object.defineProperty(RoomPosition.prototype, "isVisible", {
   configurable: true
 });
 
-const product = (...args: number[][]): any[] =>
+const product = (...args: number[][]): number[][] =>
   args.reduce(
-    (a, b): any =>
-      _.flatten(a.map((x: any): any[] => b.map((y: any): any[] => x.concat([y])))),
+    (a: number[][], b: number[]): number[][] =>
+      _.flatten(a.map((x: number[]): number[][] => b.map((y: number): number[] => x.concat([y])))),
     [[]]
   );
 
@@ -36,7 +36,6 @@ Object.defineProperty(RoomPosition.prototype, 'neighbors', {
   configurable: true,
 });
 
-// RoomPosition.prototype.isWalkable = (ignoreCreeps: boolean = false): boolean =>
 RoomPosition.prototype.isWalkable = function(ignoreCreeps: boolean = false): boolean {
   if (Game.map.getRoomTerrain(this.roomName).get(this.x, this.y) === TERRAIN_MASK_WALL) return false;
   if (this.isVisible) {
