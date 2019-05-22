@@ -1,21 +1,23 @@
 import { dijkstra, IGraph } from "./algorithms/dijkstra";
+import { ObjectMap, IKey } from "./ObjectMap";
+import {FibonacciHeap, INode } from "@tyriar/fibonacci-heap";
 import "./prototypes/RoomPosition";
 import "./prototypes/Structure";
 import "./prototypes/Room";
 import {distanceTransform, walkablePixelsForRoom, displayCostMatrix} from "./algorithms/distanceTransform";
 
-class AdjacencyList<V> implements Iterable<[V, V]> {
-  public data = new Map<string, Map<string, number>>();
+class AdjacencyList<V extends IKey> implements Iterable<[V, V]> {
+  public data = new ObjectMap<V, ObjectMap<V, number>>();
 
   public [Symbol.toStringTag] = "AdjacencyList";
 
   public link(v: V, u: V, w: number = 1, directed: boolean = false): void {
-    if (!this.data.has(v.toString())) this.data.set(v.toString(), new Map<string, number>());
-    this.data.get(v.toString())!.set(u.toString(),w);
+    if (!this.data.has(v)) this.data.set(v, new ObjectMap<V, number>());
+    this.data.get(v)!.set(u,w);
 
     if (!directed) {
-      if (!this.data.has(u.toString())) this.data.set(u.toString(), new Map<string, number>());
-      this.data.get(u.toString())!.set(v.toString(),w);
+      if (!this.data.has(u)) this.data.set(u, new ObjectMap<V, number>());
+      this.data.get(u)!.set(v,w);
     }
   }
 
@@ -30,7 +32,7 @@ class AdjacencyList<V> implements Iterable<[V, V]> {
   }
 }
 
-class Graph<V> implements IGraph<V> {
+class Graph<V extends IKey> implements IGraph<V> {
   protected readonly _edges = new AdjacencyList<V>();
   public vertices: V[] = [];
   public edges: Iterable<[V, V]> = this._edges;
@@ -38,9 +40,9 @@ class Graph<V> implements IGraph<V> {
   public [Symbol.toStringTag] = "Graph";
 
   public neighbors(v: V): V[] {
-    if (!this._edges.data.has(v.toString())) return [];
+    if (!this._edges.data.has(v)) return [];
     const neighbors: V[] = [];
-    for (const us of this._edges.data.get(v.toString())!.keys()) {
+    for (const us of this._edges.data.get(v)!.keys()) {
       let u = new RoomPosition(0,0,'sim');
       neighbors.push(u as unknown as V);
     }
@@ -68,6 +70,21 @@ class RoomGraph extends Graph<RoomPosition> {
         this._edges.link(p,n);
       }
     }
+    let last = "";
+    let counter = 0;
+    for (let rp of this.vertices) {
+      if (last !== rp.toString()) {
+        counter += 1;
+        last = rp.toString();
+      }
+    }
+    console.log(this, "vertices size:", `(${counter}/${this.vertices.length})`);
+    let rp = this.vertices[0];
+    console.log(rp, typeof rp, rp.toString(), typeof rp.toString(), rp.valueOf(), typeof rp.valueOf());
+  }
+
+  public neighbors(v: RoomPosition): RoomPosition[] {
+    return v.neighbors;
   }
 
   public weight(u: RoomPosition, v: RoomPosition): number {
@@ -88,7 +105,30 @@ class ByValue {
   }
 }
 
+let r1 = new RoomPosition(0, 0, "sim");
+let r2 = new RoomPosition(2, 1, "sim");
+let r3 = new RoomPosition(2,2, "sim");
 
+let om = new ObjectMap<RoomPosition,number|undefined>();
+om.set(r1, 33);
+om.set(r2, 44);
+om.set(r3, 43);
+console.log("s/b:", 33, 44, 43);
+om.forEach((v,k): void => console.log(`${k}:${v}`));
+om.set(r1, 22);
+om.set(r2, om.get(r1));
+om.set(r3, om.get(r3));
+console.log("s/b:", 22, 22, 43);
+om.forEach((v,k): void => console.log(`${k}:${v}`));
+
+let q = new FibonacciHeap<number, number>();
+let n1 = q.insert(3, 5);
+let n2 = q.insert(3, 5);
+q.decreaseKey(n1, 2);
+let ino = q.extractMinimum()!;
+console.log("DecreasedKey:", ino, ino.key, ino.value);
+ino = q.extractMinimum()!;
+console.log("Last:", ino, ino.key, ino.value);
 
 function reverse(str: string): RoomPosition|undefined {
   let s = str.slice(1,-1).split(' ');
@@ -107,25 +147,11 @@ for (let room in Game.rooms) {
   let dt = distanceTransform(walk);
   displayCostMatrix(dt);
 
-  let a = new RoomPosition(0,0,room);
-  let b = Game.rooms[room].getPositionAt(0,0);
-  console.log(a,b,a==b,a===b, _.isEqual(a,b));
-  console.log(a, a.valueOf(), a.toString());
-  console.log(typeof a, typeof a.valueOf(), typeof a.toString());
-  console.log("TEST", a, a.toString(), reverse(a.toString()), reverse(a.toString())!.toString());
-
-  let c = new ByValue();
-  let d: Map<string, string> = new Map<string, string>();
-  d.set(c.valueOf(), "Hello");
-  console.log(c, c.toString(), c.valueOf(), d.get(c.valueOf()));
-  let e = new ByValue();
-  d.set(e.valueOf(), "Hello World");
-  console.log(d.get(c.valueOf()), d.get(e.valueOf()));
-
   let sources = Game.rooms[room].find(FIND_SOURCES);
   let rg = new RoomGraph(room);
   for (let s of sources) {
     let r = dijkstra<RoomPosition>(rg, s.pos);
-    console.log(_.min(r[0]), _.min(r[1]));
+    console.log(_.min(r[0].values()));
+    console.log();
   }
 }
