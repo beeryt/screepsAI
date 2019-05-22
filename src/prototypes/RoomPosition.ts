@@ -5,6 +5,11 @@ Object.defineProperty(RoomPosition.prototype, 'room', {
   configurable: true,
 });
 
+Object.defineProperty(RoomPosition.prototype, "id", {
+  get: function(): string { return `<${this.roomName}: ${this.x},${this.y}`; },
+  configurable: true,
+});
+
 Object.defineProperty(RoomPosition.prototype, "isVisible", {
   get: function(): boolean {
     return Game.rooms[this.roomName] !== undefined;
