@@ -6,9 +6,26 @@
     "clean": "rm -rf tsc-out && rm -rf dist",
     "lint": "eslint src --ext .js,.ts",
     "build": "tsc -p .",
-    "test": "npm run clean && npm run lint && npm run build",
+    "test": "ava tests",
     "start": "node tsc-out/main.js",
     "deploy": "rollup -c --environment DEST:main"
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "files": [
+      "test/**/*"
+    ],
+    "sources": [
+      "src/**/*"
+    ],
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "esm",
+      "ts-node/register"
+    ],
+    "timeout": "5s"
   },
   "devDependencies": {
     "@types/lodash": "^3.10.1",
@@ -16,7 +33,9 @@
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
     "@tyriar/avl-tree": "^2.0.6",
+    "ava": "^1.4.1",
     "eslint": "^5.16.0",
+    "esm": "^3.2.25",
     "node": "^10.15.3",
     "rollup": "^1.11.3",
     "rollup-plugin-clear": "^2.0.7",
@@ -25,6 +44,7 @@
     "rollup-plugin-screeps": "^0.1.2",
     "rollup-plugin-terser": "^4.0.4",
     "rollup-plugin-typescript2": "^0.21.0",
+    "ts-node": "^8.1.0",
     "typescript": "^3.4.5"
   },
   "dependencies": {
