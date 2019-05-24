@@ -1,41 +1,44 @@
-import { Colony } from "Colony";
+import { Colony } from "./Colony";
 
-class Sovereign {
-  constructor() {
+export class Sovereign {
+  private colonies: Colony[];
+  public readonly expiry: number;
+
+  public constructor() {
     this.colonies = [];
     this.expiry = Game.time + 100;
   }
 
-  populateColonies() {
+  public populateColonies(): void {
     console.log("Sovereign::populateColonies()");
     this.colonies.push(new Colony(Game.spawns.Spawn1.room));
   }
 
-  init() {
+  public init(): void {
     console.log("Sovereign::init()");
     this.populateColonies();
-    this.colonies.forEach(function(colony) {
+    this.colonies.forEach(function(colony): void {
       colony.init();
     });
   }
 
-  refresh() {
+  public refresh(): void {
     // console.log("Sovereign::refresh()");
-    this.colonies.forEach(function(colony) {
+    this.colonies.forEach(function(colony): void {
       colony.refresh();
     });
   }
 
-  update() {
+  public update(): void {
     // console.log("Sovereign::update()");
-    this.colonies.forEach(function(colony) {
+    this.colonies.forEach(function(colony): void {
       colony.update();
     });
   }
 
-  run() {
+  public run(): void {
     // console.log("Sovereign::run()");
-    this.colonies.forEach(function(colony) {
+    this.colonies.forEach(function(colony): void {
       colony.run();
     });
   }
