@@ -1,1 +1,1 @@
-cmd: "npm run build"
+cmd: "npm run test"
