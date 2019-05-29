@@ -1,5 +1,5 @@
 import { dijkstra, IGraph } from "./algorithms/dijkstra";
-import { ObjectMap, IKey } from "./ObjectMap";
+import { OMap, IKey } from "./OMap";
 import {FibonacciHeap, INode } from "@tyriar/fibonacci-heap";
 import "./prototypes/RoomPosition";
 import "./prototypes/Structure";
@@ -7,16 +7,16 @@ import "./prototypes/Room";
 import {distanceTransform, walkablePixelsForRoom, displayCostMatrix} from "./algorithms/distanceTransform";
 
 class AdjacencyList<V extends IKey> implements Iterable<[V, V]> {
-  public data = new ObjectMap<V, ObjectMap<V, number>>();
+  public data = new OMap<V, OMap<V, number>>();
 
   public [Symbol.toStringTag] = "AdjacencyList";
 
   public link(v: V, u: V, w: number = 1, directed: boolean = false): void {
-    if (!this.data.has(v)) this.data.set(v, new ObjectMap<V, number>());
+    if (!this.data.has(v)) this.data.set(v, new OMap<V, number>());
     this.data.get(v)!.set(u,w);
 
     if (!directed) {
-      if (!this.data.has(u)) this.data.set(u, new ObjectMap<V, number>());
+      if (!this.data.has(u)) this.data.set(u, new OMap<V, number>());
       this.data.get(u)!.set(v,w);
     }
   }
@@ -109,7 +109,7 @@ let r1 = new RoomPosition(0, 0, "sim");
 let r2 = new RoomPosition(2, 1, "sim");
 let r3 = new RoomPosition(2,2, "sim");
 
-let om = new ObjectMap<RoomPosition,number|undefined>();
+let om = new OMap<RoomPosition,number|undefined>();
 om.set(r1, 33);
 om.set(r2, 44);
 om.set(r3, 43);

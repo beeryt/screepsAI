@@ -1,5 +1,5 @@
 import { FibonacciHeap, INode } from "@tyriar/fibonacci-heap";
-import { ObjectMap, IKey } from "../ObjectMap";
+import { OMap, IKey } from "../OMap";
 
 export interface IGraph<V>
 {
@@ -9,11 +9,11 @@ export interface IGraph<V>
   neighbors(v: V): Iterable<V>;
 }
 
-export function dijkstra<V extends IKey>(graph: IGraph<V>, source: V): [ObjectMap<V, number>, ObjectMap<V, V>] {
-  const node = new ObjectMap<V, INode<number,string>>();
+export function dijkstra<V extends IKey>(graph: IGraph<V>, source: V): [OMap<V, number>, OMap<V, V>] {
+  const node = new OMap<V, INode<number,string>>();
   const keys = new Map<string, V>();
-  const dist = new ObjectMap<V, number>();
-  const prev = new ObjectMap<V, V>();
+  const dist = new OMap<V, number>();
+  const prev = new OMap<V, V>();
   const Q = new FibonacciHeap<number, string>();
 
   dist.set(source, 0);
