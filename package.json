@@ -11,23 +11,6 @@
     "start": "node tsc-out/main.js",
     "deploy": "rollup -c --environment DEST:main"
   },
-  "ava": {
-    "compileEnhancements": false,
-    "files": [
-      "test/**/*"
-    ],
-    "sources": [
-      "src/**/*"
-    ],
-    "extensions": [
-      "ts"
-    ],
-    "require": [
-      "esm",
-      "ts-node/register"
-    ],
-    "timeout": "5s"
-  },
   "devDependencies": {
     "@types/lodash": "^3.10.1",
     "@types/screeps": "^2.5.2",
