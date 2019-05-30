@@ -1,5 +1,5 @@
 import { FibonacciHeap, INode } from "@tyriar/fibonacci-heap";
-import { OMap, IKey } from "../OMap";
+import { OMap, IKey } from "../structures/OMap";
 
 /**
  * Interface for a weighted graph.

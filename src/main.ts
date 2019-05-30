@@ -1,4 +1,11 @@
 import { Sovereign } from "./Sovereign";
+import { RoomGraph } from "./RoomGraph";
+import { dijkstra } from "./algorithms/dijkstra";
+import { distanceTransform, displayCostMatrix, walkablePixelsForRoom } from  "./algorithms/distanceTransform";
+
+import "./prototypes/RoomPosition";
+import "./prototypes/Structure";
+import "./prototypes/Room";
 
 var SovereignInstance: Sovereign;
 
@@ -22,6 +29,33 @@ module.exports.loop = function(): void {
   SovereignInstance.update();
   SovereignInstance.run();
   // console.log();
+  for (let room in Game.rooms) {
+    console.log(`\nProcessing ${room}...`);
+
+    let walk = walkablePixelsForRoom(room);
+    let dt = distanceTransform(walk);
+    displayCostMatrix(dt);
+
+    let st = new PathFinder.CostMatrix;
+
+    let sources = Game.rooms[room].find(FIND_SOURCES);
+    let rg = new RoomGraph(room);
+    for (let s of sources) {
+      let r = dijkstra<RoomPosition>(rg, s.pos);
+      let dist = r[0];
+
+      for(let kv of dist.entries()) {
+        let k = kv[0];
+        let v = kv[1];
+        let orig = st.get(k.x, k.y);
+        st.set(k.x, k.y, orig + v);
+      }
+
+      displayCostMatrix(st, "#000fff");
+
+      break;
+    }
+  }
 };
 
 function reset(): void {
