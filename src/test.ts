@@ -1,6 +1,5 @@
 import { dijkstra, IGraph } from "./algorithms/dijkstra";
 import { OMap, IKey } from "./OMap";
-import {FibonacciHeap, INode } from "@tyriar/fibonacci-heap";
 import "./prototypes/RoomPosition";
 import "./prototypes/Structure";
 import "./prototypes/Room";
@@ -62,7 +61,6 @@ class RoomGraph extends Graph<RoomPosition> {
 
   public constructor(roomname: string) {
     super();
-    console.log(this, this._edges, this.edges);
     this.room = Game.rooms[roomname];
     for (let p of this.room.positions) {
       this.vertices.push(p);
@@ -70,17 +68,6 @@ class RoomGraph extends Graph<RoomPosition> {
         this._edges.link(p,n);
       }
     }
-    let last = "";
-    let counter = 0;
-    for (let rp of this.vertices) {
-      if (last !== rp.toString()) {
-        counter += 1;
-        last = rp.toString();
-      }
-    }
-    console.log(this, "vertices size:", `(${counter}/${this.vertices.length})`);
-    let rp = this.vertices[0];
-    console.log(rp, typeof rp, rp.toString(), typeof rp.toString(), rp.valueOf(), typeof rp.valueOf());
   }
 
   public neighbors(v: RoomPosition): RoomPosition[] {
@@ -95,63 +82,30 @@ class RoomGraph extends Graph<RoomPosition> {
   }
 }
 
-class ByValue {
-  public x: number;
-  public constructor(n: number = 5) {
-    this.x = n;
-  }
-  public valueOf(): string {
-    return 'ByValue:'+this.x;
-  }
-}
-
-let r1 = new RoomPosition(0, 0, "sim");
-let r2 = new RoomPosition(2, 1, "sim");
-let r3 = new RoomPosition(2,2, "sim");
-
-let om = new OMap<RoomPosition,number|undefined>();
-om.set(r1, 33);
-om.set(r2, 44);
-om.set(r3, 43);
-console.log("s/b:", 33, 44, 43);
-om.forEach((v,k): void => console.log(`${k}:${v}`));
-om.set(r1, 22);
-om.set(r2, om.get(r1));
-om.set(r3, om.get(r3));
-console.log("s/b:", 22, 22, 43);
-om.forEach((v,k): void => console.log(`${k}:${v}`));
-
-let q = new FibonacciHeap<number, number>();
-let n1 = q.insert(3, 5);
-let n2 = q.insert(3, 5);
-q.decreaseKey(n1, 2);
-let ino = q.extractMinimum()!;
-console.log("DecreasedKey:", ino, ino.key, ino.value);
-ino = q.extractMinimum()!;
-console.log("Last:", ino, ino.key, ino.value);
-
-function reverse(str: string): RoomPosition|undefined {
-  let s = str.slice(1,-1).split(' ');
-  let pos = s[3].split(',');
-  let x = Number(pos[0]);
-  let y = Number(pos[1]);
-  let room = s[1];
-
-  return new RoomPosition(x,y,room);
-}
-
 for (let room in Game.rooms) {
-  console.log(`Processing ${room}...`);
+  console.log(`\nProcessing ${room}...`);
 
   let walk = walkablePixelsForRoom(room);
   let dt = distanceTransform(walk);
   displayCostMatrix(dt);
 
+  let st = new PathFinder.CostMatrix;
+
   let sources = Game.rooms[room].find(FIND_SOURCES);
   let rg = new RoomGraph(room);
   for (let s of sources) {
     let r = dijkstra<RoomPosition>(rg, s.pos);
-    console.log(_.min(r[0].values()));
-    console.log();
+    let dist = r[0];
+
+    for(let kv of dist.entries()) {
+      let k = kv[0];
+      let v = kv[1];
+      let orig = st.get(k.x, k.y);
+      st.set(k.x, k.y, orig + v);
+    }
+
+    displayCostMatrix(st, "#000fff");
+
+    break;
   }
 }

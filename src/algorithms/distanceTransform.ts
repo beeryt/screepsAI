@@ -56,12 +56,17 @@ export function walkablePixelsForRoom(roomName: string): CostMatrix {
 export function displayCostMatrix(costMatrix: CostMatrix, color = '#fff000'): void {
   const vis = new RoomVisual();
 
-  let max = 1;
+  let max = -Infinity;
+  let min = Infinity;
   for (let y = 0; y < 50; ++y) {
     for (let x = 0; x < 50; ++x) {
-      max = Math.max(max, costMatrix.get(x, y));
+      const v = costMatrix.get(x, y);
+      max = Math.max(max, v);
+      min = Math.min(min, v);
     }
   }
+
+  console.log("Costmatrix:", costMatrix, "Max:", max, "Min:", min);
 
   for (let y = 0; y < 50; ++y) {
     for (let x = 0; x < 50; ++x) {
