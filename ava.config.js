@@ -1,6 +1,6 @@
 export default {
   compileEnhancements: false,
-  files: [ "test/**/*" ],
+  files: [ "tests/**/*" ],
   sources: [ "src/**/*" ],
   extensions: [ "ts" ],
   require: [ "esm", "ts-node/register", "lodash" ],

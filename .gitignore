@@ -1,5 +1,6 @@
 screeps.json
 
+/.nyc_output
 /docs
 /.rpt2_cache
 /dist
