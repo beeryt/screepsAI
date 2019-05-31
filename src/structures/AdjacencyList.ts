@@ -5,6 +5,8 @@ export class AdjacencyList<V extends IKey> implements Iterable<[V, V]> {
 
   public [Symbol.toStringTag] = "AdjacencyList";
 
+  public constructor() {}
+
   public link(v: V, u: V, w: number = 1, directed: boolean = false): void {
     if (!this.data.has(v)) this.data.set(v, new OMap<V, number>());
     this.data.get(v)!.set(u,w);

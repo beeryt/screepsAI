@@ -12,7 +12,22 @@
     "docs": "typedoc --excludePrivate --out docs src",
     "deploy": "rollup -c --environment DEST:main"
   },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "include": [
+      "src/structures/**/*.ts"
+    ],
+    "exclude": ["src/main.ts"],
+    "sourceMap": true,
+    "require": [
+      "esm",
+      "ts-node/register",
+      "lodash"
+    ],
+    "all": true
+  },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^0.1.3",
     "@types/lodash": "^3.10.1",
     "@types/screeps": "^2.5.2",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
