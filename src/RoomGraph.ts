@@ -1,4 +1,4 @@
-import { Graph } from "./structures/Graph";
+import { Graph } from "./algorithms/Graph";
 
 export class RoomGraph extends Graph<RoomPosition> {
   protected room: Room;
