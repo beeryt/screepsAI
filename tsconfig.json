@@ -4,15 +4,16 @@
 
   "compilerOptions": {
     "moduleResolution": "node",
-    "module": "ESNext",
+    "module": "commonjs",
     "target": "es6",
-    "outDir": "./tsc-out",
+    "outDir": "build/tsc",
+
     "strict": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
+
     "sourceMap": true
   },
 

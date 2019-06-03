@@ -9,8 +9,7 @@ import screeps from "rollup-plugin-screeps";
 
 let cfg;
 const dest = process.env.DEST;
-if (dest && (cfg = require("./screeps.json")[dest]) == null)
-{
+if (dest && (cfg = require("./screeps.json")[dest]) == null) {
   throw new Error("Invalid upload destination");
 }
 
@@ -30,7 +29,12 @@ export default {
     resolve(),
     commonjs(),
     terser({sourcemap: true}),
-    typescript({tsconfig: "./tsconfig.json"}),
+    typescript({
+      tsconfig: "./tsconfig.json",
+      tsconfigOverride: {
+        compilerOptions: { module: "ESNext" }
+      },
+    }),
     screeps({config: cfg, dryRun: cfg == null})
   ]
 };
