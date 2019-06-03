@@ -1,6 +1,6 @@
-import { OMap, IKey } from "./OMap";
+import { OMap, IKey } from "../structures/OMap";
 import { AdjacencyList } from "./AdjacencyList";
-import { IGraph } from "../algorithms/dijkstra";
+import { IGraph } from "./dijkstra";
 
 export class Graph<V extends IKey> implements IGraph<V> {
   protected readonly _edges = new AdjacencyList<V>();

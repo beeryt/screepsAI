@@ -1,4 +1,4 @@
-import { OMap, IKey } from "./OMap";
+import { OMap, IKey } from "../structures/OMap";
 
 export class AdjacencyList<V extends IKey> implements Iterable<[V, V]> {
   public data = new OMap<V, OMap<V, number>>();
