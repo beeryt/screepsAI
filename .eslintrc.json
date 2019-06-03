@@ -5,8 +5,8 @@
         "ecmaVersion": 6,
         "sourceType": "module"
     },
-    "plugins": ["@typescript-eslint"],
-    "extends": ["plugin:@typescript-eslint/recommended"],
+    "plugins": ["@typescript-eslint", "ava"],
+    "extends": ["plugin:@typescript-eslint/recommended", "plugin:ava/recommended"],
     "rules": {
       "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
       "indent": "off",
