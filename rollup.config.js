@@ -19,7 +19,7 @@ if (dest) console.log(`Deploying ${dest}...`);
 export default {
   input: "src/main.ts",
   output: {
-    file: "dist/main.js",
+    file: "./build/dist/main.js",
     format: "cjs",
     sourcemap: true
   },

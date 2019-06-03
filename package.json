@@ -5,7 +5,7 @@
   "author": "Carl Beery (https://github.com/beeryt)",
   "license": "Unlicensed",
   "scripts": {
-    "clean": "del-cli .nyc_output tsc-out dist",
+    "clean": "del-cli build",
     "build": "tsc",
     "test": "nyc ava",
     "lint": "eslint src --ext .js,.ts",
@@ -13,6 +13,8 @@
     "deploy": "rollup -c --environment DEST:main"
   },
   "nyc": {
+    "report-dir": "./build/coverage",
+    "temp-dir": "./build/.nyc_output",
     "extends": "@istanbuljs/nyc-config-typescript",
     "include": [
       "src/structures/**/*.ts"
