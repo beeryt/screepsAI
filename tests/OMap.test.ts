@@ -1,6 +1,6 @@
 import test, { TestInterface } from 'ava';
 import * as _ from 'lodash';
-import { OMap, IKey } from "../src/structures/OMap";
+import { OMap } from "../src/structures/OMap";
 
 class V {
   private _id: number;
@@ -102,7 +102,7 @@ ava("entries insertion order", (t): void => {
     OM.set(k,v);
   }
 
-  for (const kv of OM.entries()) {
+  for (const kv of Array.from(OM.entries())) {
     t.is(kv[0],keys.shift());
     t.is(kv[1],vals.shift());
   }
@@ -111,14 +111,14 @@ ava("entries insertion order", (t): void => {
 ava("keys insertion order", (t): void => {
   const OM = t.context.om;
   const size = 5;
-  const keys: V[] = []
+  const keys: V[] = [];
   for (const i of _.range(size)) {
     let k = new V(i);
     keys.push(k);
     OM.set(k, i**2);
   }
 
-  for (const k of OM.keys()) {
+  for (const k of Array.from(OM.keys())) {
     t.is(k,keys.shift());
   }
 });
@@ -126,14 +126,25 @@ ava("keys insertion order", (t): void => {
 ava("values insertion order", (t): void => {
   const OM = t.context.om;
   const size = 5;
-  const vals: number[] = []
+  const vals: number[] = [];
   for (const i of _.range(size)) {
     let v = i**2;
     vals.push(v);
     OM.set(new V(i), v);
   }
 
-  for (const v of OM.values()) {
+  for (const v of Array.from(OM.values())) {
     t.is(v,vals.shift());
   }
+});
+
+ava("minimum of OMap is not Infinity", (t): void => {
+  const OM = t.context.om;
+  const size = 5;
+  for (const i of _.range(size)) {
+    OM.set(new V(i), Infinity);
+  }
+  t.is(_.min(Array.from(OM.values())), Infinity);
+  OM.set(new V(0), 0);
+  t.is(_.min(Array.from(OM.values())), 0);
 });

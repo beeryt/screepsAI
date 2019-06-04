@@ -1,6 +1,5 @@
 import test from 'ava';
 import * as _ from 'lodash';
-import { OMap } from "../src/structures/OMap";
 
 test('one plus three equals two', (t): void => {
   t.is(1+2, 3);
