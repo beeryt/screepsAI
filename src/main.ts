@@ -50,11 +50,32 @@ module.exports.loop = function(): void {
         let orig = st.get(k.x, k.y);
         st.set(k.x, k.y, orig + v);
       }
-
-      displayCostMatrix(st, "#000fff");
-
-      break;
     }
+    displayCostMatrix(st, "#000fff");
+
+    let thing = new Map<number,{x: number,y: number}>();
+    for (const x of _.range(50)) {
+      for (const y of _.range(50)) {
+        // filter out places where base won't fit
+        if (dt.get(x,y) < 3) {
+          dt.set(x,y,NaN);
+          st.set(x,y,NaN);
+        } else {
+          thing.set(st.get(x,y), {x:x, y:y});
+        }
+      }
+    }
+
+    for (const i of _.range(10)) {
+      const k = _.min(Array.from(thing.keys()));
+      console.log("minimum key:", k);
+      const pos = thing.get(k);
+      thing.delete(k);
+      if (pos === undefined) break;
+      let vis = new RoomVisual();
+      vis.text(i.toString(), pos.x, pos.y);
+    }
+
   }
 };
 
