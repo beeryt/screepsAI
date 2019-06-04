@@ -53,7 +53,7 @@ module.exports.loop = function(): void {
     }
     displayCostMatrix(st, "#000fff");
 
-    let thing = new Map<number,{x: number,y: number}>();
+    let thing = new Map<number,{x: number; y: number}>();
     for (const x of _.range(50)) {
       for (const y of _.range(50)) {
         // filter out places where base won't fit
