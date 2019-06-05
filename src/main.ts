@@ -4,6 +4,7 @@ import { dijkstra } from "./algorithms/dijkstra";
 import { FibonacciHeap, INode } from "@tyriar/fibonacci-heap";
 import { distanceTransform, displayCostMatrix, walkablePixelsForRoom } from  "./algorithms/distanceTransform";
 import { update, finalize, Aggregate, Variance } from "./statistics";
+import { base, dualCamp, mineLayout, display } from "./layouts/layouts";
 
 import "./prototypes/RoomPosition";
 import "./prototypes/Structure";
@@ -56,11 +57,14 @@ module.exports.loop = function(): void {
       }
     }
 
-    interface MyRoomMemory extends RoomMemory {
+    interface IRoomMemory extends RoomMemory {
       factor: number;
+      range: number;
+      labels: number;
+      varianceFactor: number;
     }
-    const factor: number = (Game.rooms.sim.memory as MyRoomMemory).factor || 10;
-    console.log("Factor:", factor);
+    const mem: IRoomMemory = Game.rooms.sim.memory as IRoomMemory;
+    console.log("mem:", JSON.stringify(mem));
 
     let ag = new Aggregate();
     let heap = new FibonacciHeap<number, {x: number; y: number; v: number}>();
@@ -68,7 +72,7 @@ module.exports.loop = function(): void {
     for (const x of _.range(50)) {
       for (const y of _.range(50)) {
         // filter out places where base won't fit
-        if (dt.get(x,y) < 3) {
+        if (dt.get(x,y) < mem.range) {
           dt.set(x,y,NaN);
           st.set(x,y,NaN);
         } else {
@@ -89,21 +93,24 @@ module.exports.loop = function(): void {
       if (v === undefined) continue;
 
       // filter out anything larger than average
-      if (v.v > stats.mean - 1.15034938037601*(Math.sqrt(stats.variance))) {
+      if (v.v > stats.mean - mem.varianceFactor*(Math.sqrt(stats.variance))) {
         st.set(v.x,v.y,NaN);
         dt.set(v.x,v.y,NaN);
         continue;
       }
 
       // label the lowest 10 dijkstra results
-      if (i < 10) {
-        vis.text(i.toString(), v.x, v.y);
+      if (i < mem.labels) {
+        vis.text(i.toString(), v.x, v.y, {color: "#ffffff40"});
         ++i;
       }
     }
 
     displayCostMatrix(st, "#000fff40");
     displayCostMatrix(dt, "#fff00040");
+    display(mineLayout);
+    display(dualCamp);
+    display(base);
   }
 };
 
