@@ -40,7 +40,9 @@ module.exports.loop = function(): void {
 
     let st = new PathFinder.CostMatrix;
 
-    let sources = Game.rooms[room].find(FIND_SOURCES);
+    let sources: RoomObject[] = Game.rooms[room].find(FIND_SOURCES);
+    const controller = Game.rooms[room].controller;
+    if (controller !== undefined) sources.push(controller);
     let rg = new RoomGraph(room);
     for (let s of sources) {
       let r = dijkstra<RoomPosition>(rg, s.pos);
