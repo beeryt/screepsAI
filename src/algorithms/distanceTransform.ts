@@ -1,3 +1,5 @@
+import { map, update, finalize, Aggregate, Variance } from "../statistics";
+
 function neighbors(dist: CostMatrix, x: number, y: number, dirs: DirectionConstant[]): number[] {
   let n: number[] = [];
   for (let d of dirs) {
@@ -52,65 +54,27 @@ export function walkablePixelsForRoom(roomName: string): CostMatrix {
   return costMatrix;
 }
 
-export class Aggregate { public count: number=0; public mean: number=0; public M2: number=0; }
-export class Variance { public mean: number=0; public variance: number=0; public sampleVariance: number=0; }
-
-export function update(existingAggregate: Aggregate, newValue: number): Aggregate {
-  existingAggregate.count += 1;
-  let delta = newValue - existingAggregate.mean;
-  existingAggregate.mean += delta / existingAggregate.count;
-  let delta2 = newValue - existingAggregate.mean;
-  existingAggregate.M2 += delta * delta2;
-
-  return existingAggregate;
-}
-
-export function finalize(existingAggregate: Aggregate): Variance|undefined {
-  let mean = existingAggregate.mean;
-  let variance = existingAggregate.M2 / existingAggregate.count;
-  let sampleVariance = existingAggregate.M2 / (existingAggregate.count - 1);
-
-  if (existingAggregate.count < 2) {
-    return undefined;
-  } else {
-    return {mean:mean, variance:variance, sampleVariance:sampleVariance};
-  }
-
-
-}
-
 // Visualize a given costMatrix globally
 export function displayCostMatrix(costMatrix: CostMatrix, color = '#fff000'): void {
   const vis = new RoomVisual();
 
   let ag = new Aggregate();
-
-  const samples: number[] = [];
-  let max = -Infinity;
-  let min = Infinity;
+  const samples: {x: number; y: number; v: number}[] = [];
   for (let y = 0; y < 50; ++y) {
     for (let x = 0; x < 50; ++x) {
       const v = costMatrix.get(x, y);
-      samples.push(v);
       ag = update(ag, v);
-      max = Math.max(max, v);
-      min = Math.min(min, v);
+      samples.push({x:x,y:y,v:v});
     }
   }
 
-  let vari = finalize(ag);
-  if (vari === undefined) throw new Error("srsly?!");
+  let stat = finalize(ag);
+  if (stat === undefined) throw new Error("srsly?!");
+  console.log("Costmatrix:", costMatrix, "Max:", stat.max.toExponential(2), "Min:", stat.min.toExponential(2), "μ:", stat.mean.toExponential(2), "σ²:", stat.variance.toExponential(2), "σ²:", stat.sampleVariance.toExponential(2));
 
-  console.log("Costmatrix:", costMatrix, "Max:", max, "Min:", min);
-  console.log("\tμ:", vari.mean, "σ²:", vari.variance, "σ²:", vari.sampleVariance);
-
-  for (let y = 0; y < 50; ++y) {
-    for (let x = 0; x < 50; ++x) {
-      const value = costMatrix.get(x, y);
-      if (value > 0) {
-        vis.circle(x, y, {radius: costMatrix.get(x, y) / max / 2, fill: color});
-      }
-    }
+  for (const s of samples) {
+    const r = map(s.v, stat.min, stat.max, 0, 0.5);
+    vis.circle(s.x,s.y, {radius: r, fill: color});
   }
 }
 

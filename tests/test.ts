@@ -1,6 +1,12 @@
 import test from 'ava';
 import * as _ from 'lodash';
-import {update, finalize, Aggregate, Variance} from "../src/algorithms/distanceTransform";
+import {map, update, finalize, Aggregate, Variance} from "../src/statistics";
+
+test('map normalize', (t): void => {
+  t.is(map(6, 0, 10, 0, 5), 3);
+  t.is(map(3, 0, 5, 0, 10), 6);
+  t.is(map(5, 0, 5, 5, 0), 0);
+});
 
 test('variance [1,2,3,4,5]', (t): void => {
   const sample = [1,2,3,4,5];
@@ -14,6 +20,32 @@ test('variance [1,2,3,4,5]', (t): void => {
   t.is(v.mean, 3);
   t.is(v.variance, 2);
   t.is(v.sampleVariance, 2.5);
+});
+
+test("statistics empty", (t): void => {
+  const sample = [1];
+  let ag = new Aggregate();
+  for (const s of sample) {
+    ag = update(ag, s);
+  }
+  const v = finalize(ag);
+  t.is(v, undefined);
+});
+
+test("statistics constructors", (t): void => {
+  const a = new Aggregate();
+  t.is(a.count, 0);
+  t.is(a.min, Infinity);
+  t.is(a.max, -Infinity);
+  t.is(a.mean, 0);
+  t.is(a.M2, 0);
+
+  const v = new Variance();
+  t.is(v.min, Infinity);
+  t.is(v.max, -Infinity);
+  t.is(v.mean, 0);
+  t.is(v.variance, 0);
+  t.is(v.sampleVariance, 0);
 });
 
 test('one plus three equals two', (t): void => {
