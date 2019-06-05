@@ -89,7 +89,7 @@ module.exports.loop = function(): void {
       if (v === undefined) continue;
 
       // filter out anything larger than average
-      if (v.v > stats.mean - 1.25*(Math.sqrt(stats.variance))) {
+      if (v.v > stats.mean - 1.15034938037601*(Math.sqrt(stats.variance))) {
         st.set(v.x,v.y,NaN);
         dt.set(v.x,v.y,NaN);
         continue;
