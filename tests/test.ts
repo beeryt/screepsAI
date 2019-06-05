@@ -1,5 +1,20 @@
 import test from 'ava';
 import * as _ from 'lodash';
+import {update, finalize, Aggregate, Variance} from "../src/algorithms/distanceTransform";
+
+test('variance [1,2,3,4,5]', (t): void => {
+  const sample = [1,2,3,4,5];
+  let ag = new Aggregate();
+  for (const s of sample) {
+    ag = update(ag, s);
+  }
+  const v = finalize(ag);
+  t.not(v, undefined);
+  if (v === undefined) return;
+  t.is(v.mean, 3);
+  t.is(v.variance, 2);
+  t.is(v.sampleVariance, 2.5);
+});
 
 test('one plus three equals two', (t): void => {
   t.is(1+2, 3);
