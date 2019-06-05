@@ -22,7 +22,7 @@ export const mineLayout: ILayout  = {
   }
 };
 
-const sequence = ["#2e4463", "#1e588a", "#086da7", "#00b2b9", "#039ac7", "#12b1d4", "#2bc8e2", "#3ddff0", "#61f4fb"];
+const sequence = ["#245447", "#076a4c", "#038145", "#2d9642", "#5fa941", "#89bb3f", "#b3cb3b", "#dbdc34", "#ffed39"];
 
 export const dualCamp: ILayout = {
   anchor: new RoomPosition(5,23,'sim'),
