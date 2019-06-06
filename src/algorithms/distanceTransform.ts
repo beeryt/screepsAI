@@ -1,4 +1,4 @@
-import { map, update, finalize, Aggregate, Variance } from "../statistics";
+import { map, update, finalize, Aggregate } from "../statistics";
 
 function neighbors(dist: CostMatrix, x: number, y: number, dirs: DirectionConstant[]): number[] {
   let n: number[] = [];
@@ -44,10 +44,15 @@ export function distanceTransform(foreground: CostMatrix): CostMatrix {
 export function walkablePixelsForRoom(roomName: string): CostMatrix {
   const costMatrix = new PathFinder.CostMatrix();
   const terrain = Game.map.getRoomTerrain(roomName);
+  const room = Game.rooms[roomName];
   for (let y = 0; y < 50; ++y) {
     for (let x = 0; x < 50; ++x) {
+      const structures = room.lookForAt(LOOK_STRUCTURES, x, y);
       if (terrain.get(x, y) != TERRAIN_MASK_WALL) {
         costMatrix.set(x, y, 1);
+      }
+      if (_.find(structures, (s): boolean => { return s.structureType === STRUCTURE_CONTROLLER; })) {
+        costMatrix.set(x, y, 0);
       }
     }
   }
