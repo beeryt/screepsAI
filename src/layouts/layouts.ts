@@ -26,30 +26,83 @@ const sequence = ["#294767", "#1e5b88", "#1a748b", "#1f8e7e", "#29a869", "#6abf5
 
 export const dualCamp: ILayout = {
   anchor: new RoomPosition(5,23,'sim'),
-  1: {
+  2: {
     buildings: [
       {
         type: STRUCTURE_EXTENSION,
         pos: [
-          {x:0,y:1}, {x:0,y:2}, {x:0,y:5}, {x:0,y:6},
-          {x:1,y:0}, {x:1,y:2}, {x:1,y:3}, {x:1,y:4}, {x:1,y:5}, {x:1,y:7},
-          {x:2,y:0}, {x:2,y:1}, {x:2,y:6}, {x:2,y:7},
-          {x:3,y:1}, {x:3,y:6},
-          {x:4,y:1}, {x:4,y:6},
-          {x:5,y:0}, {x:5,y:1}, {x:5,y:6}, {x:5,y:7},
-          {x:6,y:0}, {x:6,y:2}, {x:6,y:3}, {x:6,y:4}, {x:6,y:5}, {x:6,y:7},
-          {x:7,y:1}, {x:7,y:2}, {x:7,y:5}, {x:7,y:6}
+          {x:0,y:1}, {x:0,y:2}, {x:0,y:5}, {x:0,y:6}, {x:1,y:0},
+        ]
+      }
+    ]
+  },
+  3: {
+    buildings: [
+      {
+        type: STRUCTURE_EXTENSION,
+        pos: [
+          {x:1,y:2}, {x:1,y:3}, {x:1,y:4}, {x:1,y:5}, {x:1,y:7},
+        ]
+      }
+    ]
+  },
+  4: {
+    buildings: [
+      {
+        type: STRUCTURE_EXTENSION,
+        pos: [
+          {x:2,y:0}, {x:2,y:1}, {x:2,y:6}, {x:2,y:7}, {x:3,y:1},
         ]
       }, {
         type: STRUCTURE_STORAGE,
         pos: [{x:5,y:4}]
       }
     ]
+  },
+  5: {
+    buildings: [
+      {
+        type: STRUCTURE_EXTENSION,
+        pos: [
+          {x:3,y:6}, {x:4,y:1}, {x:4,y:6}, {x:5,y:0}, {x:5,y:1},
+        ]
+      }
+    ]
+  },
+  6: {
+    buildings: [
+      {
+        type: STRUCTURE_EXTENSION,
+        pos: [
+          {x:5,y:6}, {x:5,y:7}, {x:6,y:0}, {x:6,y:2}, {x:6,y:3},
+        ]
+      }
+    ]
+  },
+  7: {
+    buildings: [
+      {
+        type: STRUCTURE_EXTENSION,
+        pos: [
+          {x:6,y:4}, {x:6,y:5}, {x:6,y:7}, {x:7,y:1}, {x:7,y:2},
+        ]
+      }
+    ]
+  },
+  8: {
+    buildings: [
+      {
+        type: STRUCTURE_EXTENSION,
+        pos: [
+          {x:7,y:5}, {x:7,y:6}
+        ]
+      }
+    ]
   }
 };
 
 export const base: ILayout = {
-  anchor: new RoomPosition(24,18,'sim'),
+  anchor: new RoomPosition(25,25,'sim'),
   1: {
     buildings: [
       {
@@ -131,15 +184,19 @@ Display[STRUCTURE_TOWER] = "D";
 Display[STRUCTURE_TERMINAL] = "T";
 
 
-export function display(layout: ILayout, rcl: number = 8): void {
+export function display(layout: ILayout, pos: RoomPosition|undefined = undefined): void {
   const vis = new RoomVisual();
-  for (const r of _.range(rcl+1)) {
+  const anchor = pos ? pos : layout.anchor;
+  console.log("Anchor:", anchor, pos, layout.anchor);
+
+  for (const r of _.range(9)) {
     if (layout[r] === undefined) continue;
     let buildings = layout[r].buildings;
     for (const b of buildings) {
-      console.log(JSON.stringify(b));
       for (const p of b.pos) {
-        vis.text(Display[b.type], p.x + layout.anchor.x, p.y + layout.anchor.x, {color: sequence[r]});
+        const x = p.x + anchor.x;
+        const y = p.y + anchor.y;
+        vis.text(Display[b.type], x, y, {color: sequence[r]});
       }
     }
   }

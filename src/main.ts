@@ -88,11 +88,13 @@ module.exports.loop = function(): void {
 
     // Filter out bottom 50% of dijkstra results
     let i = 0;
+    let bestPos: RoomPosition|undefined;
     while (!heap.isEmpty()) {
       const n = heap.extractMinimum();
       if (n === null) continue;
       const v = n.value;
       if (v === undefined) continue;
+      if (bestPos === undefined) bestPos = new RoomPosition(v.x,v.y,'sim');
 
       // filter out anything larger than average
       if (v.v > stats.mean - mem.varianceFactor*(Math.sqrt(stats.variance))) {
@@ -124,7 +126,8 @@ module.exports.loop = function(): void {
     displayCostMatrix(dt, "#fff00040");
     display(mineLayout);
     display(dualCamp);
-    display(base);
+    console.log("BestPos:", bestPos);
+    display(base, bestPos);
   }
 };
 
