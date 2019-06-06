@@ -58,12 +58,14 @@ module.exports.loop = function(): void {
     }
 
     interface IRoomMemory extends RoomMemory {
-      factor: number;
       range: number;
       labels: number;
       varianceFactor: number;
     }
     const mem: IRoomMemory = Game.rooms.sim.memory as IRoomMemory;
+    mem.range = mem.range ? mem.range : 3;
+    mem.labels = mem.labels ? mem.labels: 3;
+    mem.varianceFactor = mem.varianceFactor ? mem.varianceFactor : 0.674489750196082;
     console.log("mem:", JSON.stringify(mem));
 
     let ag = new Aggregate();
