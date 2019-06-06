@@ -105,6 +105,18 @@ module.exports.loop = function(): void {
       if (i < mem.labels) {
         vis.text(i.toString(), v.x, v.y, {color: "#ffffff40"});
         ++i;
+        // draw fastest paths to each source
+        for (const s of sources) {
+          const start = new RoomPosition(v.x,v.y,'sim');
+          let line = PathFinder.search(start, {pos: s.pos, range:1});
+          if (!line.incomplete) {
+            let l = start;
+            for (const p of line.path) {
+              vis.line(l, p);
+              l = p;
+            }
+          }
+        }
       }
     }
 
