@@ -12,14 +12,17 @@ export class Colony {
     this.controller = room.controller;
     this.pos = this.controller.pos;
     this.mines = [];
-    // this.room.find(FIND_SOURCES).forEach((source: any): void => { this.mines.push(new Mine(this, source)); }, this);
-    // this.room.find(FIND_MINERALS).forEach((mineral: any): void => { this.mines.push(new Mine(this, mineral)); }, this);
+    this.room.find(FIND_SOURCES).forEach((source: any): void => { this.mines.push(new Mine(this, source)); }, this);
+    this.room.find(FIND_MINERALS).forEach((mineral: any): void => { this.mines.push(new Mine(this, mineral)); }, this);
 
     this.costs = [];
   }
 
   public init(): void {
     console.log("Colony::init()");
+    this.mines.forEach((mine): void => {
+      mine.init();
+    });
   }
 
   public refresh(): void {
