@@ -26,12 +26,20 @@ const sequence = ["#294767", "#1e5b88", "#1a748b", "#1f8e7e", "#29a869", "#6abf5
 
 export const dualCamp: ILayout = {
   anchor: new RoomPosition(5,23,'sim'),
+  1: {
+    buildings: [
+      {
+        type: STRUCTURE_SPAWN,
+        pos: [ {x:0,y:0} ]
+      }
+    ]
+  },
   2: {
     buildings: [
       {
         type: STRUCTURE_EXTENSION,
         pos: [
-          {x:0,y:1}, {x:0,y:2}, {x:0,y:5}, {x:0,y:6}, {x:1,y:0},
+          {x:2,y:1}, {x:2,y:0}, {x:1,y:0}, {x:0,y:1}, {x:0,y:2},
         ]
       }
     ]
@@ -41,7 +49,7 @@ export const dualCamp: ILayout = {
       {
         type: STRUCTURE_EXTENSION,
         pos: [
-          {x:1,y:2}, {x:1,y:3}, {x:1,y:4}, {x:1,y:5}, {x:1,y:7},
+          {x:1,y:2}, {x:1,y:3}, {x:1,y:4}, {x:1,y:5}, {x:2,y:6},
         ]
       }
     ]
@@ -51,7 +59,7 @@ export const dualCamp: ILayout = {
       {
         type: STRUCTURE_EXTENSION,
         pos: [
-          {x:2,y:0}, {x:2,y:1}, {x:2,y:6}, {x:2,y:7}, {x:3,y:1},
+          {x:0,y:5}, {x:0,y:6}, {x:1,y:7}, {x:2,y:7}, {x:3,y:6},
         ]
       }, {
         type: STRUCTURE_STORAGE,
@@ -64,7 +72,7 @@ export const dualCamp: ILayout = {
       {
         type: STRUCTURE_EXTENSION,
         pos: [
-          {x:3,y:6}, {x:4,y:1}, {x:4,y:6}, {x:5,y:0}, {x:5,y:1},
+          {x:4,y:6}, {x:5,y:6}, {x:6,y:5}, {x:6,y:4}, {x:3,y:1},
         ]
       }
     ]
@@ -74,7 +82,7 @@ export const dualCamp: ILayout = {
       {
         type: STRUCTURE_EXTENSION,
         pos: [
-          {x:5,y:6}, {x:5,y:7}, {x:6,y:0}, {x:6,y:2}, {x:6,y:3},
+          {x:5,y:7}, {x:6,y:7}, {x:7,y:6}, {x:7,y:5}, {x:6,y:3},
         ]
       }
     ]
@@ -84,7 +92,7 @@ export const dualCamp: ILayout = {
       {
         type: STRUCTURE_EXTENSION,
         pos: [
-          {x:6,y:4}, {x:6,y:5}, {x:6,y:7}, {x:7,y:1}, {x:7,y:2},
+          {x:6,y:2}, {x:5,y:1}, {x:4,y:1}, {x:5,y:0}, {x:6,y:0},
         ]
       }
     ]
@@ -94,7 +102,7 @@ export const dualCamp: ILayout = {
       {
         type: STRUCTURE_EXTENSION,
         pos: [
-          {x:7,y:5}, {x:7,y:6}
+          {x:7,y:1}, {x:7,y:2}
         ]
       }
     ]
