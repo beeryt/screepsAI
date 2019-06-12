@@ -10,10 +10,9 @@ export class Colony {
   public controller: any;
   public pos: any;
   private mines: Mine[];
-  private costs: number[];
 
-  private dt: CostMatrix = PathFinder.CostMatrix;
-  private st: CostMatrix = PathFinder.CostMatrix;
+  private dt: CostMatrix = new PathFinder.CostMatrix;
+  private st: CostMatrix = new PathFinder.CostMatrix;
 
   public constructor(room: Room) {
     this.room = room;
@@ -22,8 +21,6 @@ export class Colony {
     this.mines = [];
     this.room.find(FIND_SOURCES).forEach((source: any): void => { this.mines.push(new Mine(this, source)); }, this);
     this.room.find(FIND_MINERALS).forEach((mineral: any): void => { this.mines.push(new Mine(this, mineral)); }, this);
-
-    this.costs = [];
   }
 
   public init(): void {
@@ -34,8 +31,7 @@ export class Colony {
 
       let walk = walkablePixelsForRoom(room);
       let dt = distanceTransform(walk);
-
-      let st = new PathFinder.CostMatrix;
+      let st = this.st;
 
       let sources: RoomObject[] = Game.rooms[room].find(FIND_SOURCES);
       const controller = Game.rooms[room].controller;

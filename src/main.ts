@@ -8,7 +8,6 @@ var SovereignInstance: Sovereign;
 
 module.exports.loop = function(): void {
 
-  console.log(Game.cpu.bucket, Game.cpu.tickLimit);
   for (var name in Memory.creeps) {
     if (!Game.creeps[name]) {
       delete Memory.creeps[name];
@@ -18,6 +17,7 @@ module.exports.loop = function(): void {
 
   if (!SovereignInstance || Game.time >= SovereignInstance.expiry) {
     // delete SovereignInstance;
+    console.log("Stats:", Game.cpu.bucket, Game.cpu.tickLimit);
     SovereignInstance = new Sovereign();
     SovereignInstance.init();
   }
