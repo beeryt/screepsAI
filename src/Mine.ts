@@ -1,8 +1,4 @@
-import { dijkstra } from "./algorithms/dijkstra";
 import { Colony } from "./Colony";
-
-interface ILookStructure {type: string; structure: Structure};
-interface ILookTerrain {type: string; terrain: string};
 
 function isWalkable(pos: RoomPosition): boolean {
   for (let object of pos.look()) {
@@ -68,6 +64,13 @@ export class Mine {
   public run(): void {
     const vis = new RoomVisual();
     if (this.pos && this.room) {
+      let thePath = PathFinder.search(this.pos, this.colony.pos);
+      let last = this.pos;
+      for (const p of thePath.path) {
+        vis.line(last, p);
+        last = p;
+      }
+      vis.circle(thePath.path[0], {radius:0.4, fill:"#00000000", stroke:"blue"});
       for (let x = 0; x < 3; ++x) {
         for (let y = 0; y < 3; ++y) {
           const pos = this.room.getPositionAt(this.pos.x + x - 1, this.pos.y + y - 1);
