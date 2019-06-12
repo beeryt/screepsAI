@@ -18,7 +18,7 @@ export class Mine {
   public source: RoomObject;
   public pos: RoomPosition;
   public room: Room|undefined;
-  private costs: CostMatrix = new PathFinder.CostMatrix;
+  public costs: CostMatrix = new PathFinder.CostMatrix;
   public constructionSite: ConstructionSite|undefined;
   public container: StructureContainer|undefined;
   public link: StructureLink|undefined;

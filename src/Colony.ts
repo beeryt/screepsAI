@@ -31,21 +31,28 @@ export class Colony {
 
       let walk = walkablePixelsForRoom(room);
       let dt = distanceTransform(walk);
-      let st = this.st;
+      let st = new PathFinder.CostMatrix;
 
-      let sources: RoomObject[] = Game.rooms[room].find(FIND_SOURCES);
+      const rg = new RoomGraph(room);
       const controller = Game.rooms[room].controller;
-      if (controller !== undefined) sources.push(controller);
-      let rg = new RoomGraph(room);
-      for (let s of sources) {
-        let r = dijkstra<RoomPosition>(rg, s.pos);
-        let dist = r[0];
+      let count = 0;
+      if (controller !== undefined) {
+        let ret = dijkstra<RoomPosition>(rg, controller.pos);
+        for (const kv of ret[0].entries()) {
+          count++;
+          const k = kv[0];
+          const v = kv[1];
+          st.set(k.x, k.y, v);
+        }
+        console.log("Counted:", count);
+      }
 
-        for(let kv of dist.entries()) {
-          let k = kv[0];
-          let v = kv[1];
-          let orig = st.get(k.x, k.y);
-          st.set(k.x, k.y, orig + v);
+      for (const x of _.range(50)) {
+        for (const y of _.range(50)) {
+          for (const mine of this.mines) {
+            const val = st.get(x,y) + mine.costs.get(x,y);
+            st.set(x,y, val);
+          }
         }
       }
 
@@ -53,11 +60,13 @@ export class Colony {
         range: number;
         labels: number;
         varianceFactor: number;
+        doThing: boolean;
       }
       const mem: IRoomMemory = Game.rooms.sim.memory as IRoomMemory;
       mem.range = mem.range ? mem.range : 3;
       mem.labels = mem.labels ? mem.labels: 3;
       mem.varianceFactor = mem.varianceFactor ? mem.varianceFactor : 0.674489750196082;
+      mem.doThing = mem.doThing ? mem.doThing : false;
       console.log("mem:", JSON.stringify(mem));
 
       let ag = new Aggregate();
@@ -127,6 +136,13 @@ export class Colony {
   }
   public run(): void {
     // console.log("Colony::run()");
+
+    if (this.room.memory.doThing) {
+      this.room.memory.doThing = false;
+      const ret = this.room.createConstructionSite(this.pos, STRUCTURE_STORAGE);
+      console.log("Doing Thing:", ret);
+    }
+
     displayCostMatrix(this.st, "#000fff40");
     displayCostMatrix(this.dt, "#fff00040");
     this.mines.forEach((mine): void => {
