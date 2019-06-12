@@ -14,13 +14,15 @@ function isWalkable(pos: RoomPosition): boolean {
 export class Mine {
   public colony: Colony;
   public source: RoomObject;
-  public pos: RoomPosition|undefined;
+  public pos: RoomPosition;
   public room: Room|undefined;
   public costs: number[];
   public maxCost: number = Infinity;
   public constructionSite: ConstructionSite|undefined;
   public container: StructureContainer|undefined;
   public link: StructureLink|undefined;
+  private path: RoomPosition[] = [];
+  private walkable: RoomPosition[] = [];
 
   public constructor(colony: Colony, source: RoomObject) {
     this.colony = colony;
@@ -49,6 +51,17 @@ export class Mine {
   // Find mineable positions around source and place container
   public init(): void {
     this.maxCost = _.max(this.costs);
+    this.path = PathFinder.search(this.pos, this.colony.pos).path;
+    if (this.room) {
+      for (const x of _.range(3)) {
+        for (const y of _.range(3)) {
+          const pos = this.room.getPositionAt(this.pos.x + x -1 , this.pos.y + y - 1);
+          if (pos) {
+            if (isWalkable(pos)) this.walkable.push(pos);
+          }
+        }
+      }
+    }
   }
 
   public refresh(): void {
@@ -63,23 +76,14 @@ export class Mine {
 
   public run(): void {
     const vis = new RoomVisual();
-    if (this.pos && this.room) {
-      let thePath = PathFinder.search(this.pos, this.colony.pos);
-      let last = this.pos;
-      for (const p of thePath.path) {
-        vis.line(last, p);
-        last = p;
-      }
-      vis.circle(thePath.path[0], {radius:0.4, fill:"#00000000", stroke:"blue"});
-      for (let x = 0; x < 3; ++x) {
-        for (let y = 0; y < 3; ++y) {
-          const pos = this.room.getPositionAt(this.pos.x + x - 1, this.pos.y + y - 1);
-          if (!pos) continue;
-          if (isWalkable(pos)) {
-            vis.circle(pos);
-          }
-        }
-      }
+    let last = this.pos;
+    for (const p of this.path) {
+      vis.line(last, p);
+      last = p;
+    }
+    vis.circle(this.path[0], {radius:0.4, fill:"#00000000", stroke:"blue"});
+    for (const pos of this.walkable) {
+      vis.circle(pos);
     }
   }
 }

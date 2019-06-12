@@ -4,7 +4,6 @@ import { dijkstra } from "./algorithms/dijkstra";
 import { FibonacciHeap, INode } from "@tyriar/fibonacci-heap";
 import { distanceTransform, displayCostMatrix, walkablePixelsForRoom } from  "./algorithms/distanceTransform";
 import { update, finalize, Aggregate, Variance } from "./statistics";
-import { base, dualCamp, mineLayout, display } from "./layouts/layouts";
 
 export class Colony {
   public room: any;
@@ -12,6 +11,9 @@ export class Colony {
   public pos: any;
   private mines: Mine[];
   private costs: number[];
+
+  private dt: CostMatrix = PathFinder.CostMatrix;
+  private st: CostMatrix = PathFinder.CostMatrix;
 
   public constructor(room: Room) {
     this.room = room;
@@ -26,9 +28,6 @@ export class Colony {
 
   public init(): void {
     console.log("Colony::init()");
-    this.mines.forEach((mine): void => {
-      mine.init();
-    });
     for (let room in Game.rooms) {
       const vis = new RoomVisual();
       console.log(`\nProcessing ${room}...`);
@@ -107,14 +106,14 @@ export class Colony {
         }
       }
 
-      displayCostMatrix(st, "#000fff40");
-      displayCostMatrix(dt, "#fff00040");
-      display(mineLayout);
-      display(dualCamp);
+      this.st = st;
+      this.dt = dt;
       console.log("BestPos:", bestPos);
       this.pos = bestPos;
-      display(base, bestPos);
     }
+    this.mines.forEach((mine): void => {
+      mine.init();
+    });
   }
 
   public refresh(): void {
@@ -132,6 +131,8 @@ export class Colony {
   }
   public run(): void {
     // console.log("Colony::run()");
+    displayCostMatrix(this.st, "#000fff40");
+    displayCostMatrix(this.dt, "#fff00040");
     this.mines.forEach((mine): void => {
       mine.run();
     });
